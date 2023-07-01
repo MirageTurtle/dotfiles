@@ -242,9 +242,9 @@
  :ensure t
  :config
  (setq dashboard-banner-logo-title "Welcome to Emacs!")
- ;; (setq dashboard-projects-backend 'projectile)
+ (setq dashboard-projects-backend 'projectile)
  (setq dashboard-startup-banner 'official)
- (setq dashboard-items '((recents  . 5)
+ (setq dashboard-items '((recents  . 10)
 		  (bookmarks . 5)
-		  (projects . 10)))
+		  (projects . 5)))
  (dashboard-setup-startup-hook))
