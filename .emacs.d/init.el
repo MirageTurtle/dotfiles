@@ -213,6 +213,8 @@
   :config
   (setq mc/insert-numbers-default 1))
 
+;; For some format
+
 (use-package json-mode
   :ensure t)
 
@@ -224,6 +226,10 @@
   ;; :after (yaml-mode)
   :config
   (add-hook 'yaml-mode-hook #'yaml-pro-mode))
+
+;; For Markdown
+(use-package markdown-mode
+  :ensure t)
   
 
 ;; Program for Python
