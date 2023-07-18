@@ -45,7 +45,8 @@
 (global-set-key (kbd "C-c ;") 'comment-line)
 ;; Didn't work
 ;; (global-set-key (kbd "C-h") 'view-order-manuals)
-;; (global-set-key (kbd "C-SPC") 'set-mark-command)
+(global-set-key (kbd "C-c SPC") 'set-mark-command)
+(global-set-key (kbd "M-SPC") 'rectangle-mark-mode)
 
 ;; package
 (require 'package)
@@ -111,7 +112,7 @@
    ("C-c s" . 'ivy-switch-view)
    ("C-c V" . 'ivy-pop-view)
    ("C-x C-@" . 'counsel-mark-ring)
-   ("C-x C-SPC" . 'counsel-mark-ring)
+   ("C-x SPC" . 'counsel-mark-ring)
    :map minibuffer-local-map
    ("C-r" . counsel-minibuffer-history)))
 
@@ -174,7 +175,7 @@
   :bind (("C-c p" . projectile-command-map))
   :config
   (setq projectile-mode-line "Projectile")
-  (setq projectile-track-known-projects-automatically nil))
+  (setq projectile-track-known-projects-automatically t))
 
 (use-package counsel-projectile
   :ensure t
