@@ -56,6 +56,7 @@
 ;; (setq package-check-signature 'allow-unsigned)
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (package-initialize)
+;; (package-refresh-contents)
 
 ;; proxy
 ;; TODO: FIX clash()
@@ -80,7 +81,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep company-jedi lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
+   '(pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep company-jedi lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -134,8 +135,9 @@
   :ensure t
   :config
   (setq truncate-lines nil)
-  :hook
-  (prog-mode . flycheck-mode))
+  ;; :hook
+  ;; (prog-mode . flycheck-mode)
+)
 
 (use-package lsp-mode
   :ensure t
@@ -151,6 +153,13 @@
   (setq lsp-headerline-breadcrumb-enable t)
   :bind
   ("C-c l s" . lsp-ivy-workspace-symbol))
+
+(use-package lsp-ui
+  :ensure t
+  :config
+  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+  (setq lsp-ui-doc-position 'top))
 
 (use-package lsp-ivy
   :ensure t
@@ -196,9 +205,9 @@
   :ensure t
   :after (treemacs lsp))
 
-;; (use-package smart-tabs-mode
-;;   :ensure t)
-;; (smart-tabs-insinuate 'python)
+(use-package smart-tabs-mode
+  :ensure t)
+(smart-tabs-insinuate 'python)
 
 (use-package multiple-cursors
   :ensure t
@@ -233,9 +242,30 @@
   
 
 ;; Program for Python
-(use-package company-jedi
+(use-package pyvenv
   :ensure t
-  :after (company-mode))
+  :config
+  (setenv "WORKON_HOME" (expand-file-name "~/Documents/venv"))
+  ;; (setq python-shell-interpreter "python3")
+  (pyvenv-mode t))
+
+(use-package lsp-pyright
+  :ensure t
+  :config
+  (setq lsp-pyright-use-library-code-for-types t)
+  (setq lsp-pyright-stub-path "~/Documents/repo/python-type-stubs")
+  (setq lsp-pyright-typechecking-mode nil)
+  :hook
+  (python-mode . (lambda ()
+		  (require 'lsp-pyright)
+		  (lsp-deferred))))
+
+;; Copilot
+;; (use-package copilot
+;;   :quelpa (copilot :fetcher github
+;;                    :repo "zerolfx/copilot.el"
+;;                    :branch "main"
+;;                    :files ("dist" "*.el")))
 
 ;; Others
 (use-package mwim
