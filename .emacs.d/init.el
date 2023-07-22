@@ -44,7 +44,6 @@
 ;; (global-set-key (kbd "C-c '") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-c ;") 'comment-line)
 
-;; (global-set-key (kbd "C-h") 'view-order-manuals)
 (global-set-key (kbd "C-c SPC") 'set-mark-command)
 (global-set-key (kbd "M-SPC") 'rectangle-mark-mode)
 
@@ -197,7 +196,9 @@
         ;; ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag))
   (:map treemacs-mode-map
-	("/" . treemacs-advanced-helpful-hydra)))
+	("/" . treemacs-advanced-helpful-hydra)
+	("n" . treemacs-next-neighbour)
+	("p" . treemacs-previous-neighbour)))
 
 (use-package treemacs-projectile
   :ensure t
