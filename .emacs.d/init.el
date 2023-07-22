@@ -43,10 +43,11 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 ;; (global-set-key (kbd "C-c '") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-c ;") 'comment-line)
-;; Didn't work
+
 ;; (global-set-key (kbd "C-h") 'view-order-manuals)
 (global-set-key (kbd "C-c SPC") 'set-mark-command)
 (global-set-key (kbd "M-SPC") 'rectangle-mark-mode)
+
 
 ;; package
 (require 'package)
@@ -82,7 +83,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep company-jedi lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
+   '(lua-mode pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -261,12 +262,10 @@
 		  (require 'lsp-pyright)
 		  (lsp-deferred))))
 
-;; Copilot
-;; (use-package copilot
-;;   :quelpa (copilot :fetcher github
-;;                    :repo "zerolfx/copilot.el"
-;;                    :branch "main"
-;;                    :files ("dist" "*.el")))
+;; For Lua
+
+(use-package lua-mode
+  :ensure t)
 
 ;; Others
 (use-package mwim
@@ -274,6 +273,14 @@
   :bind
   ("C-a" . mwim-beginning-of-code-or-line)
   ("C-e" . mwim-end-of-code-or-line))
+
+;; Copilot
+;; (use-package copilot
+;;   :quelpa (copilot :fetcher github
+;;                    :repo "zerolfx/copilot.el"
+;;                    :branch "main"
+;;                    :files ("dist" "*.el")))
+
 
 (use-package dashboard
  :ensure t
