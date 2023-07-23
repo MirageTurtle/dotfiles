@@ -82,7 +82,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(lua-mode pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
+   '(eglot lua-mode pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -114,7 +114,7 @@
    ("C-x C-@" . 'counsel-mark-ring)
    ("C-x SPC" . 'counsel-mark-ring)
    :map minibuffer-local-map
-   ("C-r" . counsel-minibuffer-history)))
+   ("C-r" . counsel-minibuffer-history)))  ;; not working
 
 ;; windmove
 (windmove-default-keybindings)
@@ -157,6 +157,7 @@
 
 (use-package lsp-ui
   :ensure t
+  :after (lsp)
   :config
   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
@@ -165,6 +166,13 @@
 (use-package lsp-ivy
   :ensure t
   :after (lsp-mode))
+
+(use-package eglot
+  :ensure t
+  :after (lsp)
+  :hook
+  ('c-mode-hook . 'eglot-ensure)
+  ('c++-mode-hook . 'eglot-ensure))
 
 (use-package rainbow-delimiters
   :ensure t
@@ -209,8 +217,9 @@
   :after (treemacs lsp))
 
 (use-package smart-tabs-mode
-  :ensure t)
-(smart-tabs-insinuate 'python)
+  :ensure t
+  :config
+  (smart-tabs-insinuate 'python 'c 'c++))
 
 (use-package multiple-cursors
   :ensure t
@@ -264,9 +273,12 @@
 		  (lsp-deferred))))
 
 ;; For Lua
-
 (use-package lua-mode
   :ensure t)
+
+;; For C/C++
+;; (use-package clang-format
+  ;; :ensure t)
 
 ;; Others
 (use-package mwim
