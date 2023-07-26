@@ -42,3 +42,4 @@ end
 
 print(titleline("My configuration"))
 require "module.window"
+require "module.translator"
