@@ -41,4 +41,4 @@ end
 
 
 print(titleline("My configuration"))
-require "window.window"
+require "module.window"
