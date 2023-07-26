@@ -102,7 +102,7 @@ end
 
 function init()
    newWebview()
-   hs.hotkey.bind({"alt", "cmd"}, "T", function()
+   hs.hotkey.bind({"alt"}, "space", function()
        ifFirst = true
        res = hs.json.read(transHistory)
        if res == nil then
