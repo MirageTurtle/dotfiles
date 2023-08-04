@@ -30,10 +30,16 @@ function winResize(method)
    newWin = method_table[method]
 
    win:move(newWin)
-end   
+end
+
+function winCenter()
+   local win = hs.window.focusedWindow()
+   win:centerOnScreen()
+end
 
 hs.hotkey.bind({"ctrl", "alt"}, "left", hs.fnutils.partial(winResize, "left"))
 hs.hotkey.bind({"ctrl", "alt"}, "right", hs.fnutils.partial(winResize, "right"))
 hs.hotkey.bind({"ctrl", "alt"}, "up", hs.fnutils.partial(winResize, "up"))
 hs.hotkey.bind({"ctrl", "alt"}, "down", hs.fnutils.partial(winResize, "down"))
 hs.hotkey.bind({"ctrl", "alt"}, "return", hs.fnutils.partial(winResize, "max"))
+hs.hotkey.bind({"ctrl", "alt"}, "C", winCenter)
