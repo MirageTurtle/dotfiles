@@ -12,12 +12,14 @@ function ssidChangedCallback()
             hs.audiodevice.defaultOutputDevice():setVolume(0)
             hs.audiodevice.defaultOutputDevice():setMuted(true)
         end
-        if (ssid == "eduroam") then
-            -- TODO: Test network connection and if need, reconnect it.
-            hs.notify.new({title="Hammerspoon", informativeText="You are in eduroam."}):send()
-        end
+	if (ssid == "OpenWrt") then
+	   hs.notify.new({title="Hammerspoon", informativeText="You are at the doom, feel free.", autoWithdraw=true, withdrawAfter=3}):send()
+	end
+    --     if (ssid == "eduroam") then
+    --         -- TODO: Test network connection and if need, reconnect it.
+    --         hs.notify.new({title="Hammerspoon", informativeText="You are in eduroam."}):send()
+    --     end
     end
-
 end
 
 wifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
