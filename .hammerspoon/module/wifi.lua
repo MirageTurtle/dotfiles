@@ -1,6 +1,6 @@
 -- Based on hammerspoon-config
 -- Wifi management
--- Manage others(e.g., window) based on wifi SSID.
+-- Manage others(e.g., window) based on wifi SSID and MAC.
 
 function ssidChangedCallback()
     -- I want to test network when I just open my Mac.
@@ -15,10 +15,15 @@ function ssidChangedCallback()
 	if (ssid == "OpenWrt") then
 	   hs.notify.new({title="Hammerspoon", informativeText="You are at the doom, feel free.", autoWithdraw=true, withdrawAfter=3}):send()
 	end
-    --     if (ssid == "eduroam") then
-    --         -- TODO: Test network connection and if need, reconnect it.
-    --         hs.notify.new({title="Hammerspoon", informativeText="You are in eduroam."}):send()
-    --     end
+    if (ssid == "eduroam") then
+        -- hs.notify.new({title="Hammerspoon", informativeText="You are in eduroam."}):send()
+        -- Check the MAC Address
+        mac = hs.wifi.interfaceDetails().hardwareAddress
+        -- Eduroam MAC near my doom: 1c:36:bb:2a:c5:8a
+        if (mac == "1c:36:bb:2a:c5:8a") then
+            hs.notify.new({title="Hammerspoon", informativeText="You are in doom, feel free.", autoWithdraw=true, withdrawAfter=3}):send()
+        end
+    end
     end
 end
 
