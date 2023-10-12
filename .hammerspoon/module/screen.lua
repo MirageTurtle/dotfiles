@@ -7,6 +7,11 @@ function update_screens()
     aoc = nil
     for _, screen in pairs(screens)
     do
+        brightness = screen:getBrightness()
+        if brightness == nil then
+            brightness = "nil"
+        end
+        print(screen:name() .. ": " .. brightness)
         if screen:name() == "Built-in Display" then
             builtin = screen
         elseif screen:name() == "U27G3X" then
@@ -20,8 +25,11 @@ end
 
 function double_screens(primary, external, position)
     -- position means external screen's position
+    if primary == nil or external == nil then
+        print("Target screen(s) miss.")
+        return
+    end
     -- set primary
-    primary:mirrorStop(true)
     primary:setPrimary()
     -- compute position
     if position == "up" then
@@ -33,21 +41,36 @@ function double_screens(primary, external, position)
     end
     -- set external
     external:setOrigin(x, y)
+    -- set brightness
+    for _, screen in pairs(hs.screen.allScreens())
+    do
+        brightness = screen:getBrightness()
+        if brightness ~= nil and brightness < 1e-5 then
+            screen:setBrightness(0.5)
+        end
+    end
 end
 
 -- Function for single screen
 -- primary screen: U27G3X
 -- mirror screen: Built-in Display
--- lightness of mirror screen: 0
+-- Brightness of mirror screen: 0
 function only_external(builtin, external)
+    if builtin == nil or external == nil then
+        print("Target screen(s) miss.")
+        return
+    end
     external:setPrimary()
     builtin:mirrorOf(external)
     builtin:setBrightness(0)
 end
 
 screenWatcher = hs.screen.watcher.new(update_screens)
+screenWatcher:start()
 
 hs.hotkey.bind({"alt", "ctrl"}, "0", function()
+    main = hs.screen.mainScreen()
+    main:mirrorStop()
     update_screens()
     double_screens(builtin, aoc, "up")
 end)
