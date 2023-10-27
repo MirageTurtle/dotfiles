@@ -12,6 +12,8 @@ I hope this can help you while helping me. :)
 	  + S-Tab may be conflict with some features of Markdown-mode (I found it when I wrote this TODO).
   + About window section (maybe not the official concept)
   + Copilot
+  + lsp
+	+ style: background, font_color, etc.
 + HammerSpoon
   + Window
 	+ Undo window resize
