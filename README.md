@@ -14,6 +14,7 @@ I hope this can help you while helping me. :)
   + Copilot
   + lsp
 	+ style: background, font_color, etc.
+  + Something about replace
 + HammerSpoon
   + Window
 	+ Undo window resize
