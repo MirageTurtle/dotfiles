@@ -10,6 +10,8 @@ I hope this can help you while helping me. :)
   + Indentitation
     + Tab and S-Tab
 	  + S-Tab may be conflict with some features of Markdown-mode (I found it when I wrote this TODO).
+  + About window section (maybe not the official concept)
+  + Copilot
 + HammerSpoon
   + Window
 	+ Undo window resize
