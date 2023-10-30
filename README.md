@@ -14,9 +14,10 @@ I hope this can help you while helping me. :)
   + Copilot
   + lsp
 	+ style: background, font_color, etc.
-  + Something about replace
-  + Some shortcut like vscode habit shortcut
-	+ Move a line or some lines up or down
+  + Others
+	+ Something about replace
+	+ Some shortcut like vscode habit shortcut
+	  + Move a line or some lines up or down
 + HammerSpoon
   + Window
 	+ Undo window resize
