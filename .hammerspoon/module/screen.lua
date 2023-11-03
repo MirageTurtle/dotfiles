@@ -1,10 +1,10 @@
 builtin = nil
-aoc = nil
+external = nil
 
 function update_screens()
     screens = hs.screen.allScreens()
     builtin = nil
-    aoc = nil
+    external = nil
     for _, screen in pairs(screens)
     do
         brightness = screen:getBrightness()
@@ -14,12 +14,13 @@ function update_screens()
         print(screen:name() .. ": " .. brightness)
         if screen:name() == "Built-in Display" then
             builtin = screen
-        elseif screen:name() == "U27G3X" then
-            aoc = screen
+        -- elseif screen:name() == "U27G3X" then
+	else
+            external = screen
         end
     end
-    if aoc == nil then
-        hs.notify.new({title="Hammerspoon", informativeText="No AOC screen found."}):send()
+    if external == nil then
+        hs.notify.new({title="Hammerspoon", informativeText="No external screen found."}):send()
     end
 end
 
@@ -72,9 +73,9 @@ hs.hotkey.bind({"alt", "ctrl"}, "0", function()
     main = hs.screen.mainScreen()
     main:mirrorStop()
     update_screens()
-    double_screens(builtin, aoc, "up")
+    double_screens(builtin, external, "up")
 end)
 hs.hotkey.bind({"alt", "ctrl"}, "1", function()
     update_screens()
-    only_external(builtin, aoc)
+    only_external(builtin, external)
 end)
