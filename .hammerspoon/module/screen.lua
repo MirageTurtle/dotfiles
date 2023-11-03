@@ -66,6 +66,24 @@ function only_external(builtin, external)
     builtin:setBrightness(0)
 end
 
+-- Function for presentation
+function mirror_builtin(builtin, external)
+   if builtin == nil or external == nil then
+      print("Target screen(s) miss.")
+      return
+   end
+   builtin:setPrimary()
+   external:mirrorOf(builtin)
+   -- set brightness
+   for _, screen in pairs(hs.screen.allScreens())
+   do
+      brightness = screen:getBrightness()
+      if brightness ~= nil and brightness < 1e-5 then
+	 screen:setBrightness(0.5)
+      end
+   end
+end
+
 screenWatcher = hs.screen.watcher.new(update_screens)
 screenWatcher:start()
 
@@ -78,4 +96,10 @@ end)
 hs.hotkey.bind({"alt", "ctrl"}, "1", function()
     update_screens()
     only_external(builtin, external)
+end)
+hs.hotkey.bind({"alt", "ctrl"}, "2", function()
+    main = hs.screen.mainScreen()
+    main:mirrorStop()
+    update_screens()
+    mirror_builtin(builtin, external)
 end)
