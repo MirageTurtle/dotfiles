@@ -53,7 +53,7 @@ function double_screens(primary, external, position)
 end
 
 -- Function for single screen
--- primary screen: U27G3X
+-- primary screen: external
 -- mirror screen: Built-in Display
 -- Brightness of mirror screen: 0
 function only_external(builtin, external)
