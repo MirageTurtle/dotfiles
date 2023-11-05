@@ -14,10 +14,13 @@ I hope this can help you while helping me. :)
   + Copilot
   + lsp
 	+ style: background, font_color, etc.
+  + Markdown
+    + Detect path when writing for an image.
   + Others
 	+ Something about replace
 	+ Some shortcut like vscode habit shortcut
 	  + Move a line or some lines up or down
+	+ Turn 。 to . automatically after a number in Chinese input method.
 + HammerSpoon
   + Window
 	+ Undo window resize
