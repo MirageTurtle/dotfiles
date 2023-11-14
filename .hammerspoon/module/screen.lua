@@ -21,6 +21,10 @@ function update_screens()
     end
     if external == nil then
         hs.notify.new({title="Hammerspoon", informativeText="No external screen found."}):send()
+        if hs.execute("defaults read com.apple.dock autohide") == "0\n" then
+            hs.execute("defaults write com.apple.dock autohide -bool true")
+            hs.execute("killall Dock")
+        end
     end
 end
 
@@ -50,6 +54,10 @@ function double_screens(primary, external, position)
             screen:setBrightness(0.5)
         end
     end
+    if hs.execute("defaults read com.apple.dock autohide") == "0\n" then
+        hs.execute("defaults write com.apple.dock autohide -bool true")
+        hs.execute("killall Dock")
+    end
 end
 
 -- Function for single screen
@@ -64,24 +72,32 @@ function only_external(builtin, external)
     external:setPrimary()
     builtin:mirrorOf(external)
     builtin:setBrightness(0)
+    if hs.execute("defaults read com.apple.dock autohide") == "1\n" then
+        hs.execute("defaults write com.apple.dock autohide -bool false")
+        hs.execute("killall Dock")
+    end
 end
 
 -- Function for presentation
 function mirror_builtin(builtin, external)
-   if builtin == nil or external == nil then
-      print("Target screen(s) miss.")
-      return
-   end
-   builtin:setPrimary()
-   external:mirrorOf(builtin)
-   -- set brightness
-   for _, screen in pairs(hs.screen.allScreens())
-   do
-      brightness = screen:getBrightness()
-      if brightness ~= nil and brightness < 1e-5 then
-	 screen:setBrightness(0.5)
-      end
-   end
+    if builtin == nil or external == nil then
+        print("Target screen(s) miss.")
+        return
+    end
+    builtin:setPrimary()
+    external:mirrorOf(builtin)
+    -- set brightness
+    for _, screen in pairs(hs.screen.allScreens())
+    do
+        brightness = screen:getBrightness()
+        if brightness ~= nil and brightness < 1e-5 then
+        screen:setBrightness(0.5)
+        end
+    end
+    if hs.execute("defaults read com.apple.dock autohide") == "0\n" then
+        hs.execute("defaults write com.apple.dock autohide -bool true")
+        hs.execute("killall Dock")
+    end
 end
 
 screenWatcher = hs.screen.watcher.new(update_screens)
