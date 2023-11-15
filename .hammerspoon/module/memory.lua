@@ -19,6 +19,13 @@ memoryBar:setClickCallback(function()
 
 	memoryBar:setTitle('清理中..')
 	memoryBar:setIcon(memoryIcon['clean'])
+
+	-- for Arc
+	-- if Arc is no windows, it will be quit.
+	if (#hs.axuielement.applicationElement('Arc').AXWindows == 0) then
+		hs.application.get('Arc'):kill()
+	end
+
 	hs.execute('sudo purge')
 	if (fetchTimer ~= nil) then
 		fetchTimer:start()
@@ -63,5 +70,7 @@ local function fetchPhysMem()
 	memoryBar:setTitle((string.gsub(string.format("%6.0f", used_rate * 100), "^%s*(.-)%s*$", "%1"))..'%')
 	memoryBar:setTooltip(string.format('%dM used (%dM wired), %dM unused',used, wired, unused))
 end
+
+
 fetchTimer = hs.timer.doEvery(5, fetchPhysMem)
 fetchPhysMem()
