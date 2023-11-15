@@ -1,4 +1,4 @@
--- memory module from https://gitee.com/hei5xie/hammerspoon-config
+-- memory module partly from https://gitee.com/hei5xie/hammerspoon-config
 
 local memoryIcon = {
     icon = hs.image.imageFromPath('assets/memory/icon.png'):setSize({ w = 20, h = 20 }),
