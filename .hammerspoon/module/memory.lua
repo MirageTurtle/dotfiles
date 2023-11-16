@@ -20,10 +20,14 @@ memoryBar:setClickCallback(function()
 	memoryBar:setTitle('清理中..')
 	memoryBar:setIcon(memoryIcon['clean'])
 
-	-- for Arc
-	-- if Arc is no windows, it will be quit.
-	if (#hs.axuielement.applicationElement('Arc').AXWindows == 0) then
-		hs.application.get('Arc'):kill()
+	-- for some Applications
+	-- if the application has no windows, it will be quit.
+	apps = {'Arc', 'Typora', 'Code'}
+	for _, app in ipairs(apps) do
+		if hs.application.get(app) ~= nil and #hs.axuielement.applicationElement(app).AXWindows == 0 then
+			print('killing '.. app)
+			hs.application.get(app):kill()
+		end
 	end
 
 	hs.execute('sudo purge')
