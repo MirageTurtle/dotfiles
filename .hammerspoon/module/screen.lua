@@ -23,6 +23,7 @@ function update_screens()
         hs.notify.new({title="Hammerspoon", informativeText="No external screen found."}):send()
         if hs.execute("defaults read com.apple.dock autohide") == "0\n" then
             hs.execute("defaults write com.apple.dock autohide -bool true")
+	    hs.execute("defaults write com.apple.dock magnification -bool true")
             hs.execute("killall Dock")
         end
     end
@@ -56,6 +57,7 @@ function double_screens(primary, external, position)
     end
     if hs.execute("defaults read com.apple.dock autohide") == "0\n" then
         hs.execute("defaults write com.apple.dock autohide -bool true")
+	hs.execute("defaults write com.apple.dock magnification -bool true")
         hs.execute("killall Dock")
     end
 end
@@ -74,6 +76,7 @@ function only_external(builtin, external)
     builtin:setBrightness(0)
     if hs.execute("defaults read com.apple.dock autohide") == "1\n" then
         hs.execute("defaults write com.apple.dock autohide -bool false")
+	hs.execute("defaults write com.apple.dock magnification -bool false")
         hs.execute("killall Dock")
     end
 end
@@ -96,6 +99,7 @@ function mirror_builtin(builtin, external)
     end
     if hs.execute("defaults read com.apple.dock autohide") == "0\n" then
         hs.execute("defaults write com.apple.dock autohide -bool true")
+	hs.execute("defaults write com.apple.dock magnification -bool true")
         hs.execute("killall Dock")
     end
 end
