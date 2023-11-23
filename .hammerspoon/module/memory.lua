@@ -22,7 +22,7 @@ memoryBar:setClickCallback(function()
 
 	-- for some Applications
 	-- if the application has no windows, it will be quit.
-	apps = {'Arc', 'Typora', 'Code'}
+	apps = {'Arc', 'Typora', 'Code', 'QQ', 'WeChat', 'TencentMeeting', 'Preview'}
 	for _, app in ipairs(apps) do
 		if hs.application.get(app) ~= nil and #hs.axuielement.applicationElement(app).AXWindows == 0 then
 			print('killing '.. app)
