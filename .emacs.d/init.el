@@ -47,6 +47,20 @@
 ;; (global-set-key (kbd "C-c SPC") 'set-mark-command)
 (global-set-key (kbd "M-SPC") 'rectangle-mark-mode)
 
+;; For font
+;; References: https://github.com/lujun9972/emacs-document/blob/master/org-mode/%E7%BE%8E%E5%8C%96%20Org%20mode.org
+(when (member "Symbola" (font-family-list))
+  (set-fontset-font "fontset-default" nil
+                    (font-spec :size 20 :name "Symbola")))
+(when (member "Symbola" (font-family-list))
+  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+
+
 
 ;; package
 (require 'package)
@@ -72,9 +86,7 @@
   (interactive)
   (setq url-proxy-services nil))
 
-(provide 'init)
 
-;;; init.el ends here.
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -82,7 +94,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(eglot lua-mode pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
+   '(org-bullets org-roam eglot lua-mode pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -111,7 +123,7 @@
    ("C-c v" . 'ivy-push-view)
    ("C-c s" . 'ivy-switch-view)
    ("C-c V" . 'ivy-pop-view)
-   ("C-x C-@" . 'counsel-mark-ring)
+   ;; ("C-x C-@" . 'counsel-mark-ring)
    ("C-x SPC" . 'counsel-mark-ring)
    :map minibuffer-local-map
    ("C-r" . counsel-minibuffer-history)))  ;; not working
@@ -305,3 +317,9 @@
 		  (bookmarks . 5)
 		  (projects . 5)))
  (dashboard-setup-startup-hook))
+
+(require 'init-org)
+
+(provide 'init)
+
+;;; init.el ends here.
