@@ -60,7 +60,7 @@
 (set-keyboard-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-
+(setq package-install-upgrade-built-in t)
 
 ;; package
 (require 'package)
