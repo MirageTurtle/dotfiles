@@ -218,7 +218,8 @@
   (:map treemacs-mode-map
 	("/" . treemacs-advanced-helpful-hydra)
 	("n" . treemacs-next-neighbour)
-	("p" . treemacs-previous-neighbour)))
+	("p" . treemacs-previous-neighbour)
+	("r" . treemacs-rename-file)))
 
 (use-package treemacs-projectile
   :ensure t
