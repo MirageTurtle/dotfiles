@@ -94,7 +94,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(cnfonts org-bullets org-roam eglot lua-mode pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
+   '(copilot cnfonts org-bullets org-roam eglot lua-mode pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -254,6 +254,22 @@
          ("C-|" . mc/vertical-align-with-space))
   :config
   (setq mc/insert-numbers-default 1))
+
+(use-package quelpa-use-package
+  :ensure t)
+;; accept completion from copilot and fallback to company
+(use-package copilot
+  :quelpa (copilot :fetcher github
+                   :repo "copilot-emacs/copilot.el"
+                   :branch "main"
+                   :files ("dist" "*.el")))
+  :ensure t
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 ;; For some format
 
