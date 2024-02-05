@@ -94,7 +94,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(org-bullets org-roam eglot lua-mode pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
+   '(cnfonts org-bullets org-roam eglot lua-mode pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -131,6 +131,14 @@
 ;; windmove
 (windmove-default-keybindings)
 (setq windmove-wrap-around t)
+
+(use-package cnfonts
+  :ensure t
+  :init
+  (cnfonts-mode 1)
+  :config
+  (define-key cnfonts-mode-map (kbd "C--") #'cnfonts-decrease-fontsize)
+  (define-key cnfonts-mode-map (kbd "C-=") #'cnfonts-increase-fontsize))
 
 ;; Program for all
 (use-package company
