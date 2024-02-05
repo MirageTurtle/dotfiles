@@ -258,12 +258,19 @@
 (use-package quelpa-use-package
   :ensure t)
 ;; accept completion from copilot and fallback to company
+;;; dependencies
+(use-package editorconfig
+  :ensure t)
+(use-package jsonrpc
+  :ensure t)
+;;; copilot
 (use-package copilot
   :quelpa (copilot :fetcher github
                    :repo "copilot-emacs/copilot.el"
                    :branch "main"
-                   :files ("dist" "*.el")))
+                   :files ("dist" "*.el"))
   :ensure t
+  :after (editorconfig jsonrpc)
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
