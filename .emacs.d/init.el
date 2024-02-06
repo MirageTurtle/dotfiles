@@ -63,16 +63,16 @@
 
 (setq package-install-upgrade-built-in t)
 
-;; package
-(require 'package)
-(setq package-archives '(("gnu" . "https://mirrors.ustc.edu.cn/elpa/gnu/")
-                         ("melpa" . "https://mirrors.ustc.edu.cn/elpa/melpa/")
-                         ("nongnu" . "https://mirrors.ustc.edu.cn/elpa/nongnu/")))
-(setq package-check-signature nil)
-;; (setq package-check-signature 'allow-unsigned)
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-(package-initialize)
-;; (package-refresh-contents)
+;; ;; package
+;; (require 'package)
+;; (setq package-archives '(("gnu" . "https://mirrors.ustc.edu.cn/elpa/gnu/")
+;;                          ("melpa" . "https://mirrors.ustc.edu.cn/elpa/melpa/")
+;;                          ("nongnu" . "https://mirrors.ustc.edu.cn/elpa/nongnu/")))
+;; (setq package-check-signature nil)
+;; ;; (setq package-check-signature 'allow-unsigned)
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; (package-initialize)
+;; ;; (package-refresh-contents)
 
 ;; proxy
 (defun clash()
@@ -85,8 +85,25 @@
   "No proxy."
   (interactive)
   (setq url-proxy-services nil))
-
 (clash)
+
+;; straight
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+(setq package-enable-at-startup nil)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -94,7 +111,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(copilot cnfonts org-bullets org-roam eglot lua-mode pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
+   '(lsp-bridge yasnippet copilot cnfonts org-bullets org-roam eglot lua-mode pyvenv lsp-pyright lsp-ui yaml-pro json-mode multiple-cursors smart-tabs-mode wgrep lsp-treemacs lsp-ivy lsp-mode flycheck company treemacs-projectile treemacs counsel-projectile projectile undo-tree google-this rainbow-delimiters dashboard mwim counsel ivy use-package gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -140,59 +157,77 @@
   (define-key cnfonts-mode-map (kbd "C-=") #'cnfonts-decrease-fontsize)
   (define-key cnfonts-mode-map (kbd "C-+") #'cnfonts-increase-fontsize))
 
+
 ;; Program for all
-(use-package company
-  :ensure t
-  :init (global-company-mode)
-  :config
-  (setq company-minimum-prefix-length 1)
-  (setq company-tooltip-align-annotations t)
-  (setq company-idle-delay 0.0)
-  (setq company-show-numbers t)
-  (setq company-selection-wrap-around t)
-  (setq company-transformers '(company-sort-by-occurrence)))
+;; (use-package company
+;;   :ensure t
+;;   :init (global-company-mode)
+;;   :config
+;;   (setq company-minimum-prefix-length 1)
+;;   (setq company-tooltip-align-annotations t)
+;;   (setq company-idle-delay 0.0)
+;;   (setq company-show-numbers t)
+;;   (setq company-selection-wrap-around t)
+;;   (setq company-transformers '(company-sort-by-occurrence)))
 
-(use-package flycheck
+;; lsp-brige dependency
+(use-package yasnippet
   :ensure t
-  :config
-  (setq truncate-lines nil)
-  ;; :hook
-  ;; (prog-mode . flycheck-mode)
-)
+  :init (yas-global-mode 1))
 
-(use-package lsp-mode
+(use-package lsp-bridge
+  :straight '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
+            :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+            :build (:not compile))
   :ensure t
   :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l"
-	lsp-file-watch-threshold 500)
-  :hook 
-  (lsp-mode . lsp-enable-which-key-integration) ; which-key integration
-  :commands (lsp lsp-deferred)
-  :config
-  (setq lsp-completion-provider :none)
-  (setq lsp-headerline-breadcrumb-enable t)
-  :bind
-  ("C-c l s" . lsp-ivy-workspace-symbol))
+  (global-lsp-bridge-mode)
+  ;; :config
+  ;; (setq lsp-bridge-python-lsp-server 'pyright)
+  (setq lsp-bridge-python-command (expand-file-name "~/Documents/venv/lsp-bridge/bin/python3"))
+  (setq acm-enable-copilot t))
 
-(use-package lsp-ui
-  :ensure t
-  :after (lsp)
-  :config
-  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
-  (setq lsp-ui-doc-position 'top))
+;; (use-package flycheck
+;;   :ensure t
+;;   :config
+;;   (setq truncate-lines nil)
+;;   ;; :hook
+;;   ;; (prog-mode . flycheck-mode)
+;; )
 
-(use-package lsp-ivy
-  :ensure t
-  :after (lsp-mode))
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :init
+;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;;   (setq lsp-keymap-prefix "C-c l"
+;; 	lsp-file-watch-threshold 500)
+;;   :hook 
+;;   (lsp-mode . lsp-enable-which-key-integration) ; which-key integration
+;;   :commands (lsp lsp-deferred)
+;;   :config
+;;   (setq lsp-completion-provider :none)
+;;   (setq lsp-headerline-breadcrumb-enable t)
+;;   :bind
+;;   ("C-c l s" . lsp-ivy-workspace-symbol))
 
-(use-package eglot
-  :ensure t
-  :after (lsp)
-  :hook
-  ('c-mode-hook . 'eglot-ensure)
-  ('c++-mode-hook . 'eglot-ensure))
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :after (lsp)
+;;   :config
+;;   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+;;   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+;;   (setq lsp-ui-doc-position 'top))
+
+;; (use-package lsp-ivy
+;;   :ensure t
+;;   :after (lsp-mode))
+
+;; (use-package eglot
+;;   :ensure t
+;;   :after (lsp)
+;;   :hook
+;;   ('c-mode-hook . 'eglot-ensure)
+;;   ('c++-mode-hook . 'eglot-ensure))
 
 (use-package rainbow-delimiters
   :ensure t
@@ -234,9 +269,9 @@
   :ensure t
   :after (treemacs projectile))
 
-(use-package lsp-treemacs
-  :ensure t
-  :after (treemacs lsp))
+;; (use-package lsp-treemacs
+;;   :ensure t
+;;   :after (treemacs lsp))
 
 (use-package smart-tabs-mode
   :ensure t
@@ -256,8 +291,7 @@
   :config
   (setq mc/insert-numbers-default 1))
 
-(use-package quelpa-use-package
-  :ensure t)
+
 ;; accept completion from copilot and fallback to company
 ;;; dependencies
 (use-package editorconfig
@@ -265,19 +299,19 @@
 (use-package jsonrpc
   :ensure t)
 ;;; copilot
-(use-package copilot
-  :quelpa (copilot :fetcher github
-                   :repo "copilot-emacs/copilot.el"
-                   :branch "main"
-                   :files ("dist" "*.el"))
-  :ensure t
-  :after (editorconfig jsonrpc)
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+;; (use-package copilot
+;;   :quelpa (copilot :fetcher github
+;;                    :repo "copilot-emacs/copilot.el"
+;;                    :branch "main"
+;;                    :files ("dist" "*.el"))
+;;   :ensure t
+;;   :after (editorconfig jsonrpc)
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;               ("<tab>" . 'copilot-accept-completion)
+;;               ("TAB" . 'copilot-accept-completion)
+;;               ("C-TAB" . 'copilot-accept-completion-by-word)
+;;               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 ;; For some format
 
@@ -306,16 +340,16 @@
   ;; (setq python-shell-interpreter "python3")
   (pyvenv-mode t))
 
-(use-package lsp-pyright
-  :ensure t
-  :config
-  (setq lsp-pyright-use-library-code-for-types t)
-  (setq lsp-pyright-stub-path "~/Documents/repo/python-type-stubs")
-  (setq lsp-pyright-typechecking-mode nil)
-  :hook
-  (python-mode . (lambda ()
-		  (require 'lsp-pyright)
-		  (lsp-deferred))))
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :config
+;;   (setq lsp-pyright-use-library-code-for-types t)
+;;   (setq lsp-pyright-stub-path "~/Documents/repo/python-type-stubs")
+;;   (setq lsp-pyright-typechecking-mode nil)
+;;   :hook
+;;   (python-mode . (lambda ()
+;; 		  (require 'lsp-pyright)
+;; 		  (lsp-deferred))))
 
 ;; For Lua
 (use-package lua-mode
