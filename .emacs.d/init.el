@@ -86,7 +86,7 @@
   (interactive)
   (setq url-proxy-services nil))
 
-
+(clash)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
