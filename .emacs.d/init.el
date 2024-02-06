@@ -46,6 +46,7 @@
 
 ;; (global-set-key (kbd "C-c SPC") 'set-mark-command)
 (global-set-key (kbd "M-SPC") 'rectangle-mark-mode)
+(global-set-key (kbd "C--") 'undo)
 
 ;; For font
 ;; References: https://github.com/lujun9972/emacs-document/blob/master/org-mode/%E7%BE%8E%E5%8C%96%20Org%20mode.org
@@ -136,8 +137,8 @@
   :init
   (cnfonts-mode 1)
   :config
-  (define-key cnfonts-mode-map (kbd "C--") #'cnfonts-decrease-fontsize)
-  (define-key cnfonts-mode-map (kbd "C-=") #'cnfonts-increase-fontsize))
+  (define-key cnfonts-mode-map (kbd "C-=") #'cnfonts-decrease-fontsize)
+  (define-key cnfonts-mode-map (kbd "C-+") #'cnfonts-increase-fontsize))
 
 ;; Program for all
 (use-package company
