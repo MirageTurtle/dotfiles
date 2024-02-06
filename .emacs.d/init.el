@@ -330,13 +330,6 @@
   ("C-a" . mwim-beginning-of-code-or-line)
   ("C-e" . mwim-end-of-code-or-line))
 
-;; Copilot
-;; (use-package copilot
-;;   :quelpa (copilot :fetcher github
-;;                    :repo "zerolfx/copilot.el"
-;;                    :branch "main"
-;;                    :files ("dist" "*.el")))
-
 
 (use-package dashboard
  :ensure t
