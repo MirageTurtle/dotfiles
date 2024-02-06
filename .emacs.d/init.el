@@ -74,7 +74,6 @@
 ;; (package-refresh-contents)
 
 ;; proxy
-;; TODO: FIX clash()
 (defun clash()
   "Use clash as proxy."
   (interactive)
