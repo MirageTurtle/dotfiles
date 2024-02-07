@@ -48,31 +48,18 @@
 (global-set-key (kbd "M-SPC") 'rectangle-mark-mode)
 (global-set-key (kbd "C--") 'undo)
 
-;; For font
-;; References: https://github.com/lujun9972/emacs-document/blob/master/org-mode/%E7%BE%8E%E5%8C%96%20Org%20mode.org
-(when (member "Symbola" (font-family-list))
-  (set-fontset-font "fontset-default" nil
-                    (font-spec :size 20 :name "Symbola")))
-(when (member "Symbola" (font-family-list))
-  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
+;; (setq package-install-upgrade-built-in t)
 
-(setq package-install-upgrade-built-in t)
-
-;; ;; package
+;; package
 ;; (require 'package)
-;; (setq package-archives '(("gnu" . "https://mirrors.ustc.edu.cn/elpa/gnu/")
-;;                          ("melpa" . "https://mirrors.ustc.edu.cn/elpa/melpa/")
-;;                          ("nongnu" . "https://mirrors.ustc.edu.cn/elpa/nongnu/")))
-;; (setq package-check-signature nil)
-;; ;; (setq package-check-signature 'allow-unsigned)
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(setq package-archives '(("gnu" . "https://mirrors.ustc.edu.cn/elpa/gnu/")
+                         ("melpa" . "https://mirrors.ustc.edu.cn/elpa/melpa/")
+                         ("nongnu" . "https://mirrors.ustc.edu.cn/elpa/nongnu/")))
+(setq package-check-signature nil)
+;; (setq package-check-signature 'allow-unsigned)
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 ;; (package-initialize)
-;; ;; (package-refresh-contents)
+;; (package-refresh-contents)
 
 ;; proxy
 (defun clash()
@@ -103,6 +90,8 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+(straight-use-package 'use-package)
+;; (straight-pull-all)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -121,40 +110,9 @@
 (eval-when-compile
   (require 'use-package))
 
-(use-package counsel
-  :ensure t)
-
-(use-package ivy
-  :ensure t
-  :init
-  (ivy-mode 1)
-  (counsel-mode 1)
-  :config
-  (setq ivy-use-virtual-buffers t)
-  (setq search-default-mode #'char-fold-to-regexp)
-  (setq ivy-count-format "(%d/%d) ")
-  :bind
-  (("C-s" . 'swiper)
-   ("C-x b" . 'ivy-switch-buffer)
-   ("C-c v" . 'ivy-push-view)
-   ("C-c s" . 'ivy-switch-view)
-   ("C-c V" . 'ivy-pop-view)
-   ;; ("C-x C-@" . 'counsel-mark-ring)
-   ("C-x SPC" . 'counsel-mark-ring)
-   :map minibuffer-local-map
-   ("C-r" . counsel-minibuffer-history)))  ;; not working
-
-;; windmove
-(windmove-default-keybindings)
-(setq windmove-wrap-around t)
-
-(use-package cnfonts
-  :ensure t
-  :init
-  (cnfonts-mode 1)
-  :config
-  (define-key cnfonts-mode-map (kbd "C-=") #'cnfonts-decrease-fontsize)
-  (define-key cnfonts-mode-map (kbd "C-+") #'cnfonts-increase-fontsize))
+;; ;; windmove
+;; (windmove-default-keybindings)
+;; (setq windmove-wrap-around t)
 
 
 ;; Program for all
@@ -168,35 +126,6 @@
 ;;   (setq company-show-numbers t)
 ;;   (setq company-selection-wrap-around t)
 ;;   (setq company-transformers '(company-sort-by-occurrence)))
-
-;; lsp-brige dependency
-(use-package yasnippet
-  :ensure t
-  :straight t
-  :config
-  (yas-global-mode 1))
-
-(use-package lsp-bridge
-  :straight '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
-            :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
-            :build (:not compile))
-  :ensure t
-  :init
-  (global-lsp-bridge-mode)
-  :config
-  ;; (setq lsp-bridge-python-lsp-server 'pyright)
-  (setq lsp-bridge-enable-log t)
-  (setq lsp-bridge-python-command (expand-file-name "~/Documents/venv/lsp-bridge/bin/python3"))
-  (setq acm-enable-copilot t))
-
-;; Some Issue
-;; https://github.com/manateelazycat/lsp-bridge/blob/master/README.md
-(defun enable-lsp-bridge()
-  (when-let* ((project (project-current))
-              (project-root (nth 2 project)))
-    (setq-local lsp-bridge-user-langserver-dir project-root
-                lsp-bridge-user-multiserver-dir project-root))
-  (lsp-bridge-mode))
 
 ;; (use-package flycheck
 ;;   :ensure t
@@ -240,75 +169,35 @@
 ;;   ('c-mode-hook . 'eglot-ensure)
 ;;   ('c++-mode-hook . 'eglot-ensure))
 
-(use-package rainbow-delimiters
-  :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-(use-package projectile
-  :ensure t
-  :bind (("C-c p" . projectile-command-map))
-  :config
-  (setq projectile-mode-line "Projectile")
-  (setq projectile-track-known-projects-automatically t))
-
-(use-package counsel-projectile
-  :ensure t
-  :after (projectile)
-  :init (counsel-projectile-mode))
-
-(use-package treemacs
-  :ensure t
-  :defer t
-  :config
-  (treemacs-tag-follow-mode)
-  (treemacs-follow-mode)
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ;; ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag))
-  (:map treemacs-mode-map
-	("/" . treemacs-advanced-helpful-hydra)
-	("n" . treemacs-next-neighbour)
-	("p" . treemacs-previous-neighbour)
-	("r" . treemacs-rename-file)))
-
-(use-package treemacs-projectile
-  :ensure t
-  :after (treemacs projectile))
-
 ;; (use-package lsp-treemacs
 ;;   :ensure t
 ;;   :after (treemacs lsp))
 
-(use-package smart-tabs-mode
-  :ensure t
-  :config
-  (smart-tabs-insinuate 'python 'c 'c++))
+;; (use-package smart-tabs-mode
+;;   :ensure t
+;;   :config
+;;   (smart-tabs-insinuate 'python 'c 'c++))
 
-(use-package multiple-cursors
-  :ensure t
-  :bind (("C->"           . mc/mark-next-like-this)
-         ("C-<"           . mc/mark-previous-like-this)
-         ("C-M->"         . mc/skip-to-next-like-this)
-         ("C-M-<"         . mc/skip-to-previous-like-this)
-         ("C-c C-<"       . mc/mark-all-like-this)
-         ("C-S-<mouse-1>" . mc/add-cursor-on-click)
-         :map mc/keymap
-         ("C-|" . mc/vertical-align-with-space))
-  :config
-  (setq mc/insert-numbers-default 1))
+;; (use-package multiple-cursors
+;;   :ensure t
+;;   :bind (("C->"           . mc/mark-next-like-this)
+;;          ("C-<"           . mc/mark-previous-like-this)
+;;          ("C-M->"         . mc/skip-to-next-like-this)
+;;          ("C-M-<"         . mc/skip-to-previous-like-this)
+;;          ("C-c C-<"       . mc/mark-all-like-this)
+;;          ("C-S-<mouse-1>" . mc/add-cursor-on-click)
+;;          :map mc/keymap
+;;          ("C-|" . mc/vertical-align-with-space))
+;;   :config
+;;   (setq mc/insert-numbers-default 1))
 
 
 ;; accept completion from copilot and fallback to company
 ;;; dependencies
-(use-package editorconfig
-  :ensure t)
-(use-package jsonrpc
-  :ensure t)
+;; (use-package editorconfig
+;;   :ensure t)
+;; (use-package jsonrpc
+;;   :ensure t)
 ;;; copilot
 ;; (use-package copilot
 ;;   :quelpa (copilot :fetcher github
@@ -324,56 +213,6 @@
 ;;               ("C-TAB" . 'copilot-accept-completion-by-word)
 ;;               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
-;; For some format
-
-(use-package json-mode
-  :ensure t)
-
-(use-package yaml-mode
-  :ensure t)
-
-(use-package yaml-pro
-  :ensure t
-  ;; :after (yaml-mode)
-  :config
-  (add-hook 'yaml-mode-hook #'yaml-pro-mode))
-
-;; For Markdown
-(use-package markdown-mode
-  :ensure t)
-  
-
-;; Program for Python
-(use-package pyvenv
-  :ensure t
-  :config
-  (setenv "WORKON_HOME" (expand-file-name "~/Documents/venv"))
-  ;; (setq python-shell-interpreter "python3")
-  (pyvenv-mode t))
-
-;; for lsp-bridge
-(defun local/lsp-bridge-get-single-lang-server-by-project (project-path filepath)
-  (let* ((json-object-type 'plist)
-         (custom-dir (expand-file-name ".cache/lsp-bridge/pyright" user-emacs-directory))
-         (custom-config (expand-file-name "pyright.json" custom-dir))
-         (default-config (json-read-file (expand-file-name "straight/build/lsp-bridge/langserver/pyright.json" user-emacs-directory)))
-         (settings (plist-get default-config :settings))
-         )
-
-    (plist-put settings :pythonPath (executable-find "python"))
-
-    (make-directory (file-name-directory custom-config) t)
-
-    (with-temp-file custom-config
-      (insert (json-encode default-config)))
-
-    custom-config))
-
-(add-hook 'python-mode-hook (lambda () (setq-local lsp-bridge-get-single-lang-server-by-project 'local/lsp-bridge-get-single-lang-server-by-project)))
-
-(add-hook 'pyvenv-post-activate-hooks
-          (lambda ()
-            (lsp-bridge-restart-process)))
 
 ;; (use-package lsp-pyright
 ;;   :ensure t
@@ -386,34 +225,24 @@
 ;; 		  (require 'lsp-pyright)
 ;; 		  (lsp-deferred))))
 
-;; For Lua
-(use-package lua-mode
-  :ensure t)
 
 ;; For C/C++
 ;; (use-package clang-format
   ;; :ensure t)
 
-;; Others
-(use-package mwim
-  :ensure t
-  :bind
-  ("C-a" . mwim-beginning-of-code-or-line)
-  ("C-e" . mwim-end-of-code-or-line))
+(require 'init-efficiency)
+(require 'init-interface)
 
+(require 'init-ivy)
+(require 'init-workspace)
+(require 'init-lsp-bridge)
 
-(use-package dashboard
- :ensure t
- :config
- (setq dashboard-banner-logo-title "Welcome to Emacs!")
- (setq dashboard-projects-backend 'projectile)
- (setq dashboard-startup-banner 'official)
- (setq dashboard-items '((recents  . 10)
-		  (bookmarks . 5)
-		  (projects . 5)))
- (dashboard-setup-startup-hook))
-
+(require 'init-python)
 (require 'init-org)
+(require 'init-lua)
+(require 'init-json)
+(require 'init-yaml)
+
 
 (provide 'init)
 
