@@ -103,7 +103,6 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
-(setq package-enable-at-startup nil)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
