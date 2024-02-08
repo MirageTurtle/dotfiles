@@ -36,6 +36,7 @@
 (global-display-line-numbers-mode 1) ; show column number in window
 (tool-bar-mode -1) ; no tool bar
 (menu-bar-mode -1) ; no menu bar
+(tab-bar-mode 1) ; use tab bar
 (when (display-graphic-p) (toggle-scroll-bar -1)) ; no scroll bar in graphic window
 (savehist-mode 1) ; save buffer history
 
