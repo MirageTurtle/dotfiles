@@ -39,6 +39,7 @@
 (tab-bar-mode 1) ; use tab bar
 (when (display-graphic-p) (toggle-scroll-bar -1)) ; no scroll bar in graphic window
 (savehist-mode 1) ; save buffer history
+(setq cursor-type 'bar)
 
 ;; Global Key bind
 (global-set-key (kbd "RET") 'newline-and-indent)
