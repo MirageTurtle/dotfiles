@@ -51,12 +51,16 @@
 (global-set-key (kbd "C--") 'undo)
 
 ;; macOS preferences
-(global-set-key (kbd "s-a") 'mark-whole-buffer)
-(global-set-key (kbd "s-c") 'kill-ring-save)
-(global-set-key (kbd "s-s") 'save-buffer)
-(global-set-key (kbd "s-v") 'yank)
-(global-set-key (kbd "s-z") 'undo)
-(global-set-key (kbd "s-x") 'kill-region)
+(if *is-a-mac*
+    (progn
+      (global-set-key (kbd "s-a") 'mark-whole-buffer)
+      (global-set-key (kbd "s-c") 'kill-ring-save)
+      (global-set-key (kbd "s-s") 'save-buffer)
+      (global-set-key (kbd "s-v") 'yank)
+      (global-set-key (kbd "s-z") 'undo)
+      (global-set-key (kbd "s-x") 'kill-region))
+  ())
+
 
 ;; (setq package-install-upgrade-built-in t)
 
