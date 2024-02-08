@@ -2,7 +2,6 @@
 
 (use-package yasnippet
   :ensure t
-  :straight t
   :config
   (yas-global-mode 1))
 
