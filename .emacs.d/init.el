@@ -240,7 +240,9 @@
 ;; (use-package clang-format
   ;; :ensure t)
 
+
 (require 'init-efficiency)
+(require 'init-theme)
 (require 'init-interface)
 
 (require 'init-ivy)
