@@ -244,6 +244,7 @@
 ;; (use-package clang-format
   ;; :ensure t)
 
+(require 'init-utils)
 
 (require 'init-efficiency)
 (require 'init-theme)
