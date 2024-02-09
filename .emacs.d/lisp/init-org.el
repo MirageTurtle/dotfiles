@@ -3,8 +3,14 @@
 ; https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html
 ; https://github.com/lujun9972/emacs-document/blob/master/org-mode/%E7%BE%8E%E5%8C%96%20Org%20mode.org
 
+;; fonts
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
 
-; org
+;; org
 ;; basic
 (setq org-directory (file-truename "~/Documents/org/"))
 ;; (setq org-startup-indented t)
