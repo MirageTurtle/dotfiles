@@ -1,12 +1,5 @@
 ;;; init-interface.el
 
-;; For font
-;; References: https://github.com/lujun9972/emacs-document/blob/master/org-mode/%E7%BE%8E%E5%8C%96%20Org%20mode.org
-(when (member "Symbola" (font-family-list))
-  (set-fontset-font "fontset-default" nil
-                    (font-spec :size 20 :name "Symbola")))
-(when (member "Symbola" (font-family-list))
-  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -19,7 +12,9 @@
   (cnfonts-mode 1)
   :config
   (define-key cnfonts-mode-map (kbd "C-=") #'cnfonts-decrease-fontsize)
-  (define-key cnfonts-mode-map (kbd "C-+") #'cnfonts-increase-fontsize))
+  (define-key cnfonts-mode-map (kbd "C-+") #'cnfonts-increase-fontsize)
+  (setq cnfonts-profiles '("Program"))
+  (setq cnfonts-personal-fontnames '(("JetBrains Mono"))))
 
 (use-package rainbow-delimiters
   :ensure t
