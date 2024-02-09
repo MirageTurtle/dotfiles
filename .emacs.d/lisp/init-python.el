@@ -16,7 +16,7 @@
          (settings (plist-get default-config :settings))
          )
 
-    (plist-put settings :pythonPath (executable-find "python"))
+    (plist-put settings :pythonPath (executable-find "python3"))
 
     (make-directory (file-name-directory custom-config) t)
 
