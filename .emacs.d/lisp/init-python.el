@@ -5,7 +5,8 @@
   :config
   (setenv "WORKON_HOME" (expand-file-name "~/Documents/venv"))
   ;; (setq python-shell-interpreter "python3")
-  (pyvenv-mode t))
+  (pyvenv-mode t)
+  (pyvenv-activate (expand-file-name "~/Documents/venv/base")))
 
 ;; for lsp-bridge
 (defun local/lsp-bridge-get-single-lang-server-by-project (project-path filepath)
