@@ -1,6 +1,7 @@
 local applist = {
     {shortcut = 'F', appname='Emacs'},
-    {shortcut = 'J', appname='Alacritty'}
+    {shortcut = 'J', appname='Alacritty'},
+    {shortcut = 'L', appname='Logseq'},
 }
 
 hs.fnutils.each(applist, function (entry)
