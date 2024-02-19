@@ -1,5 +1,8 @@
 ;;; init-theme.el
 
+(use-package all-the-icons
+  :ensure t)
+
 (use-package doom-themes
   :ensure t
   :config
