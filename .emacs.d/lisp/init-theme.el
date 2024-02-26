@@ -3,6 +3,9 @@
 (use-package all-the-icons
   :ensure t)
 
+(unless (find-font (font-spec :name "Symbols Nerd Font Mono"))
+  (nerd-icons-install-fonts))
+
 (use-package doom-themes
   :ensure t
   :config
