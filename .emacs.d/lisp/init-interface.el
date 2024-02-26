@@ -15,7 +15,7 @@
   (setq use-default-font-for-symbols nil)
   (setq cnfonts-use-face-font-rescale t)
   (define-key cnfonts-mode-map (kbd "C--") #'cnfonts-decrease-fontsize)
-  (define-key cnfonts-mode-map (kbd "C-+") #'cnfonts-increase-fontsize)
+  (define-key cnfonts-mode-map (kbd "C-=") #'cnfonts-increase-fontsize)
   (setq cnfonts-profiles '("Program"))
   (setq cnfonts-personal-fontnames '(("JetBrains Mono"))))
 
