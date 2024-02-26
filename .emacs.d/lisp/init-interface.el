@@ -1,10 +1,19 @@
 ;;; init-interface.el
+;;; including some font-/unicode-related
+
+(when (member "Symbola" (font-family-list))
+  (set-fontset-font "fontset-default" nil
+                    (font-spec :size 20 :name "Symbola")))
+(when (member "Symbola" (font-family-list))
+  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
 (use-package cnfonts
   :ensure t
   :init
   (cnfonts-mode 1)
   :config
+  (setq use-default-font-for-symbols nil)
+  (setq cnfonts-use-face-font-rescale t)
   (define-key cnfonts-mode-map (kbd "C--") #'cnfonts-decrease-fontsize)
   (define-key cnfonts-mode-map (kbd "C-+") #'cnfonts-increase-fontsize)
   (setq cnfonts-profiles '("Program"))
