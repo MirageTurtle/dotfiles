@@ -5,7 +5,7 @@
   :init
   (cnfonts-mode 1)
   :config
-  (define-key cnfonts-mode-map (kbd "C-=") #'cnfonts-decrease-fontsize)
+  (define-key cnfonts-mode-map (kbd "C--") #'cnfonts-decrease-fontsize)
   (define-key cnfonts-mode-map (kbd "C-+") #'cnfonts-increase-fontsize)
   (setq cnfonts-profiles '("Program"))
   (setq cnfonts-personal-fontnames '(("JetBrains Mono"))))
