@@ -46,9 +46,8 @@
 ;; (global-set-key (kbd "C-c '") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-c ;") 'comment-line)
 
-;; (global-set-key (kbd "C-c SPC") 'set-mark-command)
+(global-set-key (kbd "C-c SPC") 'set-mark-command)
 ;; (global-set-key (kbd "M-SPC") 'rectangle-mark-mode)
-(global-set-key (kbd "M-h") 'set-mark-command)
 ;; (global-set-key (kbd "C--") 'undo)
 
 ;; macOS preferences
