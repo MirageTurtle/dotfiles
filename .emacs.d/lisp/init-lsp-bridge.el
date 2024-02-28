@@ -20,7 +20,8 @@
   ;; (setq lsp-bridge-enable-log t)
   ;; (setq lsp-bridge-enable-debug t)
   (setq lsp-bridge-python-command (expand-file-name "~/Documents/venv/lsp-bridge/bin/python3"))
-  (setq acm-enable-copilot t))
+  ;; (setq acm-enable-copilot t)
+  )
 
 ;; Some Issue
 ;; https://github.com/manateelazycat/lsp-bridge/blob/master/README.md
