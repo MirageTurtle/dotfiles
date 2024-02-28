@@ -254,6 +254,7 @@
 (require 'init-ivy)
 (require 'init-workspace)
 (require 'init-lsp-bridge)
+(require 'init-copilot)
 
 (require 'init-python)
 (require 'init-org)
