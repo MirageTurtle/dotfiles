@@ -24,7 +24,7 @@
   (add-hook 'emacs-startup-hook
             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
-(setq confirm-kill-emacs #'yes-or-no-p) ; confirm if kill emacs
+(setq confirm-kill-emacs #'y-or-n-p) ; confirm if kill emacs
 (electric-pair-mode t) ; auto electric pair((){}[] .ete)
 (add-hook 'prog-mode-hook #'show-paren-mode) ; highlight electric pair in program mode
 (column-number-mode t) ; show column number in mode line
