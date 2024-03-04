@@ -13,11 +13,11 @@
   (cnfonts-mode 1)
   :config
   (setq use-default-font-for-symbols nil)
-  (setq cnfonts-use-face-font-rescale t)
+  ;; (setq cnfonts-use-face-font-rescale t)
   (define-key cnfonts-mode-map (kbd "C--") #'cnfonts-decrease-fontsize)
   (define-key cnfonts-mode-map (kbd "C-=") #'cnfonts-increase-fontsize)
-  (setq cnfonts-profiles '("Program"))
-  (setq cnfonts-personal-fontnames '(("JetBrains Mono"))))
+  (setq cnfonts-profiles '("Program" "Document"))
+  (setq cnfonts-personal-fontnames '(("JetBrains Mono" "LXGW WenKai Mono") ("LXGW WenKai Mono"))))
 
 (use-package rainbow-delimiters
   :ensure t
