@@ -32,6 +32,8 @@
           (lambda ()
             (lsp-bridge-restart-process)))
 
+(use-package ein
+  :ensure t)
 
 (provide 'init-python)
 
