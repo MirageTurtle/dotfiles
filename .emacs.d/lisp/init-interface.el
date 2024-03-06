@@ -26,9 +26,10 @@
 (use-package dashboard
  :ensure t
  :config
- (setq dashboard-banner-logo-title "Welcome to Emacs!")
+ (setq dashboard-banner-logo-title "Enjoy Hacking!")
  (setq dashboard-projects-backend 'projectile)
- (setq dashboard-startup-banner 'official)
+ ;; (setq dashboard-startup-banner 'logo)
+ (setq dashboard-startup-banner nil)
  (setq dashboard-items '((recents  . 10)
 		  (bookmarks . 5)
 		  (projects . 5)))
