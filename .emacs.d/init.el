@@ -49,6 +49,8 @@
 (global-set-key (kbd "C-c SPC") 'set-mark-command)
 ;; (global-set-key (kbd "M-SPC") 'rectangle-mark-mode)
 ;; (global-set-key (kbd "C--") 'undo)
+(global-set-key (kbd "M-《") 'beginning-of-buffer)
+(global-set-key (kbd "M-》") 'end-of-buffer)
 
 ;; macOS preferences
 (if *is-a-mac*
