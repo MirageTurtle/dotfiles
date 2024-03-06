@@ -28,8 +28,8 @@
  :config
  (setq dashboard-banner-logo-title "Enjoy Hacking!")
  (setq dashboard-projects-backend 'projectile)
- ;; (setq dashboard-startup-banner 'logo)
- (setq dashboard-startup-banner nil)
+ (setq dashboard-startup-banner 'logo)
+ ;; (setq dashboard-startup-banner nil)
  (setq dashboard-items '((recents  . 10)
 		  (bookmarks . 5)
 		  (projects . 5)))
