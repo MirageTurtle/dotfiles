@@ -15,6 +15,11 @@
   (call-interactively 'switch-to-buffer))
 (global-set-key (kbd "C-x 3") 'split-window-right-new)
 
+(global-set-key (kbd "C-c <left>")  'windmove-left)
+(global-set-key (kbd "C-c <right>") 'windmove-right)
+(global-set-key (kbd "C-c <up>")    'windmove-up)
+(global-set-key (kbd "C-c <down>")  'windmove-down)
+
 (provide 'init-efficiency)
 
 ;;; init-efficiency.el ends here.
