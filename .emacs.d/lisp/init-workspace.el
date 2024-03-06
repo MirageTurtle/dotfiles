@@ -18,6 +18,7 @@
   :config
   (treemacs-tag-follow-mode)
   (treemacs-follow-mode)
+  (setf treemacs-select-when-already-in-treemacs 'stay)
   :bind
   (:map global-map
         ("M-0"       . treemacs-select-window)
