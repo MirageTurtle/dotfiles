@@ -37,6 +37,15 @@
   :ensure t
   :after (treemacs projectile))
 
-(provide 'init-workspace)
+(use-package treemacs-icons-dired
+  :ensure t
+  :after (treemacs dired)
+  :config (treemacs-icons-dired-mode))
+
+(use-package treemacs-magit
+  :ensure t
+  :after (treemacs magit))
+
+(Provide 'init-workspace)
 
 ;;; init-workspace.el ends here.
