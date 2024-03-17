@@ -12,7 +12,7 @@
 
 ;; org
 ;; basic
-(setq org-directory (file-truename "~/Documents/org/"))
+(setq org-directory (file-truename "~/Documents/sshfs-docs-client/org/"))
 ;; (setq org-startup-indented t)
 ;; (setq org-startup-numerated t)
 (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
@@ -54,14 +54,14 @@
    :config
    (org-roam-setup)
    :custom
-   (org-roam-directory (concat org-directory "roam/")) ; set org-roam directory
+   (setq org-roam-directory (concat org-directory "roam/")) ; set org-roam directory
    :bind
    (("C-c n f" . org-roam-node-find)
     (:map org-mode-map
 	  (("C-c n i" . org-roam-node-insert)))))
 
 ; For org-agenda
-(setq org-agenda-files '("~/Documents/org/"))
+(setq org-agenda-files (list org-directory))
 (setq org-agenda-custom-commands
       '(("c" "Simple agenda view"
 	 ((agenda "")
