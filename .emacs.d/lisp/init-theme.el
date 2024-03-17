@@ -3,6 +3,9 @@
 (use-package all-the-icons
   :ensure t)
 
+(use-package all-the-icons-nerd-fonts
+  :ensure t)
+
 (unless (find-font (font-spec :name "Symbols Nerd Font Mono"))
   (nerd-icons-install-fonts))
 
