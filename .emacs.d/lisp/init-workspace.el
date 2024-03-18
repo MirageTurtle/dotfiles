@@ -42,10 +42,16 @@
   :after (treemacs dired)
   :config (treemacs-icons-dired-mode))
 
-(use-package treemacs-magit
-  :ensure t
-  :after (treemacs magit))
+;; (use-package treemacs-magit
+;;   :ensure t
+;;   :after (treemacs magit))
 
-(Provide 'init-workspace)
+(use-package 0blayout
+  :ensure t
+  ;; Load the mode
+  :config (0blayout-mode t)
+  (0blayout-add-keybindings-with-prefix "C-c l"))
+
+(provide 'init-workspace)
 
 ;;; init-workspace.el ends here.
