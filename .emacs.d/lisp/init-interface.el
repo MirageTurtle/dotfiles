@@ -37,4 +37,4 @@
 
 (provide 'init-interface)
 
-;;; init-interface.el ends here.
+;;; init-interface.el ends here
