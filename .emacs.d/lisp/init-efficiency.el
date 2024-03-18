@@ -13,6 +13,12 @@
   (split-window-right)
   (other-window 1)
   (call-interactively 'switch-to-buffer))
+(defun split-window-below-new ()
+  (interactive)
+  (split-window-below)
+  (other-window 1)
+  (call-interactively 'switch-to-buffer))
+(global-set-key (kbd "C-x 2") 'split-window-below-new)
 (global-set-key (kbd "C-x 3") 'split-window-right-new)
 
 (global-set-key (kbd "C-c <left>")  'windmove-left)
