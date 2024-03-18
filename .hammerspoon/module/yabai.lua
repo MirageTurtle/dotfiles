@@ -5,7 +5,7 @@
 local function yabai (commands)
    for _, command in ipairs(commands) do
       print('yabai -m ' .. command)
-      hs.execute('yabai -m ' .. command)
+      hs.execute('/usr/local/bin/yabai -m ' .. command)
    end
 end
 
