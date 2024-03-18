@@ -61,11 +61,22 @@
 	  (("C-c n i" . org-roam-node-insert)))))
 
 ; For org-agenda
+(global-set-key (kbd "C-c a") 'org-agenda)
 (setq org-agenda-files (list org-directory))
 (setq org-agenda-custom-commands
       '(("c" "Simple agenda view"
 	 ((agenda "")
 	  (alltodo "")))))
+(setq org-agenda-start-on-weekday 0) ;; start on Sunday
+
+;; for my personal todo
+(setq org-todo-keywords
+      '((sequence "TODO" "DOING" "WAITING" "|" "DONE")))
+;; (setq org-log-done 'time)
+(setq org-log-done 'note)
+
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(global-set-key (kbd "C-c c") 'org-capture)
 
 
 (provide 'init-org)
