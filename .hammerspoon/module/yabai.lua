@@ -4,7 +4,8 @@
 -- local yabai_modifier = {'cmd', 'alt', 'ctrl', 'shift'}
 local function yabai (commands)
    for _, command in ipairs(commands) do
-      hs.execute('/usr/local/bin/yabai -m ' .. command)
+      print('yabai -m ' .. command)
+      hs.execute('yabai -m ' .. command)
    end
 end
 

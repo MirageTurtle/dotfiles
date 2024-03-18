@@ -3,15 +3,6 @@
 
 set -x # Enable debugging
 
-# output the interpreter
-echo "Interpreter: $0"
-# output the father process id and name
-echo "Father Process ID: $PPID"
-echo "Father Process Name: $(ps -p $PPID -o comm=)"
-# output the current process id and name
-echo "Current Process ID: $$"
-echo "Current Process Name: $(ps -p $$ -o comm=)"
-
 # == Variables ==
 declare -A gaps
 # declare -A color
@@ -56,7 +47,7 @@ yabai -m config mouse_modifier fn # default
 yabai -m config mouse_action1 move # default
 yabai -m config mouse_action2 resize # default
 
-yabai -m config mouse_follows_focus off
+yabai -m config mouse_follows_focus on
 yabai -m config focus_follows_mouse off
 
 # == Window Modifications ==
@@ -86,6 +77,7 @@ yabai -m rule --add label="Dictionary" app="^Dictionary$" manage=off
 yabai -m rule --add label="Karabiner-EventViewer" app="^Karabiner-EventViewer$" manage=off
 yabai -m rule --add label="Karabiner-Elements" app="^Karabiner-Elements$" manage=off
 yabai -m rule --add label="Wechat" app="WeChat" title=".*" manage=off
+yabai -m rule --add label="Finder" app="^Finder$" manage=off
 # == End ==
 
 set +x # Disable debugging
