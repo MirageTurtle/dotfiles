@@ -55,6 +55,13 @@
 ;; macOS preferences
 (if *is-a-mac*
     (progn
+      (setq mac-command-modifier 'super)
+      (setq mac-option-modifier 'meta)
+      (setq mac-control-modifier 'control)
+      (setq mac-shift-modifier 'shift))
+  ())
+(if *is-a-mac*
+    (progn
       (global-set-key (kbd "s-a") 'mark-whole-buffer)
       (global-set-key (kbd "s-c") 'kill-ring-save)
       (global-set-key (kbd "s-s") 'save-buffer)
