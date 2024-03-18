@@ -12,7 +12,7 @@ function update_screens()
             brightness = "nil"
         end
         print(screen:name() .. ": " .. brightness)
-        if screen:name() == "Built-in Display" then
+        if screen:name() == "Built-in Display" or screen:name() == "Built-in Retina Display" then
             builtin = screen
         -- elseif screen:name() == "U27G3X" then
 	else
