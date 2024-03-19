@@ -9,7 +9,7 @@ declare -A gaps
 declare -A opacity
 
 gaps["top"]=4
-gaps["bottom"]=24
+gaps["bottom"]=8
 gaps["left"]=4
 gaps["right"]=4
 gaps["inner"]=4
@@ -20,8 +20,6 @@ gaps["inner"]=4
 
 opacity["active"]=1.0
 opacity["normal"]=0.8
-echo ${opacity["active"]}
-echo ${opacity["normal"]}
 
 # == Loading Scripting Additions ==
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
@@ -78,6 +76,8 @@ yabai -m rule --add label="Karabiner-EventViewer" app="^Karabiner-EventViewer$" 
 yabai -m rule --add label="Karabiner-Elements" app="^Karabiner-Elements$" manage=off
 yabai -m rule --add label="Wechat" app="WeChat" title=".*" manage=off
 yabai -m rule --add label="Finder" app="^Finder$" manage=off
+# === On Management ===
+
 # == End ==
 
 set +x # Disable debugging
