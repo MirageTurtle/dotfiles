@@ -21,14 +21,33 @@ local function alt_shift(key, commands)
    end)
 end
 
+local function toggle_layout()
+    local layout_list = {"bsp", "float", "stack"}
+    local current_layout = hs.execute("/usr/local/bin/yabai -m query --spaces --space | /usr/local/bin/jq -r '.type'")
+    current_layout = string.gsub(current_layout, "\n", "")
+    local next_layout = layout_list[1]
+    for i, layout in ipairs(layout_list) do
+       -- layout == current_layout will always be false
+       -- print type of layout and current_layout to debug
+       if layout == current_layout then
+	  next_layout = layout_list[(i % #layout_list) + 1]
+	  break
+       end
+    end
+    hs.notify.new({title="Yabai", informativeText="Switching layout to " .. next_layout}):send()
+    yabai({"space --layout " .. next_layout})
+end
+
 local alt_keybindings = {
    -- letters
    {key="m", commands={"space --toggle mission-control"}},
    {key="r", commands={"space --rotate 90"}},
-   {key="t", commands={"window --toggle float", "window --grid 4:4:1:1:2:2"}},
+   -- {key="t", commands={"window --toggle float", "window --grid 4:4:1:1:2:2"}},
+   {key = "t", commands={"window --toggle zoom-fullscreen"}},
    -- special characters
    {key="tab", commands={"space --focus recent"}},
-   {key="'", commands={"space --layout bsp"}},
+   -- use ' to toggle layout between bsp, float and stack
+   -- {key="'", commands={"space --layout bsp"}},
 }
 
 local alt_shift_keybinds = {
@@ -52,6 +71,9 @@ end
 for _, keybinding in ipairs(alt_keybindings) do
 	alt(keybinding.key, keybinding.commands)
 end
+hs.hotkey.bind({'alt'}, "'", function ()
+      toggle_layout()
+end)
 for _, keybinding in ipairs(alt_shift_keybinds) do
 	alt_shift(keybinding.key, keybinding.commands)
 end
