@@ -1,7 +1,9 @@
 -- Some keybindings for yabai
+-- Deprecaed:
 -- The yabai modifier is cmd+option+ctrl+shift, which I use Karabiner-Elements to map to right_option
 -- I try to write a key-map using hammerspoon but failed, add it to my todo list maybe
 -- local yabai_modifier = {'cmd', 'alt', 'ctrl', 'shift'}
+
 local function yabai (commands)
    for _, command in ipairs(commands) do
       print('yabai -m ' .. command)
@@ -22,20 +24,21 @@ local function alt_shift(key, commands)
 end
 
 local function toggle_layout()
-    local layout_list = {"bsp", "float", "stack"}
-    local current_layout = hs.execute("/usr/local/bin/yabai -m query --spaces --space | /usr/local/bin/jq -r '.type'")
-    current_layout = string.gsub(current_layout, "\n", "")
-    local next_layout = layout_list[1]
-    for i, layout in ipairs(layout_list) do
-       -- layout == current_layout will always be false
-       -- print type of layout and current_layout to debug
-       if layout == current_layout then
-	  next_layout = layout_list[(i % #layout_list) + 1]
-	  break
-       end
-    end
-    hs.notify.new({title="Yabai", informativeText="Switching layout to " .. next_layout}):send()
-    yabai({"space --layout " .. next_layout})
+   -- local layout_list = {"bsp", "float", "stack"}
+   local layout_list = {"bsp", "float"}
+   local current_layout = hs.execute("/usr/local/bin/yabai -m query --spaces --space | /usr/local/bin/jq -r '.type'")
+   current_layout = string.gsub(current_layout, "\n", "")
+   local next_layout = layout_list[1]
+   for i, layout in ipairs(layout_list) do
+      -- layout == current_layout will always be false
+      -- print type of layout and current_layout to debug
+      if layout == current_layout then
+	 next_layout = layout_list[(i % #layout_list) + 1]
+	 break
+      end
+   end
+   hs.notify.new({title="Yabai", informativeText="Switching layout to " .. next_layout}):send()
+   yabai({"space --layout " .. next_layout})
 end
 
 local alt_keybindings = {
@@ -51,7 +54,7 @@ local alt_keybindings = {
 }
 
 local alt_shift_keybinds = {
-   {key="'", commands={"space --layout stack"}},
+   -- {key="'", commands={"space --layout stack"}},
 }
 
 -- numbers
