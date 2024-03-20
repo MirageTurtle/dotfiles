@@ -76,6 +76,9 @@ yabai -m rule --add label="Karabiner-EventViewer" app="^Karabiner-EventViewer$" 
 yabai -m rule --add label="Karabiner-Elements" app="^Karabiner-Elements$" manage=off
 yabai -m rule --add label="Wechat" app="WeChat" title=".*" manage=off
 yabai -m rule --add label="Finder" app="^Finder$" manage=off
+yabai -m rule --add label="Bitwarden Application" app="^Bitwarden$" manage=off
+yabai -m rule --add label="Chrome Extension" app="^Arc$" title="^chrome-extension://" manage=off
+yabai -m rule --add label="Arc Preferences" app="^Arc$" title="why2002011…" manage=off
 # === On Management ===
 
 # == End ==
