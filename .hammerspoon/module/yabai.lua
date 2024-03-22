@@ -41,6 +41,20 @@ local function toggle_layout()
    yabai({"space --layout " .. next_layout})
 end
 
+-- A function for start/stop yabai
+local function yabai_switcher()
+   local if_yabai_running = hs.execute("pgrep yabai")
+   if if_yabai_running == "" then
+      hs.execute("/usr/local/bin/yabai --start-service")
+      hs.execute("/bin/sh -c /Users/haoyuanwang/.yabairc", true)
+      hs.notify.new({title="Yabai", informativeText="Yabai started"}):send()
+   else
+      hs.execute("/usr/local/bin/yabai -m config normal_window_opacity 1.0")
+      hs.execute("/usr/local/bin/yabai --stop-service")
+      hs.notify.new({title="Yabai", informativeText="Yabai stopped"}):send()
+   end
+end
+
 local alt_keybindings = {
    -- letters
    {key="m", commands={"space --toggle mission-control"}},
@@ -75,7 +89,8 @@ for _, keybinding in ipairs(alt_keybindings) do
 	alt(keybinding.key, keybinding.commands)
 end
 hs.hotkey.bind({'alt'}, "'", function ()
-      toggle_layout()
+      -- toggle_layout()
+      yabai_switcher()
 end)
 for _, keybinding in ipairs(alt_shift_keybinds) do
 	alt_shift(keybinding.key, keybinding.commands)
