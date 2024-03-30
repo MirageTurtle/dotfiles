@@ -17,6 +17,7 @@ I hope this can help you while helping me. :)
 	+ Something about replace
 	+ Some shortcut like vscode habit shortcut
 	  + Move a line or some lines up or down
+	  + Multi-line editing
 	+ ~~Turn 。 to . automatically after a number in Chinese input method. (May be fixed by using Emacs GUI version)~~
 + HammerSpoon
   + Window
@@ -27,3 +28,5 @@ I hope this can help you while helping me. :)
 	  + Stick on top
     + A tool preventing Mac to sleep
 	+ A tool can help me hide some icon in the Menu bar.
++ Shell
+  + Custom shell alias or function
