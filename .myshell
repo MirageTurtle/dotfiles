@@ -1,0 +1,8 @@
+# sshfs
+alias mysshfs="sshfs -C -o kill_on_unmount,reconnect,allow_other,defer_permissions,auto_cache,nolocalcaches,no_readahead"
+alias mysshfs-umount="diskutil unmount force"
+function mysshfs-remount() {
+	mysshfs-umount $1
+	mysshfs $1
+}
+alias mysshfs-umount-all="ps ux | grep sshfs | grep -v grep | awk '{print \$NF}' | xargs -n1 diskutil unmount force"
