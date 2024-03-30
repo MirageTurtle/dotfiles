@@ -6,3 +6,17 @@ function mysshfs-remount() {
 	mysshfs $1
 }
 alias mysshfs-umount-all="ps ux | grep sshfs | grep -v grep | awk '{print \$NF}' | xargs -n1 diskutil unmount force"
+
+# custom tmux command
+function mtmux() {
+    # If no parameter is passed, attach to or create a default session
+    # Otherwise, attach to or create a session with the name passed as the first parameter
+    # suffix is the suffix of every group name
+    default_session="main"
+    group_name="mt"
+    if [ -z "$1" ]; then
+	tmux attach-session -t $default_session 2>/dev/null || tmux new-session -s $default_session
+    else
+	tmux attach-session -t $1 2>/dev/null || tmux new-session -s $1
+    fi
+}
