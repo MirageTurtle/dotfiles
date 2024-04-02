@@ -27,9 +27,15 @@
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-(use-package doom-modeline
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :init (doom-modeline-mode 1))
+
+(use-package awesome-tray
+  :straight (awesome-tray :type git :host github :repo "manateelazycat/awesome-tray")
   :ensure t
-  :init (doom-modeline-mode 1))
+  :config
+  (awesome-tray-mode 1))
 
 (provide 'init-theme)
 
