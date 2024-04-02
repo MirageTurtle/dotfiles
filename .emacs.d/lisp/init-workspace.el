@@ -40,6 +40,26 @@
   :ensure t
   :after (treemacs projectile))
 
+;; custom other-window function
+;; https://stackoverflow.com/questions/4941960/how-do-i-make-emacs-other-window-command-ignore-terminal-windows
+;; TODO:
+;; + [BUG] when there is only one window, it will not work
+(defvar ignore-windows-regexps
+  "^Treemacs-Scoped-Buffer")
+(require 'cl)
+(defun my-other-window ()
+  "Similar to 'other-window, only try to avoid windows whose buffers match ignore-window-regexp"
+  (interactive)
+  (let* ((window-list (delq (selected-window) (window-list)))
+         (filtered-window-list (remove-if
+                                (lambda (w)
+                                  (string-match-p ignore-windows-regexps (buffer-name (window-buffer w))))
+                                window-list)))
+    (if filtered-window-list
+        (select-window (car filtered-window-list))
+      (and window-list
+           (select-window (car window-list))))))
+(global-set-key (kbd "C-x o") 'my-other-window)
 
 (provide 'init-workspace)
 
