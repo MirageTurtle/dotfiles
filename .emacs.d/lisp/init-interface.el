@@ -35,6 +35,15 @@
 		  (projects . 5)))
  (dashboard-setup-startup-hook))
 
+(use-package highlight-indent-guides
+  :ensure t
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :config
+  (setq highlight-indent-guides-method 'character)
+  (setq highlight-indent-guides-character ?\|)
+  (setq highlight-indent-guides-auto-enabled nil)
+  (setq highlight-indent-guides-responsive 'top))
+
 (provide 'init-interface)
 
 ;;; init-interface.el ends here
