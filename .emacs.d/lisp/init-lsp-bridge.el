@@ -15,8 +15,12 @@
   :ensure t
   :init
   (global-lsp-bridge-mode)
+  :hook
+  ((prog-mode . lsp-bridge-mode)
+   ((latex-mode LaTeX-mode) . lsp-bridge-mode))
   :config
-  ;; (setq lsp-bridge-python-lsp-server 'pyright)
+  (setq lsp-bridge-python-lsp-server 'pyright)
+  (setq lsp-bridge-tex-lsp-server 'texlab)
   ;; (setq lsp-bridge-enable-log t)
   ;; (setq lsp-bridge-enable-debug t)
   (setq lsp-bridge-python-command (expand-file-name "~/Documents/venv/lsp-bridge/bin/python3"))
