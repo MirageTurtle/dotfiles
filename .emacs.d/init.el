@@ -43,7 +43,7 @@
 
 ;; Global Key bind
 (global-set-key (kbd "RET") 'newline-and-indent)
-;; (global-set-key (kbd "C-c '") 'comment-or-uncomment-region)
+(global-set-key (kbd "C-c C-;") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-c ;") 'comment-line)
 
 (global-set-key (kbd "C-c SPC") 'set-mark-command)
