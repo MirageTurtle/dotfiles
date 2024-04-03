@@ -35,7 +35,39 @@
   :straight (awesome-tray :type git :host github :repo "manateelazycat/awesome-tray")
   :ensure t
   :config
-  (awesome-tray-mode 1))
+  (awesome-tray-mode 1)
+  (setq awesome-tray-active-modules '("location" "file-path" "buffer-name" "mode-name" "git" "battery" "date"))
+  (setq awesome-tray-buffer-name-buffer-changed t)
+  (setq awesome-tray-date-format "%Y-%m-%d %H:%M %a")
+  (defun awesome-tray-git-command-update-cache ()
+    "Remove the space between the branch name and the status symbol, based on the original function."
+    (if (file-exists-p (format "%s" (buffer-file-name)))
+	(let* ((filename (buffer-file-name))
+               (status (vc-git-state filename))
+               (branch (car (vc-git-branches))))
+
+          (pcase status
+            ('up-to-date (setq status ""))
+            ('edited (setq status "!"))
+            ('needs-update (setq status "⇣"))
+            ('needs-merge (setq status "⇡"))
+            ('unlocked-changes (setq status ""))
+            ('added (setq status "+"))
+            ('removed (setq status "-"))
+            ('conflict (setq status "="))
+            ('missing (setq status "?"))
+            ('ignored (setq status ""))
+            ('unregistered (setq status "?"))
+            (_ (setq status "")))
+          (if (not branch) (setq branch ""))
+
+          (setq awesome-tray-git-buffer-filename filename)
+
+          (setq awesome-tray-git-command-cache (if awesome-tray-git-show-status
+                                                   (format awesome-tray-git-format (string-trim (concat branch "" status)))
+						 (format awesome-tray-git-format branch))))
+      (setq awesome-tray-git-buffer-filename nil
+            awesome-tray-git-command-cache ""))))
 
 (provide 'init-theme)
 
