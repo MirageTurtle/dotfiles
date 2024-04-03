@@ -271,7 +271,7 @@
 (require 'init-lua)
 (require 'init-json)
 (require 'init-yaml)
-
+(require 'init-rust)
 
 (provide 'init)
 
