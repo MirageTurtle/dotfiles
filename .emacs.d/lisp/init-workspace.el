@@ -46,7 +46,7 @@
 ;; TODO:
 ;; + [BUG] when there is only one window, it will not work
 (defvar ignore-windows-regexps
-  "^Treemacs-Scoped-Buffer")
+  "Treemacs-Scoped-Buffer")
 (require 'cl)
 (defun my-other-window ()
   "Similar to 'other-window, only try to avoid windows whose buffers match ignore-window-regexp"
