@@ -2,32 +2,32 @@
 draw_bold_text_with_bright_colors = false
 
 [colors.bright]
-black = "0x8e908c"
-blue = "0x969896"
+black = "0x969896"
+blue = "0xb4b7b4"
 cyan = "0xa3685a"
-green = "0xe0e0e0"
-magenta = "0x282a2e"
-red = "0xf5871f"
-white = "0x1d1f21"
-yellow = "0xd6d6d6"
+green = "0x282a2e"
+magenta = "0xe0e0e0"
+red = "0xde935f"
+white = "0xffffff"
+yellow = "0x373b41"
 
 [colors.cursor]
-cursor = "0x4d4d4c"
-text = "0xffffff"
+cursor = "0xc5c8c6"
+text = "0x1d1f21"
 
 [colors.normal]
-black = "0xffffff"
-blue = "0x4271ae"
-cyan = "0x3e999f"
-green = "0x718c00"
-magenta = "0x8959a8"
-red = "0xc82829"
-white = "0x4d4d4c"
-yellow = "0xeab700"
+black = "0x1d1f21"
+blue = "0x81a2be"
+cyan = "0x8abeb7"
+green = "0xb5bd68"
+magenta = "0xb294bb"
+red = "0xcc6666"
+white = "0xc5c8c6"
+yellow = "0xf0c674"
 
 [colors.primary]
-background = "0xffffff"
-foreground = "0x4d4d4c"
+background = "0x1d1f21"
+foreground = "0xc5c8c6"
 
 [env]
 TERM = "xterm-256color"
