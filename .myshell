@@ -6,6 +6,13 @@ function mysshfs-reconnect() {
     mysshfs-umount $2
     mysshfs $1 $2
 }
+function mtsshfs() {
+    # try to mount the remote directory to the local directory
+    # if failed, try to unmount the local directory and mount again
+    # $1: remote directory
+    # $2: local directory
+    mysshfs $1 $2 || mysshfs-reconnect $1 $2
+}
 
 # custom tmux command
 function mtmux() {
