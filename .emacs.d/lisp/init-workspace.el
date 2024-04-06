@@ -20,7 +20,11 @@
   (treemacs-follow-mode)
   (treemacs-filewatch-mode)
   ;; (treemacs-git-mode 'deferred)
-  (treemacs-icons-dired-mode)
+  (use-package treemacs-icons-dired
+    :ensure t
+    :after (treemacs dired)
+    :config
+    (treemacs-icons-dired-mode))
   (setf treemacs-select-when-already-in-treemacs 'stay)
   :bind
   (:map global-map
