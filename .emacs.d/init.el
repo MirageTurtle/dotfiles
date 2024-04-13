@@ -273,6 +273,8 @@
 (require 'init-yaml)
 (require 'init-rust)
 
+(require 'init-eaf)
+
 (provide 'init)
 
 ;;; init.el ends here.
