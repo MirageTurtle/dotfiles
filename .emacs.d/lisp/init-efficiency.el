@@ -1,5 +1,7 @@
 ;;; init-efficiency.el
 
+(global-hl-line-mode 1) ;; highlight current line
+
 (use-package mwim
   ;; :straight t
   :ensure t
