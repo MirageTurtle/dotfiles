@@ -17,9 +17,10 @@
   (global-lsp-bridge-mode)
   :hook
   ((prog-mode . lsp-bridge-mode)
-   ((latex-mode LaTeX-mode) . lsp-bridge-mode))
+   ((latex-mode LaTeX-mode) . lsp-bridge-mode)
+   (markdown-mode . lsp-bridge-mode))
   :config
-  (setq lsp-bridge-python-lsp-server 'pyright)
+  (setq lsp-bridge-python-lsp-server 'ruff)
   (setq lsp-bridge-tex-lsp-server 'texlab)
   ;; (setq lsp-bridge-enable-log t)
   ;; (setq lsp-bridge-enable-debug t)
