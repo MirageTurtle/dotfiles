@@ -257,6 +257,7 @@
 
 (require 'init-utils)
 
+(require 'init-git)
 (require 'init-efficiency)
 (require 'init-theme)
 (require 'init-interface)
