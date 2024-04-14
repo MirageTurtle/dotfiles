@@ -54,9 +54,13 @@
   ;; (setq eaf-browser-auto-import-chrome-cookies t)
   (setq eaf-browser-default-search-engine "google")
   (setq eaf-browser-enable-adblocker t)
+  (defalias 'browse-web #'eaf-open-browser)
+  (eaf-bind-key nil "M-0" eaf-browser-keybinding)
+  (global-set-key (kbd "s-t") 'eaf-open-browser-with-history)
   (when (and (boundp '*is-a-mac*) *is-a-mac*)
-    (add-to-list 'eaf-browser-keybinding '("s-]" . "history_forward"))
-    (add-to-list 'eaf-browser-keybinding '("s-[" . "history_backward"))))
+    (eaf-bind-key history_forward "s-]" eaf-browser-keybinding)
+    (eaf-bind-key history_backward "s-[" eaf-browser-keybinding)
+    (eaf-bind-key refresh_page "s-r" eaf-browser-keybinding)))
 
 (use-package eaf-pdf-viewer
   ;; :ensure t
