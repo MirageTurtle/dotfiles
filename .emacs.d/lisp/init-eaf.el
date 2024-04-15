@@ -55,12 +55,21 @@
   (setq eaf-browser-default-search-engine "google")
   (setq eaf-browser-enable-adblocker t)
   (defalias 'browse-web #'eaf-open-browser)
-  (eaf-bind-key nil "M-0" eaf-browser-keybinding)
+  ;; unbind keys, especially every alphabet key
+  (let ((unbind-keys (append (mapcar 'char-to-string (number-sequence ?a ?z))
+			     (mapcar 'char-to-string (number-sequence ?A ?Z))
+			     (list "M-0"))))
+    (dolist (key unbind-keys)
+      (message "Unbind key %s" key)
+      (eaf-bind-key nil key eaf-browser-keybinding)))
   (global-set-key (kbd "s-t") 'eaf-open-browser-with-history)
   (when (and (boundp '*is-a-mac*) *is-a-mac*)
     (eaf-bind-key history_forward "s-]" eaf-browser-keybinding)
     (eaf-bind-key history_backward "s-[" eaf-browser-keybinding)
-    (eaf-bind-key refresh_page "s-r" eaf-browser-keybinding)))
+    (eaf-bind-key refresh_page "s-r" eaf-browser-keybinding)
+    (eaf-bind-key insert_or_new_blank_page "t" eaf-browser-keybinding)
+    (eaf-bind-key insert_or_recover_prev_close_page "s-T" eaf-browser-keybinding)
+    (eaf-bind-key close_buffer "s-w" eaf-browser-keybinding)))
 
 (use-package eaf-pdf-viewer
   ;; :ensure t
