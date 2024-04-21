@@ -4,7 +4,7 @@ local logger = hs.logger.new('majordomo', 'info')
 -- post-awake commands
 postAwakeCommands = {
    "mtsshfs vlab:/home/vlab/Documents/logseq ~/Documents/sshfs-client/logseq",
-   -- "mtsshfs vlab:/home/vlab/Documents/org ~/Documents/sshfs-client/org",
+   "mtsshfs vlab:/home/vlab/Documents/org ~/Documents/sshfs-client/org",
 }
 
 -- post-sleep commands
