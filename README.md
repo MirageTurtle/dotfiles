@@ -6,10 +6,11 @@ I hope this can help you while helping me. :)
 
 + Emacs
   + Treemacs
-	+ I can't use Treemacs as what I want. For example, I open a git folder, but I open treemacs and find another project.
+	+ ~~I can't use Treemacs as what I want. For example, I open a git folder, but I open treemacs and find another project.~~
   + Indentitation
     + Tab and S-Tab
 	  + S-Tab may be conflict with some features of Markdown-mode (I found it when I wrote this TODO).
+	  + It's like Tab and S-Tab in org-mode.
   + About window section (maybe not the official concept)
   + Markdown
     + Detect path when writing for an image.
@@ -26,7 +27,11 @@ I hope this can help you while helping me. :)
 	+ A plug-in can show time and my calendar list
 	  + On desktop
 	  + Stick on top
-    + A tool preventing Mac to sleep
+    + [x] A tool preventing Mac to sleep
 	+ A tool can help me hide some icon in the Menu bar.
+  + Utils
+    + [x] `majordomo.lua`: a majordomo, control auto mount/u- after awake/sleep now.
 + Shell
   + Custom shell alias or function
+	+ [x] sshfs
+	+ [x] tmux group
