@@ -12,7 +12,7 @@
 
 ;; org
 ;; basic
-(setq org-directory (file-truename "~/Documents/sshfs-docs-client/org/"))
+(setq org-directory (file-truename "~/Documents/sshfs-client/org/"))
 ;; (setq org-startup-indented t)
 ;; (setq org-startup-numerated t)
 (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
