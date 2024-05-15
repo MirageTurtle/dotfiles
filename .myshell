@@ -1,3 +1,7 @@
+# env
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 # sshfs
 alias mysshfs="sshfs -C -o kill_on_unmount,reconnect,allow_other,defer_permissions,auto_cache,nolocalcaches,no_readahead"
 alias mysshfs-umount="diskutil unmount force"
