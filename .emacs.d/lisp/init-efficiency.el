@@ -28,6 +28,14 @@
 (global-set-key (kbd "C-c <up>")    'windmove-up)
 (global-set-key (kbd "C-c <down>")  'windmove-down)
 
+;; multi-cursor
+(use-package multiple-cursors
+  :ensure t
+  :bind
+  ("C->" . mc/mark-next-like-this)
+  ("C-<" . mc/mark-previous-like-this)
+  ("C-c C-<" . mc/mark-all-like-this))
+
 (provide 'init-efficiency)
 
 ;;; init-efficiency.el ends here.
