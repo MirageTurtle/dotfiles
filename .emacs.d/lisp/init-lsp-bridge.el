@@ -20,13 +20,15 @@
    ((latex-mode LaTeX-mode) . lsp-bridge-mode)
    (markdown-mode . lsp-bridge-mode))
   :config
-  (setq lsp-bridge-python-lsp-server 'ruff)
+  ;; (setq lsp-bridge-python-lsp-server 'ruff)
+  (setq lsp-bridge-python-multi-lsp-server 'pyright-background-analysis_ruff)
   (setq lsp-bridge-tex-lsp-server 'texlab)
   ;; (setq lsp-bridge-enable-log t)
+  (setq lsp-bridge-enable-log nil)
   ;; (setq lsp-bridge-enable-debug t)
   (setq lsp-bridge-python-command (expand-file-name "~/Documents/venv/lsp-bridge/bin/python3"))
   ;; (setq acm-enable-copilot t)
-  )
+  (setq lsp-bridge-default-mode-hooks '(copilot-mode)))
 
 ;; Some Issue
 ;; https://github.com/manateelazycat/lsp-bridge/blob/master/README.md
