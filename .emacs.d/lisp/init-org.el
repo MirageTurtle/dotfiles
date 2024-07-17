@@ -12,7 +12,12 @@
 
 ;; org
 ;; basic
-(setq org-directory (file-truename "~/Documents/sshfs-client/org/"))
+;;; mac: ~/Documents/sshfs-client/org/
+;;; linux: ~/Documents/sshfs-docs-client/org/
+(if (eq system-type 'darwin)
+    (setq org-directory (file-truename "~/Documents/sshfs-client/org/"))
+  (if (eq system-type 'gnu/linux)
+      (setq org-directory (file-truename "~/Documents/sshfs-docs-client/org/"))))
 ;; (setq org-startup-indented t)
 ;; (setq org-startup-numerated t)
 (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
@@ -54,7 +59,7 @@
    :config
    (org-roam-setup)
    :custom
-   (setq org-roam-directory (concat org-directory "roam/")) ; set org-roam directory
+   (org-roam-directory (concat org-directory "roam/")) ; set org-roam directory
    :bind
    (("C-c n f" . org-roam-node-find)
     (:map org-mode-map
