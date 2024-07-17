@@ -60,6 +60,12 @@
    (org-roam-setup)
    :custom
    (org-roam-directory (concat org-directory "roam/")) ; set org-roam directory
+   (org-roam-dailies-directory "daily/")
+   (org-roam-dailies-capture-templates
+    '(("d" "default" entry
+       "* %?"
+       :target (file+head "%<%Y-%m-%d>.org"
+			  "#+title: %<%Y-%m-%d>\n"))))
    :bind
    (("C-c n f" . org-roam-node-find)
     (:map org-mode-map
