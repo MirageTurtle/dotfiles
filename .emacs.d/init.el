@@ -267,6 +267,7 @@
 (require 'init-workspace)
 (require 'init-lsp-bridge)
 (require 'init-copilot)
+(require 'init-treesit)
 
 (require 'init-python)
 (require 'init-org)
