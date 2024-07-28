@@ -91,7 +91,7 @@ WIN-ID : Window index."
          (key-desc (key-description key)))
     (my-select-window-by-number
      (string-to-number (car (nreverse (split-string key-desc "-")))))))
-(global-set-key (kbd "C-x t w") 'awesome-fast-switch/body)
+(global-set-key (kbd "C-x t") 'awesome-fast-switch/body)
 
 (provide 'init-efficiency)
 
