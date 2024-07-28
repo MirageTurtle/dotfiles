@@ -256,6 +256,7 @@
   ;; :ensure t)
 
 (require 'init-utils)
+(require 'init-emoji)
 
 (require 'init-git)
 (require 'init-efficiency)
