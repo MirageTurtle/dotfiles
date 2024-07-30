@@ -275,6 +275,7 @@
 (require 'init-json)
 (require 'init-yaml)
 (require 'init-rust)
+(require 'init-go)
 
 ;; (require 'init-eaf)
 
