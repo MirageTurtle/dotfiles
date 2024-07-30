@@ -6,8 +6,17 @@
 (use-package all-the-icons-nerd-fonts
   :ensure t)
 
-(unless (find-font (font-spec :name "Symbols Nerd Font Mono"))
-  (nerd-icons-install-fonts))
+(defun mt/frame/nerd-fonts-check (frame)
+  "Check if Nerd Fonts are installed, and install them if not."
+  (with-selected-frame frame
+    (when (display-graphic-p)
+      (unless (find-font (font-spec :name "Symbols Nerd Font Mono"))
+	(nerd-icons-install-fonts)))))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions #'mt/frame/nerd-fonts-check)
+  (mt/frame/nerd-fonts-check (selected-frame)))
+
 
 (use-package doom-themes
   :ensure t
