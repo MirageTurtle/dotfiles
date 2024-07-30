@@ -269,6 +269,7 @@
 (require 'init-copilot)
 (require 'init-treesit)
 
+(require 'init-prog)
 (require 'init-python)
 (require 'init-org)
 (require 'init-lua)
