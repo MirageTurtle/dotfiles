@@ -19,6 +19,11 @@
   ((prog-mode . lsp-bridge-mode)
    ((latex-mode LaTeX-mode) . lsp-bridge-mode)
    (markdown-mode . lsp-bridge-mode))
+  :bind (:map lsp-bridge-mode
+	("M-s-j" . lsp-bridge-diagnostic-jump-next)
+	("M-s-k" . lsp-bridge-diagnostic-jump-prev)
+	("M-s-n" . lsp-bridge-popup-documentation-scroll-up)
+	("M-s-p" . lsp-bridge-popup-documentation-scroll-down))
   :config
   (setq lsp-bridge-python-lsp-server 'basedpyright)
   (setq lsp-bridge-python-multi-lsp-server 'basedpyright_ruff)
@@ -28,9 +33,10 @@
   ;; (setq lsp-bridge-enable-debug t)
   (setq lsp-bridge-python-command (expand-file-name "~/Documents/venv/lsp-bridge/bin/python3"))
   ;; (setq acm-enable-copilot t)
+  (setq acm-enable-codeium t)
   (setq lsp-bridge-default-mode-hooks '(copilot-mode))
   (setq lsp-bridge-popup-documentation t)
-  (setq lsp-bridge-enable-diagnostics t)) ;Where's my diagnostics?
+  (setq lsp-bridge-enable-diagnostics t))
 
 ;; Some Issue
 ;; https://github.com/manateelazycat/lsp-bridge/blob/master/README.md
