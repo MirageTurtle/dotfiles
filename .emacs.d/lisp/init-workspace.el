@@ -14,6 +14,7 @@
 
 (use-package neotree
   :ensure t
+  :defer
   :config
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
