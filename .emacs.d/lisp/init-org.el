@@ -11,6 +11,7 @@
 (setq default-buffer-file-coding-system 'utf-8)
 
 ;; org
+(require 'org-indent)
 ;; basic
 ;;; mac: ~/Documents/sshfs-client/org/
 ;;; linux: ~/Documents/sshfs-docs-client/org/
