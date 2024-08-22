@@ -21,11 +21,10 @@
       (setq org-directory (file-truename "~/Documents/sshfs-docs-client/org/"))))
 ;; (setq org-startup-indented t)
 ;; (setq org-startup-numerated t)
-(add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 (add-hook 'org-mode-hook
-          (lambda ()
-            (variable-pitch-mode 1)
-            visual-line-mode))
+	  (lambda ()
+	    (setq truncate-lines nil)
+	    visual-line-mode))
 
 (setq org-hide-leading-stars t)  ;; hide the leading star
 (setq org-pretty-entities t)  ;; Using UTF8 for pretty entities
