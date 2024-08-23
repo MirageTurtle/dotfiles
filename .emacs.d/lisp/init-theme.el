@@ -1,9 +1,12 @@
 ;;; init-theme.el
 
-(use-package all-the-icons
-  :ensure t)
+;; (use-package all-the-icons
+;;   :ensure t)
 
-(use-package all-the-icons-nerd-fonts
+;; (use-package all-the-icons-nerd-fonts
+;;   :ensure t)
+
+(use-package nerd-icons
   :ensure t)
 
 (defun mt/frame/nerd-fonts-check (frame)
@@ -31,8 +34,8 @@
   ;; Enable custom neotree theme (all-the-icons must be installed!)
   ;; (doom-themes-neotree-config)
   ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-colors") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
+  ;; (setq doom-themes-treemacs-theme "doom-colors") ; use "doom-colors" for less minimal icon theme
+  ;; (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 

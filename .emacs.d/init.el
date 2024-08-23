@@ -262,6 +262,7 @@
 (require 'init-efficiency)
 (require 'init-theme)
 (require 'init-interface)
+(require 'init-dirvish)
 
 (require 'init-ivy)
 (require 'init-workspace)
