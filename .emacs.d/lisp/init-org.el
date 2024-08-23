@@ -73,7 +73,7 @@
 
 ; For org-agenda
 (global-set-key (kbd "C-c a") 'org-agenda)
-(setq org-agenda-files (list org-directory))
+(setq org-agenda-files (list org-directory (concat org-directory "tasks/")))
 (setq org-agenda-custom-commands
       '(("c" "Simple agenda view"
 	 ((agenda "")
