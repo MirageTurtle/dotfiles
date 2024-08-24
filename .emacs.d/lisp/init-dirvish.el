@@ -4,15 +4,17 @@
   :straight t
   :init
   (dirvish-override-dired-mode)
-  :custom
-  (dirvish-quick-access-entries ; It's a custom option, `setq' won't work
-   '(("h" "~/"                          "Home")
-     ("e" "~/.emacs.d"                  "Emacs User Directory")
-     ("d" "~/Downloads/"                "Downloads")
-     ("r" "~/Documents/repo"            "Repository")))
+  :after init-org ; for var `org-directory'
   :config
   (when (eq system-type 'darwin)
     (setq insert-directory-program "gls"))
+  (setq dirvish-quick-access-entries
+   (append
+    '(("h" "~/"                         "Home")
+     ("e" "~/.emacs.d"                  "Emacs User Directory")
+     ("d" "~/Downloads/"                "Downloads")
+     ("r" "~/Documents/repo"            "Repository"))
+     `(("o" ,org-directory              "Org"))))
   ;; (dirvish-peek-mode) ; Preview files in minibuffer
   ;; (dirvish-side)
   (dirvish-side-follow-mode) ; similar to `treemacs-follow-mode'
@@ -47,14 +49,6 @@
    ("M-s" . dirvish-setup-menu)
    ("M-e" . dirvish-emerge-menu)
    ("M-j" . dirvish-fd-jump)))
-
-;; add `org-directory' to `dirvish-quick-access-entries', if it is defined, and the directory is valid
-(when (and (boundp 'org-directory)
-           (file-directory-p org-directory)
-           (not (assoc "o" dirvish-quick-access-entries)))
-  (customize-set-variable 'dirvish-quick-access-entries
-        (append dirvish-quick-access-entries
-                `(("o" ,(expand-file-name org-directory) "Org Directory")))))
 
 (provide 'init-dirvish)
 
