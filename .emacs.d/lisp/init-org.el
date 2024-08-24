@@ -54,13 +54,14 @@
 (use-package org-roam
    :ensure t
    :after org
+   :demand t
    :init
    (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
    :config
    (org-roam-setup)
    :custom
    (org-roam-directory (concat org-directory "roam/")) ; set org-roam directory
-   (org-roam-dailies-directory "daily/")
+   (org-roam-dailies-directory "daily/") ; need config `org-agenda' if `org-roam-dailies-directory' changes
    (org-roam-dailies-capture-templates
     '(("d" "default" entry
        "* %?"
@@ -73,7 +74,7 @@
 
 ; For org-agenda
 (global-set-key (kbd "C-c a") 'org-agenda)
-(setq org-agenda-files (list org-directory (concat org-directory "tasks/")))
+(setq org-agenda-files (list org-directory (concat org-directory "tasks/") (concat org-roam-directory "daily/"))) ; hard-code `org-roam-dailies-directory'
 (setq org-agenda-custom-commands
       '(("c" "Simple agenda view"
 	 ((agenda "")
@@ -81,8 +82,8 @@
 (setq org-agenda-start-on-weekday 0) ;; start on Sunday
 
 ;; for my personal todo
-(setq org-todo-keywords
-      '((sequence "TODO" "DOING" "WAITING" "|" "DONE")))
+;; (setq org-todo-keywords
+;;       '((sequence "TODO" "DOING" "WAITING" "|" "DONE")))
 ;; (setq org-log-done 'time)
 (setq org-log-done 'note)
 
