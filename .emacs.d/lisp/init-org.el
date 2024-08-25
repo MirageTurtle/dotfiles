@@ -11,7 +11,6 @@
 (setq default-buffer-file-coding-system 'utf-8)
 
 ;; org
-(require 'org-indent)
 ;; basic
 ;;; mac: ~/Documents/sshfs-client/org/
 ;;; linux: ~/Documents/sshfs-docs-client/org/
@@ -25,6 +24,7 @@
 	  (lambda ()
 	    (setq truncate-lines nil)
 	    visual-line-mode))
+(add-hook 'org-mode-hook 'org-indent-mode)
 
 (setq org-hide-leading-stars t)  ;; hide the leading star
 (setq org-pretty-entities t)  ;; Using UTF8 for pretty entities
