@@ -52,25 +52,54 @@
 
 ; For org-roam
 (use-package org-roam
-   :ensure t
-   :after org
-   :demand t
-   :init
-   (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
-   :config
-   (org-roam-setup)
-   :custom
-   (org-roam-directory (concat org-directory "roam/")) ; set org-roam directory
-   (org-roam-dailies-directory "daily/") ; need config `org-agenda' if `org-roam-dailies-directory' changes
-   (org-roam-dailies-capture-templates
-    '(("d" "default" entry
-       "* %?"
-       :target (file+head "%<%Y-%m-%d>.org"
-			  "#+title: %<%Y-%m-%d>\n"))))
-   :bind
-   (("C-c n f" . org-roam-node-find)
-    (:map org-mode-map
-	  (("C-c n i" . org-roam-node-insert)))))
+  :ensure t
+  :after org
+  :init
+  (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
+  :custom
+  (org-roam-directory (concat org-directory "roam/")) ; set org-roam directory
+  (org-roam-dailies-directory "daily/")
+  (org-roam-dailies-capture-templates
+   '(("d" "default" entry
+      "* %?"
+      :target (file+head "%<%Y-%m-%d>.org"
+			 "#+title: %<%Y-%m-%d>\n"))))
+  ;; (org-roam-node-display-template (concat "${type:15} ${doom-hierarchy:80} " (propertize "${tags:*}" 'face 'org-tag)))
+  (org-roam-node-display-template (concat "${doom-hierarchy:80} " (propertize "${tags:*}" 'face 'org-tag)))
+  :config
+  (org-roam-setup)
+  (org-roam-db-autosync-mode)
+  ;; Codes blow are used to general a hierachy for title nodes that under a file
+  (cl-defmethod org-roam-node-doom-filetitle ((node org-roam-node))
+    "Return the value of \"#+title:\" (if any) from file that NODE resides in.
+      If there's no file-level title in the file, return empty string."
+    (or (if (= (org-roam-node-level node) 0)
+            (org-roam-node-title node)
+          (org-roam-get-keyword "TITLE" (org-roam-node-file node)))
+        ""))
+  (cl-defmethod org-roam-node-doom-hierarchy ((node org-roam-node))
+    "Return hierarchy for NODE, constructed of its file title, OLP and direct title.
+        If some elements are missing, they will be stripped out."
+    (let ((title     (org-roam-node-title node))
+          (olp       (org-roam-node-olp   node))
+          (level     (org-roam-node-level node))
+          (filetitle (org-roam-node-doom-filetitle node))
+          (separator (propertize " > " 'face 'shadow)))
+      (cl-case level
+        ;; node is a top-level file
+        (0 filetitle)
+        ;; node is a level 1 heading
+        (1 (concat (propertize filetitle 'face '(shadow italic))
+                   separator title))
+        ;; node is a heading with an arbitrary outline path
+        (t (concat (propertize filetitle 'face '(shadow italic))
+                   separator (propertize (string-join olp " > ") 'face '(shadow italic))
+                   separator title)))))
+  ;; (setq org-roam-node-display-template (concat "${type:15} ${doom-hierarchy:80} " (propertize "${tags:*}" 'face 'org-tag)))
+  :bind
+  (("C-c n f" . org-roam-node-find)
+   (:map org-mode-map
+	 (("C-c n i" . org-roam-node-insert)))))
 
 ; For org-agenda
 (global-set-key (kbd "C-c a") 'org-agenda)
