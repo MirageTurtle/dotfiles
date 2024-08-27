@@ -263,6 +263,50 @@
                                (point-max) t)
         (replace-match ""))))
   ;; dynamically update feature ends
+
+  ;; Beautify the org-agenda display
+  (setq org-agenda-prefix-format
+	'((agenda . " %i %-12(vulpea-agenda-category)%?-12t% s")
+          (todo . " %i %-12(vulpea-agenda-category) ")
+          (tags . " %i %-12(vulpea-agenda-category) ")
+          (search . " %i %-12(vulpea-agenda-category) ")))
+
+  (defun vulpea-agenda-category ()
+    "Get category of item at point for agenda.
+
+Category is defined by one of the following items:
+
+- CATEGORY property
+- TITLE keyword
+- TITLE property
+- filename without directory and extension
+
+Usage example:
+
+  (setq org-agenda-prefix-format
+        '((agenda . \" %(vulpea-agenda-category) %?-12t %12s\")))
+
+Refer to `org-agenda-prefix-format' for more information."
+    (let* ((file-name (when buffer-file-name
+			(file-name-sans-extension
+			 (file-name-nondirectory buffer-file-name))))
+           (title (vulpea-buffer-prop-get "title"))
+           (category (org-get-category)))
+      (or (if (and
+               title
+               (string-equal category file-name))
+              title
+            category)
+	  "")))
+  (defun vulpea-buffer-prop-get (name)
+    "Get a buffer property called NAME as a string."
+    (org-with-point-at 1
+      (when (re-search-forward (concat "^#\\+" name ": \\(.*\\)")
+                               (point-max) t)
+	(buffer-substring-no-properties
+	 (match-beginning 1)
+	 (match-end 1)))))
+  ;; Beautifying the org-agenda display ends
   )
 
 ;; for my personal todo

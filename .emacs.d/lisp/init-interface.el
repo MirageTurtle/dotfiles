@@ -32,6 +32,7 @@
  ;; (setq dashboard-startup-banner nil)
  (setq dashboard-items '((recents  . 10)
 		  (bookmarks . 5)
+		  (agenda . 5)
 		  (projects . 5)))
  (dashboard-setup-startup-hook))
 
