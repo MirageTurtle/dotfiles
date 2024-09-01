@@ -280,6 +280,8 @@
 (require 'init-rust)
 (require 'init-go)
 
+(require 'init-bib)
+
 ;; (require 'init-eaf)
 
 (provide 'init)
