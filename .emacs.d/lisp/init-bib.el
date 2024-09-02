@@ -38,7 +38,7 @@
                 ":Custom_ID: %^{citekey}\n"
                 ":URL: %^{url}\n"
                 ":AUTHOR: %^{author-or-editor}\n"
-                ":NOTER_DOCUMENT: " zot_pdf "%^{citekey}.pdf\n"
+                ":NOTER_DOCUMENT: \"" zot_pdf "%^{citekey}.pdf\"\n"
                 ":NOTER_PAGE:\n"
                 ":END:"))
   (setq org-roam-capture-templates
