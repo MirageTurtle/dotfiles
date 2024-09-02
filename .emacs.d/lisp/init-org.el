@@ -32,6 +32,7 @@
 ;; part from references but not familiar with
 ;; (setq org-hide-emphasis-markers t)
 ;; (setq org-fontify-done-headline t)
+(setq org-footnote-auto-adjust t)
 
 ;; pretty leading stars of headings
 (use-package org-bullets
