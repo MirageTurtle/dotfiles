@@ -48,6 +48,20 @@
                  :target
                  (file+head "ref/${citekey}.org" "#+title: ${title}\n"))))))
 
+(use-package org-noter
+  :ensure t
+  :after org-roam
+  :custom
+  (org-noter-notes-search-path '((concat org-directory "roam/ref/")))
+  (org-noter-auto-save-last-location t)
+  (org-noter-max-short-selected-text-length 20) ;; default value is 80
+  (org-noter-default-heading-title "note for page $p$")
+  :bind
+  (("C-c n n" . org-noter)
+   :map org-noter-doc-mode-map
+   ("e" . org-noter-insert-note)
+   ("M-e" . org-noter-insert-precise-note)))
+
 (provide 'init-bib)
 
 ;; init-bib.el ends here
