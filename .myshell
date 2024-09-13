@@ -3,19 +3,128 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # sshfs
-alias mysshfs="sshfs -C -o kill_on_unmount,reconnect,allow_other,defer_permissions,auto_cache,nolocalcaches,no_readahead"
-alias mysshfs-umount="diskutil unmount force"
-alias mysshfs-umount-all="ps ux | grep sshfs | grep -v grep | awk '{print \$NF}' | xargs -n1 diskutil unmount force"
-function mysshfs-reconnect() {
-    mysshfs-umount $2
-    mysshfs $1 $2
+# Detect the operating system
+function detect_os() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "macOS"
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        echo "Linux"
+    else
+        echo "Unknown OS"
+    fi
 }
+
+# Function to check if 'user_allow_other' is enabled in /etc/fuse.conf
+function check_allow_other_enabled() {
+    if grep -q "^user_allow_other" /etc/fuse.conf; then
+        echo "user_allow_other is already enabled."
+        return 0
+    else
+        echo "user_allow_other is NOT enabled."
+        return 1
+    fi
+}
+
+# Function to show the dry-run command and request sudo permission to fix it
+function enable_allow_other() {
+    echo "Dry-run: The following command will be run to enable 'user_allow_other' in /etc/fuse.conf:"
+    echo "    sudo bash -c \"echo 'user_allow_other' >> /etc/fuse.conf\""
+
+    echo -n "Do you want to proceed and enable 'user_allow_other'? (y/n): "
+    read answer
+    if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
+        # Request sudo permission and append 'user_allow_other' to /etc/fuse.conf
+        sudo bash -c "echo 'user_allow_other' >> /etc/fuse.conf"
+
+        if [[ $? -eq 0 ]]; then
+            echo "'user_allow_other' has been successfully enabled in /etc/fuse.conf."
+            return 0
+        else
+            echo "Failed to enable 'user_allow_other'. Please check your permissions or manually edit /etc/fuse.conf."
+        fi
+    else
+        echo "Operation cancelled. 'user_allow_other' remains disabled."
+    fi
+    return 1
+}
+
+# Define OS-specific sshfs mount commands
+function mysshfs() {
+    local os=$(detect_os)
+    if [[ "$os" == "macOS" ]]; then
+        sshfs -C -o kill_on_unmount,reconnect,allow_other,defer_permissions,auto_cache,nolocalcaches,no_readahead "$1" "$2"
+    elif [[ "$os" == "Linux" ]]; then
+        mount_command="sshfs -C -o dir_cache=no,transform_symlinks,idmap=user,reconnect,allow_other \"$1\" \"$2\""
+        eval $mount_command 2> /dev/null
+        if [[ $? -ne 0 ]]; then
+            local error_message=$(eval $mount_command 2>&1)
+            echo "$error_message" > /tmp/test.txt
+            if echo "$error_message" | grep "user_allow_other" | grep -q "/etc/fuse.conf"; then
+                if ! check_allow_other_enabled; then
+                    enable_allow_other
+                    if [[ $? -eq 0 ]]; then
+                        # retry the mount command
+                        echo "Retrying the mount command..."
+                        eval $mount_command
+                    fi
+                else
+                    echo "$error_message"
+                    return 2
+                fi
+            fi
+        fi
+    else
+        echo "Unsupported OS"
+        return 1
+    fi
+}
+
+# Define OS-specific unmount commands
+function mysshfs-umount() {
+    local os=$(detect_os)
+    if [[ "$os" == "macOS" ]]; then
+        diskutil unmount force "$1"
+    elif [[ "$os" == "Linux" ]]; then
+        umount "$1"
+    else
+        echo "Unsupported OS"
+        return 1
+    fi
+}
+
+# Unmount all sshfs mounts
+function mysshfs-umount-all() {
+    local os=$(detect_os)
+    if [[ "$os" == "macOS" ]]; then
+        ps ux | grep sshfs | grep -v grep | awk '{print $NF}' | xargs -n1 diskutil unmount force
+    elif [[ "$os" == "Linux" ]]; then
+        ps ux | grep sshfs | grep -v grep | awk '{print $NF}' | xargs -n1 umount
+    else
+        echo "Unsupported OS"
+        return 1
+    fi
+}
+
+# Reconnect function
+function mysshfs-reconnect() {
+    mysshfs-umount "$2"
+    mysshfs "$1" "$2"
+}
+
+# all-in-one function
 function mtsshfs() {
-    # try to mount the remote directory to the local directory
-    # if failed, try to unmount the local directory and mount again
     # $1: remote directory
     # $2: local directory
-    mysshfs $1 $2 || mysshfs-reconnect $1 $2
+    # on macOS:
+    # try to mount the remote directory to the local directory
+    # if failed, try to unmount the local directory and mount again
+    # mysshfs "$1" "$2" || mysshfs-reconnect "$1" "$2"
+    # BUT on Linux:
+    # it is likely that the twice mount will succeed
+    # Judge the mount status now via `ps ux | grep sshfs | grep -q "$2"`
+    # if not mounted, mount it
+    # if mounted, remount it
+    ps ux | grep sshfs | grep -q "$2" && mysshfs-reconnect "$1" "$2" || mysshfs "$1" "$2"
 }
 
 # custom tmux command
@@ -26,8 +135,8 @@ function mtmux() {
     default_session="main"
     group_name="mt"
     if [ -z "$1" ]; then
-	tmux attach-session -t $default_session 2>/dev/null || tmux new-session -s $default_session
+        tmux attach-session -t $default_session 2> /dev/null || tmux new-session -s $default_session
     else
-	tmux attach-session -t $1 2>/dev/null || tmux new-session -s $1
+        tmux attach-session -t $1 2> /dev/null || tmux new-session -s $1
     fi
 }
