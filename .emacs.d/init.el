@@ -279,6 +279,7 @@
 (require 'init-yaml)
 (require 'init-rust)
 (require 'init-go)
+(require 'init-bash)
 
 (require 'init-bib)
 
