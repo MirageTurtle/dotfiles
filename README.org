@@ -1,0 +1,31 @@
+Here are personal dotfiles of MirageTurtle!
+
+I hope this can help you while helping me. :)
+
+* TODO:
+** Emacs
+*** Configuration
++ About window section (maybe not the official concept)
++ Markdown
+  + Detect path when writing for an image.
++ Multi-line editing
++ Some shortcut like vscode habit shortcut
+  + Move a line or some lines up or down
+*** To be developed
++ [ ] A plugin to translate in buffer via DeepL Pro API.
+** HammerSpoon
+*** Configuration
++ Window
+  + Undo window resize
+*** To be developed
++ [ ] A plug-in can show time and my calendar list
+  + On desktop
+  + Stick on top
++ [X] A tool preventing Mac to sleep
++ +A tool can help me hide some icon in the Menu bar.+
+  Cancelled since Hammerspoon can not control menu bar except only adding icon in menu bar.
++ [X] `majordomo.lua`: a majordomo, control auto mount/u- after awake/sleep now.
+** Shell
+*** Custom shell alias or function
+  + [X] sshfs
+  + [X] tmux group
