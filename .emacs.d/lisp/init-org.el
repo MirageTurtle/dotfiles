@@ -39,8 +39,9 @@
   :ensure t
   :after org
   :custom
-  (org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶"))
-  (org-ellipsis "⤵")
+  ;; (org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶"))
+  (org-bullets-bullet-list '("◉" "○" "✸" "✿" "✜" "◆" "▶"))
+  ;; (org-ellipsis "⤵")
   :hook (org-mode . org-bullets-mode))
 
 ;; leading stars of table
