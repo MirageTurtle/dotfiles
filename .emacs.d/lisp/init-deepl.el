@@ -39,6 +39,6 @@ With a PREFIX argument, the target language is Chinese."
 
 (global-set-key (kbd "C-c t") #'deeplx-translate-region)
 
-(provide 'init-deep)
+(provide 'init-deepl)
 
 ;;; init-deep.el ends here
