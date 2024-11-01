@@ -35,6 +35,12 @@
 (use-package ein
   :ensure t)
 
+;; for black, a formatter
+(use-package python-black
+  :demand t
+  :after python
+  :hook (python-mode . python-black-on-save-mode-enable-dwim))
+
 (provide 'init-python)
 
 ;;; init-python.el ends here.
