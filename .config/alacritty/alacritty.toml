@@ -40,7 +40,7 @@ x = 0
 y = 0
 
 [font.normal]
-family = "MesloLGS NF"
+family = "JetBrains Mono"
 
 [font.offset]
 x = 0
