@@ -14,10 +14,11 @@
 ;; basic
 ;;; mac: ~/Documents/sshfs-client/org/
 ;;; linux: ~/Documents/sshfs-docs-client/org/
-(if (eq system-type 'darwin)
-    (setq org-directory (file-truename "~/Documents/sshfs-client/org/"))
-  (if (eq system-type 'gnu/linux)
-      (setq org-directory (file-truename "~/Documents/sshfs-docs-client/org/"))))
+;; (if (eq system-type 'darwin)
+;;     (setq org-directory (file-truename "~/Documents/sshfs-client/org/"))
+;;   (if (eq system-type 'gnu/linux)
+;;       (setq org-directory (file-truename "~/Documents/sshfs-docs-client/org/"))))
+(setq org-directory (file-truename "~/Documents/repo/org/"))
 ;; (setq org-startup-indented t)
 ;; (setq org-startup-numerated t)
 (add-hook 'org-mode-hook
