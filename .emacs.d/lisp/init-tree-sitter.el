@@ -9,7 +9,15 @@
   (python-mode . tree-sitter-hl-mode)
   :config
   (global-tree-sitter-mode)
-  (setq tree-sitter-load-paths "~/.emacs.d/tree-sitter/"))
+  (setq tree-sitter-load-paths "~/.emacs.d/tree-sitter/")
+  ;; for major mode language register
+  (setq tree-sitter-major-mode-language-alist
+	'((emacs-lisp-mode . elisp)
+	  (python-ts-mode . python)
+	  (bash-ts-mode . bash)
+	  (rust-ts-mode . rust)
+	  (go-ts-mode . go)
+	  (lisp-data-mode . elisp))))
 
 (use-package tree-sitter-langs
   :ensure t
