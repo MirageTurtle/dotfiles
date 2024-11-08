@@ -269,7 +269,8 @@
 (require 'init-workspace)
 (require 'init-lsp-bridge)
 (require 'init-copilot)
-(require 'init-treesit)
+;; (require 'init-treesit)
+(require 'init-tree-sitter)
 
 (require 'init-prog)
 (require 'init-python)
