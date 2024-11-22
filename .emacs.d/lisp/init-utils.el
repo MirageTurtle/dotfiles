@@ -27,6 +27,18 @@
 
 (advice-add 'message :before 'mt/ad-timestamp-message)
 
+;; Faster move cursor
+(defun next-ten-lines()
+ "Move cursor to next 10 lines."
+ (interactive)
+ (next-line 10))
+(defun previous-ten-lines()
+ "Move cursor to previous 10 lines."
+ (interactive)
+ (previous-line 10))
+(global-set-key (kbd "M-n") 'next-ten-lines)
+(global-set-key (kbd "M-p") 'previous-ten-lines)
+
 (provide 'init-utils)
 
 ;;; init-utils.el ends here.
