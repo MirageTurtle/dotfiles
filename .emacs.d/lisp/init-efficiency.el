@@ -122,6 +122,7 @@ WIN-ID : Window index."
   :ensure t
   :bind
   ("C-:" . avy-goto-char)
+  ("C-'" . avy-goto-char-timer)
   ("M-g f" . avy-goto-line)
   ("M-g w" . avy-goto-word-1))
 
