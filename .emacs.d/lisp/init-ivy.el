@@ -21,8 +21,9 @@
    ;; ("C-x C-@" . 'counsel-mark-ring)
    ("C-x SPC" . 'counsel-mark-ring)
    :map minibuffer-local-map
-   ("C-r" . counsel-minibuffer-history)  ;; not working
-   ("C-S-j" . ivy-immediate-done)))
+   ("C-r" . counsel-minibuffer-history)
+   ;; the ~ivy-immediate-done~ is binded to C-M-j
+))
 
 (provide 'init-ivy)
 

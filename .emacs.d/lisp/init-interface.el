@@ -36,6 +36,12 @@
 		  (projects . 5)))
  (dashboard-setup-startup-hook))
 
+;; good-scroll, but actually I do not feel the difference
+(use-package good-scroll
+ :ensure t
+ :if window-system
+ :init (good-scroll-mode))
+
 ;; (use-package highlight-indent-guides
 ;;   :ensure t
 ;;   :hook (prog-mode . highlight-indent-guides-mode)

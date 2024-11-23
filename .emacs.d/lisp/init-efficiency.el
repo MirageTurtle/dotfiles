@@ -2,6 +2,11 @@
 
 (global-hl-line-mode 1) ;; highlight current line
 
+(use-package amx
+  :ensure t
+  :config
+  (amx-mode 1))
+
 (use-package mwim
   ;; :straight t
   :ensure t
@@ -36,6 +41,12 @@
   ("C-<" . mc/mark-previous-like-this)
   ("C-c C-<" . mc/mark-all-like-this))
 
+;; ace-window
+(use-package ace-window
+  :ensure t
+  :bind
+  ("C-x o" . ace-window))
+
 ;; awesome-tab
 (use-package awesome-tab
   :straight (awesome-tab :type git :host github :repo "manateelazycat/awesome-tab")
@@ -56,16 +67,16 @@
   ("j" awesome-tab-forward-group)
   ("k" awesome-tab-backward-group)
   ("l" awesome-tab-forward-tab)
-  ;; ("0" my-select-window)
-  ;; ("1" my-select-window)
-  ;; ("2" my-select-window)
-  ;; ("3" my-select-window)
-  ;; ("4" my-select-window)
-  ;; ("5" my-select-window)
-  ;; ("6" my-select-window)
-  ;; ("7" my-select-window)
-  ;; ("8" my-select-window)
-  ;; ("9" my-select-window)
+  ("0" my-select-window)
+  ("1" my-select-window)
+  ("2" my-select-window)
+  ("3" my-select-window)
+  ("4" my-select-window)
+  ("5" my-select-window)
+  ("6" my-select-window)
+  ("7" my-select-window)
+  ("8" my-select-window)
+  ("9" my-select-window)
   ("C-a" awesome-tab-select-beg-tab)
   ("C-e" awesome-tab-select-end-tab)
   ("C-j" awesome-tab-ace-jump)
@@ -92,6 +103,18 @@ WIN-ID : Window index."
     (my-select-window-by-number
      (string-to-number (car (nreverse (split-string key-desc "-")))))))
 (global-set-key (kbd "C-x t") 'awesome-fast-switch/body)
+
+;; undo-tree
+;; ~C-x u~ to open undo-tree-visualizer
+(use-package undo-tree
+ :ensure t
+ :init (global-undo-tree-mode)
+ :custom
+ (undo-tree-auto-save-history nil))
+
+(use-package which-key
+ :ensure t
+ :init (which-key-mode))
 
 (provide 'init-efficiency)
 
