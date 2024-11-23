@@ -112,9 +112,18 @@ WIN-ID : Window index."
  :custom
  (undo-tree-auto-save-history nil))
 
+;; which-key
 (use-package which-key
  :ensure t
  :init (which-key-mode))
+
+;; avy
+(use-package avy
+  :ensure t
+  :bind
+  ("C-:" . avy-goto-char)
+  ("M-g f" . avy-goto-line)
+  ("M-g w" . avy-goto-word-1))
 
 (provide 'init-efficiency)
 
