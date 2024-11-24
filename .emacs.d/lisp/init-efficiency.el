@@ -33,6 +33,10 @@
 (global-set-key (kbd "C-c <up>")    'windmove-up)
 (global-set-key (kbd "C-c <down>")  'windmove-down)
 
+;; hydra
+(use-package hydra
+  :ensure t)
+
 ;; multi-cursor
 (use-package multiple-cursors
   :ensure t
