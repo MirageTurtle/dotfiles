@@ -126,6 +126,13 @@ WIN-ID : Window index."
   ("M-g f" . avy-goto-line)
   ("M-g w" . avy-goto-word-1))
 
+;; marginalia
+(use-package marginalia
+ :ensure t
+ :init (marginalia-mode)
+ :bind (:map minibuffer-local-map
+     ("M-A" . marginalia-cycle)))
+
 (provide 'init-efficiency)
 
 ;;; init-efficiency.el ends here.
