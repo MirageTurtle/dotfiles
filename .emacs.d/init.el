@@ -257,15 +257,16 @@
   ;; :ensure t)
 
 (require 'init-utils)
+(require 'init-efficiency)
 (require 'init-emoji)
+(require 'init-ivy)
+(require 'init-calendar)
 
 (require 'init-git)
-(require 'init-efficiency)
 (require 'init-theme)
 (require 'init-interface)
 (require 'init-dirvish)
 
-(require 'init-ivy)
 (require 'init-workspace)
 (require 'init-lsp-bridge)
 (require 'init-copilot)
