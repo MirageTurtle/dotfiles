@@ -1,7 +1,8 @@
 # remove fancy prompt when the $TERM is "dumb"
-if [ "$TERM" = "dumb" ]; then
-    PS1='> '
-fi
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+# if [ "$TERM" = "dumb" ]; then
+#     PS1='> '
+# fi
 
 # alias
 alias mv='mv -i'
