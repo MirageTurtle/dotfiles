@@ -5,15 +5,18 @@
 
 (use-package ivy
   :ensure t
+  :after counsel
   :init
-  (ivy-mode 1)
-  (counsel-mode 1)
   :config
+  (counsel-mode 1)
+  (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (setq search-default-mode #'char-fold-to-regexp)
   (setq ivy-count-format "(%d/%d) ")
   :bind
-  (("C-s" . 'swiper)
+  (("M-x" . 'counsel-M-x)
+   ("C-x C-f" . 'counsel-find-file)
+   ("C-s" . 'swiper)
    ("C-x b" . 'ivy-switch-buffer)
    ("C-c v" . 'ivy-push-view)
    ("C-c s" . 'ivy-switch-view)
