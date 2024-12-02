@@ -1,8 +1,7 @@
+#!/usr/bin/env zsh
 # remove fancy prompt when the $TERM is "dumb"
-[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
-# if [ "$TERM" = "dumb" ]; then
-#     PS1='> '
-# fi
+# this command should place in the first line of ~/.zshrc directly
+# [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return 1
 
 # alias
 alias mv='mv -i'
