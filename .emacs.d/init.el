@@ -261,6 +261,7 @@
 (require 'init-emoji)
 (require 'init-ivy)
 (require 'init-calendar)
+(require 'init-llm)
 
 (require 'init-git)
 (require 'init-theme)
