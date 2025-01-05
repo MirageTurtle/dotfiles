@@ -3,7 +3,7 @@ name: Update Submodules
 on: workflow_dispatch
 
 jobs:
-  update-emacs:
+  update-submodules:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout dotfiles
