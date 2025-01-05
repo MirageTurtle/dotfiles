@@ -1,4 +1,4 @@
-name: Update submodules
+name: Update Submodules
 
 on: workflow_dispatch
 
@@ -6,16 +6,16 @@ jobs:
   update-emacs:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout parent repository
-        uses: actions/checkout@v2
+      - name: Checkout dotfiles
+        uses: actions/checkout@v4
 
-      - name: Checkout submodule
-        run: git submodule update --init --recursive
+      - name: Checkout submodules
+        run: git submodule update --init --remote
 
       - name: Commit and push changes
         run: |
-          git add .
-          git commit -m "Update submodules"
-          git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           git submodule update --init --remote
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "Update submodules" || exit 0
+          git push || exit 0
