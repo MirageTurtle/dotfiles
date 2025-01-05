@@ -1,9 +1,6 @@
-name: Update .emacs.d
+name: Update submodules
 
-on:
-  push:
-    paths:
-      - '.emacs.d/**'
+on: workflow_dispatch
 
 jobs:
   update-emacs:
@@ -12,13 +9,13 @@ jobs:
       - name: Checkout parent repository
         uses: actions/checkout@v2
 
-      - name: Checkout .emacs.d submodule
+      - name: Checkout submodule
         run: git submodule update --init --recursive
 
       - name: Commit and push changes
         run: |
-          git add .emacs.d
-          git commit -m "Update .emacs.d submodule"
+          git add .
+          git commit -m "Update submodules"
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
