@@ -149,6 +149,12 @@ function mtmux() {
     group_name="mt"
     if [ -z "$1" ]; then
         tmux attach-session -t $default_session 2> /dev/null || tmux new-session -s $default_session
+    elif [[ "$1" == "list" ]]; then
+	tmux list-sessions
+    elif [[ "$1" == "help" ]]; then
+	echo "Usage: mtmux [session_name]"
+	echo "       mtmux list"
+	echo "       mtmux help"
     else
         tmux attach-session -t $1 2> /dev/null || tmux new-session -s $1
     fi
