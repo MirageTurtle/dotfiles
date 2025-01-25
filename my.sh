@@ -3,10 +3,15 @@
 # this command should place in the first line of ~/.zshrc directly
 # [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return 1
 
-# alias
+# alias for common commands
 alias mv='mv -i'
 alias proxy="export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890"
 alias unproxy="unset https_proxy http_proxy all_proxy"
+alias cp='cp -i'
+
+# alias for modern unix commands
+## eza
+alias ls='eza --all --long --group --group-directories-first --icons --header --time-style long-iso'
 
 # env
 export LANG=en_US.UTF-8
