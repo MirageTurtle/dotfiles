@@ -40,7 +40,9 @@ x = 0
 y = 0
 
 [font.normal]
-family = "JetBrains Mono"
+# family = "JetBrains Mono"
+# family = "MesloLGS NF"
+family = "JetBrainsMono Nerd Font"
 
 [font.offset]
 x = 0
