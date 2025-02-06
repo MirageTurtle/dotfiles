@@ -12,6 +12,10 @@ function winResize(method)
       "vthird-0", "vthird-1", "vthird-2"
    ]]
    local win = hs.window.focusedWindow()
+   if not win then
+      hs.alert.show("No focused window")
+      return
+   end
    local newWin
 
    local method_table = {
