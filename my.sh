@@ -15,6 +15,11 @@ if command -v eza &> /dev/null; then
     alias ls='eza --all --long --group --group-directories-first --icons --header --time-style long-iso'
 fi
 
+# alias for copilot
+if command -v gh &> /dev/null; then
+    alias copilot='gh copilot suggest -t shell -- '
+fi
+
 # env
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
