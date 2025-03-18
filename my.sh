@@ -12,6 +12,7 @@ alias cp='cp -i'
 # alias for modern unix commands
 ## eza
 if command -v eza &> /dev/null; then
+    alias ls-ls='/bin/ls'
     alias ls='eza --all --long --group --group-directories-first --icons --header --time-style long-iso'
 fi
 
