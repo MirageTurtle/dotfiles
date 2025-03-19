@@ -15,6 +15,11 @@ if command -v eza &> /dev/null; then
     alias ls-ls='/bin/ls'
     alias ls='eza --all --long --group --group-directories-first --icons --header --time-style long-iso'
 fi
+## bat
+if command -v bat &> /dev/null; then
+    alias cat-cat='/bin/cat'
+    alias cat='bat'
+fi
 
 # alias for copilot
 if command -v gh &> /dev/null; then
