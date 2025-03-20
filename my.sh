@@ -177,3 +177,14 @@ function mtmux() {
         tmux attach-session -t $1 2> /dev/null || tmux new-session -s $1
     fi
 }
+
+# alias for container
+if command -v podman &> /dev/null; then
+    alias tmpctr="podman run -it --rm --log-driver none" # thx to taoky
+fi
+
+# ripgrep
+if command -v rg &> /dev/null; then
+    # https://github.com/BurntSushi/ripgrep/issues/1352#issuecomment-1959071755
+    rgnc(){ Q="$1"; shift; rg --pretty --colors match:none -o ".{0,50}$Q.{0,50}" "$@" | rg --passthru "$Q" ;}
+fi
