@@ -190,4 +190,4 @@ if command -v rg &> /dev/null; then
 fi
 
 # 0x0.st
-0x0() { curl -F"file=@${1:--}" https://0x0.st | tee -a "$HOME/d/0x0.log"; }
+0x0() { curl -F"file=@${1:--}" https://0x0.st | tee -a "$HOME/tmp/0x0.log"; }
