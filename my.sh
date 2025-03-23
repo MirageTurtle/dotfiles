@@ -188,3 +188,6 @@ if command -v rg &> /dev/null; then
     # https://github.com/BurntSushi/ripgrep/issues/1352#issuecomment-1959071755
     rgnc(){ Q="$1"; shift; rg --pretty --colors match:none -o ".{0,50}$Q.{0,50}" "$@" | rg --passthru "$Q" ;}
 fi
+
+# 0x0.st
+0x0() { curl -F"file=@${1:--}" https://0x0.st | tee -a "$HOME/d/0x0.log"; }
