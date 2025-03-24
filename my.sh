@@ -16,9 +16,15 @@ if command -v eza &> /dev/null; then
     alias ls='eza --all --long --group --group-directories-first --icons --header --time-style long-iso'
 fi
 ## bat
+BAT_BIN=""
 if command -v bat &> /dev/null; then
+    BAT_BIN="bat"
+elif command -v batcat &> /dev/null; then
+    BAT_BIN="batcat"
+fi
+if [[ -n "$BAT_BIN" ]]; then
     alias cat-cat='/bin/cat'
-    alias cat='bat'
+    alias cat="$BAT_BIN"
 fi
 
 # alias for copilot
