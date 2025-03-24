@@ -26,6 +26,10 @@ if [[ -n "$BAT_BIN" ]]; then
     alias cat-cat='/bin/cat'
     alias cat="$BAT_BIN"
 fi
+## fd (for ubuntu package binary)
+if ! command -v fd &> /dev/null && command -v fdfind &> /dev/null; then
+    alias fd="fdfind"
+fi
 
 # alias for copilot
 if command -v gh &> /dev/null; then
