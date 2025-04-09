@@ -104,6 +104,19 @@ function mirror_builtin(builtin, external)
     end
 end
 
+-- Function to toggle the dock autohide and magnification
+function toggle_dock()
+    if hs.execute("defaults read com.apple.dock autohide") == "0\n" then
+	hs.execute("defaults write com.apple.dock autohide -bool true")
+	hs.execute("defaults write com.apple.dock magnification -bool true")
+	hs.execute("killall Dock")
+    else
+	hs.execute("defaults write com.apple.dock autohide -bool false")
+	hs.execute("defaults write com.apple.dock magnification -bool false")
+	hs.execute("killall Dock")
+    end
+end
+
 screenWatcher = hs.screen.watcher.new(update_screens)
 screenWatcher:start()
 
@@ -122,4 +135,8 @@ hs.hotkey.bind({"alt", "ctrl"}, "2", function()
     main:mirrorStop()
     update_screens()
     mirror_builtin(builtin, external)
+end)
+
+hs.hotkey.bind({"alt", "ctrl"}, "d", function()
+    toggle_dock()
 end)
