@@ -1,8 +1,10 @@
 -- memory module partly from https://gitee.com/hei5xie/hammerspoon-config
 
+local configDir = hs.configdir
+
 local memoryIcon = {
-    icon = hs.image.imageFromPath('assets/memory/icon.png'):setSize({ w = 20, h = 20 }),
-    clean = hs.image.imageFromPath('assets/memory/clean.png'):setSize({ w = 20, h = 20 }),
+   icon = hs.image.imageFromPath(configDir .. '/assets/memory/icon.png'):setSize({ w = 20, h = 20 }),
+   clean = hs.image.imageFromPath(configDir .. '/assets/memory/clean.png'):setSize({ w = 20, h = 20 }),
 }
 local fetchTimer = nil
 local isCleaning = false

@@ -1,9 +1,11 @@
 -- A substitute for Amphetamine.app
 -- All the icons are from https://www.iconfont.cn/search/index?searchType=icon&q=caffeine&page=1&fromCollection=-1
 
+local configDir = hs.configdir
+
 local amphetamineIcon = {
-   no_amphetamine = hs.image.imageFromPath('assets/amphetamine/no-caffeine.png'):setSize({ w = 20, h = 20 }),
-   amphetamine = hs.image.imageFromPath('assets/amphetamine/coffee.png'):setSize({ w = 20, h = 20 }),
+   no_amphetamine = hs.image.imageFromPath(configDir .. '/assets/amphetamine/no-caffeine.png'):setSize({ w = 20, h = 20 }),
+   amphetamine = hs.image.imageFromPath(configDir .. '/assets/amphetamine/coffee.png'):setSize({ w = 20, h = 20 }),
 }
 
 local amphetamineBar = hs.menubar.new()
