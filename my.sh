@@ -170,21 +170,26 @@ function mtsshfs() {
 
 # custom tmux command
 function mtmux() {
-    # If no parameter is passed, attach to or create a default session
+    # If no parameter is passed, show interactive session selector
     # Otherwise, attach to or create a session with the name passed as the first parameter
-    # suffix is the suffix of every group name
-    default_session="main"
-    group_name="mt"
     if [ -z "$1" ]; then
-        tmux attach-session -t $default_session 2> /dev/null || tmux new-session -s $default_session
+        # Show interactive session selector using fzf
+        selected_session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --height 40% --reverse --prompt="Select tmux session: ")
+        if [ -z "$selected_session" ]; then
+            # No session selected or fzf not available
+            # tmux attach-session -t $default_session 2>/dev/null || tmux new-session -s $default_session
+	    echo "No session selected. Exiting."
+        else
+            tmux attach-session -t "$selected_session"
+        fi
     elif [[ "$1" == "list" ]]; then
-	tmux list-sessions
+        tmux list-sessions
     elif [[ "$1" == "help" ]]; then
-	echo "Usage: mtmux [session_name]"
-	echo "       mtmux list"
-	echo "       mtmux help"
+        echo "Usage: mtmux [session_name]"
+        echo "       mtmux list"
+        echo "       mtmux help"
     else
-        tmux attach-session -t $1 2> /dev/null || tmux new-session -s $1
+        tmux attach-session -t "$1" 2>/dev/null || tmux new-session -s "$1"
     fi
 }
 
