@@ -172,6 +172,7 @@ function mtsshfs() {
 function mtmux() {
     # If no parameter is passed, show interactive session selector
     # Otherwise, attach to or create a session with the name passed as the first parameter
+    target_session="$1"
     if [ -z "$1" ]; then
         # Show interactive session selector using fzf
         selected_session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --height 40% --reverse --prompt="Select tmux session: ")
@@ -179,19 +180,38 @@ function mtmux() {
             # No session selected or fzf not available
             # tmux attach-session -t $default_session 2>/dev/null || tmux new-session -s $default_session
 	    echo "No session selected. Exiting."
+	    return 0
         else
-            tmux attach-session -t "$selected_session"
+	    target_session="$selected_session"
         fi
     elif [[ "$1" == "list" ]]; then
         tmux list-sessions
+	return 0
     elif [[ "$1" == "help" ]]; then
         echo "Usage: mtmux [session_name]"
         echo "       mtmux list"
         echo "       mtmux help"
+	return 0
+    fi
+    # now, the target_session variable is set
+    # check if in a tmux session
+    if [[ -n "$TMUX" ]]; then
+	# If already in a tmux session, switch to the target session
+	mtmux_in_session "$target_session"
     else
-        tmux attach-session -t "$1" 2>/dev/null || tmux new-session -s "$1"
+	# If not in a tmux session, attach to the target session or create it if it doesn't exist
+	mtmux_out_session "$target_session"
     fi
 }
+function mtmux_in_session() {
+    # switch to the target session if it exists, otherwise exit
+    tmux switch-client -t "$1" 2>/dev/null || echo "Session '$1' does not exist."
+}
+function mtmux_out_session() {
+    # attach to the target session if it exists, otherwise create a new session
+    tmux attach-session -t "$1" 2>/dev/null || tmux new-session -s "$1"
+}
+
 
 # alias for container
 if command -v podman &> /dev/null; then
