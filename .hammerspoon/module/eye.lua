@@ -27,7 +27,6 @@ end
 
 -- set click callback for the menubar item
 eyeBreak:setMenu({
-      { title = 'Enable for test', fn = function() enableEyeBreakWithTimeout(0.1) end },
       { title = 'Enable for 15 minutes', fn = function() enableEyeBreakWithTimeout(15) end },
       { title = 'Enable for 30 minutes', fn = function() enableEyeBreakWithTimeout(30) end },
       { title = 'Enable for 1 hour', fn = function() enableEyeBreakWithTimeout(60) end },
