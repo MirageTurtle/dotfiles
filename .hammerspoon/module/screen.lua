@@ -21,11 +21,11 @@ function update_screens()
     end
     if external == nil then
         hs.notify.new({title="Hammerspoon", informativeText="No external screen found."}):send()
-        if hs.execute("defaults read com.apple.dock autohide") == "0\n" then
-            hs.execute("defaults write com.apple.dock autohide -bool true")
-	    hs.execute("defaults write com.apple.dock magnification -bool true")
-            hs.execute("killall Dock")
-        end
+        -- if hs.execute("defaults read com.apple.dock autohide") == "0\n" then
+        --     hs.execute("defaults write com.apple.dock autohide -bool true")
+	--     hs.execute("defaults write com.apple.dock magnification -bool true")
+        --     hs.execute("killall Dock")
+        -- end
     end
 end
 
