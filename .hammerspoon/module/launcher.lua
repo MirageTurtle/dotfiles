@@ -3,7 +3,7 @@ local applist = {
     {shortcut = 'J', appname = 'Alacritty'},
     -- {shortcut = 'O', appname = 'Logseq'},
     -- {shortcut = 'D', appname = 'Dictionary'},
-    {shortcut = 'N', appname = "Chromium"},
+    {shortcut = 'N', appname = "Firefox"},
 }
 
 -- Use Cmd+Alt+Ctrl+<shortcut> to launch or focus the app
