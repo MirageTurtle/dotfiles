@@ -5,7 +5,9 @@
 
 # alias for common commands
 alias mv='mv -i'
-alias proxy="export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897"
+proxy_host="127.0.0.1"
+proxy_port="2333"
+alias proxy="export https_proxy=http://$proxy_host:$proxy_port http_proxy=http://$proxy_host:$proxy_port all_proxy=socks5://$proxy_host:$proxy_port"
 alias unproxy="unset https_proxy http_proxy all_proxy"
 alias cp='cp -i'
 
