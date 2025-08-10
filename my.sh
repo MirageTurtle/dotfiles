@@ -7,7 +7,20 @@
 alias mv='mv -i'
 proxy_host="127.0.0.1"
 proxy_port="2333"
-alias proxy="export https_proxy=http://$proxy_host:$proxy_port http_proxy=http://$proxy_host:$proxy_port all_proxy=socks5://$proxy_host:$proxy_port"
+# alias proxy="export https_proxy=http://$proxy_host:$proxy_port http_proxy=http://$proxy_host:$proxy_port all_proxy=socks5://$proxy_host:$proxy_port"
+function proxy() {
+    # -p is for port, -h is for host
+    while getopts "p:h:" opt; do
+        case $opt in
+            p) proxy_port="$OPTARG" ;;
+            h) proxy_host="$OPTARG" ;;
+            *) echo "Usage: proxy [-p port] [-h host]" >&2; return 1 ;;
+        esac
+    done
+    export https_proxy="http://$proxy_host:$proxy_port"
+    export http_proxy="http://$proxy_host:$proxy_port"
+    export all_proxy="socks5://$proxy_host:$proxy_port"
+}
 alias unproxy="unset https_proxy http_proxy all_proxy"
 alias cp='cp -i'
 
