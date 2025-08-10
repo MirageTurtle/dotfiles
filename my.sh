@@ -9,6 +9,8 @@ default_proxy_host="127.0.0.1"
 default_proxy_port="2333"
 # alias proxy="export https_proxy=http://$proxy_host:$proxy_port http_proxy=http://$proxy_host:$proxy_port all_proxy=socks5://$proxy_host:$proxy_port"
 function proxy() {
+    local proxy_host="$default_proxy_host"
+    local proxy_port="$default_proxy_port"
     # -p is for port, -h is for host
     while getopts "p:h:" opt; do
         case $opt in
