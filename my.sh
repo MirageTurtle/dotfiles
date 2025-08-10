@@ -17,11 +17,14 @@ function proxy() {
             *) echo "Usage: proxy [-p port] [-h host]" >&2; return 1 ;;
         esac
     done
-    export https_proxy="http://$proxy_host:$proxy_port"
     export http_proxy="http://$proxy_host:$proxy_port"
+    export https_proxy="http://$proxy_host:$proxy_port"
     export all_proxy="socks5://$proxy_host:$proxy_port"
+    export HTTP_PROXY="http://$proxy_host:$proxy_port"
+    export HTTPS_PROXY="http://$proxy_host:$proxy_port"
+    export ALL_PROXY="socks5://$proxy_host:$proxy_port"
 }
-alias unproxy="unset https_proxy http_proxy all_proxy"
+alias unproxy="unset https_proxy http_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY"
 alias cp='cp -i'
 
 # alias for modern unix commands
