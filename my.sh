@@ -11,20 +11,23 @@ default_proxy_port="2333"
 function proxy() {
     local proxy_host="$default_proxy_host"
     local proxy_port="$default_proxy_port"
+    local socks5_port="$default_proxy_port"
     # -p is for port, -h is for host
-    while getopts "p:h:" opt; do
+    # -s is for socks5 port
+    while getopts "p:h:s:" opt; do
         case $opt in
             p) proxy_port="$OPTARG" ;;
             h) proxy_host="$OPTARG" ;;
+            s) socks5_port="$OPTARG" ;;
             *) echo "Usage: proxy [-p port] [-h host]" >&2; return 1 ;;
         esac
     done
     export http_proxy="http://$proxy_host:$proxy_port"
     export https_proxy="http://$proxy_host:$proxy_port"
-    export all_proxy="socks5://$proxy_host:$proxy_port"
+    export all_proxy="socks5://$proxy_host:$socks5_port"
     export HTTP_PROXY="http://$proxy_host:$proxy_port"
     export HTTPS_PROXY="http://$proxy_host:$proxy_port"
-    export ALL_PROXY="socks5://$proxy_host:$proxy_port"
+    export ALL_PROXY="socks5://$proxy_host:$socks5_port"
 }
 alias unproxy="unset https_proxy http_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY"
 alias cp='cp -i'
