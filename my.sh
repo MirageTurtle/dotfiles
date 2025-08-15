@@ -247,5 +247,19 @@ if command -v rg &> /dev/null; then
     rgnc(){ Q="$1"; shift; rg --pretty --colors match:none -o ".{0,50}$Q.{0,50}" "$@" | rg --passthru "$Q" ;}
 fi
 
-# 0x0.st
-0x0() { curl -F"file=@${1:--}" https://0x0.st | tee -a "$HOME/tmp/0x0.log"; }
+# paste bin
+function pasters() {
+    local file=${1:-/dev/stdin}
+    curl --data-binary @${file} https://paste.rs
+    echo "" # add a newline for better readability
+}
+
+function pasters-delete() {
+    local id=${1:-/dev/stdin}
+    if [[ -z "$id" ]]; then
+	echo "Usage: paste-delete <paste_id>"
+	return 1
+    fi
+    curl -X DELETE https://paste.rs/${id}
+}
+
