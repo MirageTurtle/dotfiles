@@ -248,6 +248,7 @@ if command -v rg &> /dev/null; then
 fi
 
 # paste bin
+## paste.rs
 function pasters() {
     local file=${1:-/dev/stdin}
     curl --data-binary @${file} https://paste.rs
@@ -262,4 +263,11 @@ function pasters-delete() {
     fi
     curl -X DELETE https://paste.rs/${id}
 }
+## 0x0.st
+0x0() {
+    local file=${1:-/dev/stdin}
+    curl -F"file=@${file}" https://0x0.st
+    echo "" # add a newline for better readability
+}
+
 
