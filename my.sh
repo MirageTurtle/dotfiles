@@ -245,6 +245,16 @@ fi
 if command -v rg &> /dev/null; then
     # https://github.com/BurntSushi/ripgrep/issues/1352#issuecomment-1959071755
     rgnc(){ Q="$1"; shift; rg --pretty --colors match:none -o ".{0,50}$Q.{0,50}" "$@" | rg --passthru "$Q" ;}
+
+    # Keep header line when filtering with rg
+    # Usage: ps aux | rgh something
+    rgh() {
+        if [[ -z "$1" ]]; then
+            echo "Usage: rgh <pattern>" >&2
+            return 1
+        fi
+        { IFS= read -r header; printf '%s\n' "$header"; rg "$@"; }
+    }
 fi
 
 # paste bin
