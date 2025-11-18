@@ -2,7 +2,7 @@ local applist = {
     {shortcut = 'H', appname = 'Emacs'},
     {shortcut = 'J', appname = 'Alacritty'},
     -- {shortcut = 'O', appname = 'Logseq'},
-    -- {shortcut = 'D', appname = 'Dictionary'},
+    {shortcut = 'M', appname = 'Eudic'},
     {shortcut = 'N', appname = "Firefox"},
 }
 
