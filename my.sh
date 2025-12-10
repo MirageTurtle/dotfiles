@@ -210,9 +210,13 @@ function mtmux() {
     elif [[ "$1" == "list" ]]; then
         tmux list-sessions
 	return 0
+    elif [[ "$1" == "update-environment" || "$1" == "update-env" || "$1" == "env-update" ]]; then
+        mtmux_update_environment
+	return 0
     elif [[ "$1" == "help" ]]; then
         echo "Usage: mtmux [session_name]"
         echo "       mtmux list"
+        echo "       mtmux update-environment|update-env|env-update"
         echo "       mtmux help"
 	return 0
     fi
@@ -233,6 +237,22 @@ function mtmux_in_session() {
 function mtmux_out_session() {
     # attach to the target session if it exists, otherwise create a new session
     tmux attach-session -t "$1" 2>/dev/null || tmux new-session -s "$1"
+}
+function mtmux_update_environment() {
+    # Update environment variables from tmux's global environment
+    # This is useful when SSH_AUTH_SOCK or other env vars change
+    local v
+    while IFS= read -r v; do
+        if [[ $v == -* ]]; then
+            # Variable marked for removal (prefixed with -)
+            unset ${v/#-/}
+        else
+            # Export the variable with proper quoting
+            v=${v/=/=\"}
+            v=${v/%/\"}
+            eval export $v
+        fi
+    done < <(tmux show-environment)
 }
 
 
