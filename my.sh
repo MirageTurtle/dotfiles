@@ -195,31 +195,37 @@ function mtsshfs() {
 function mtmux() {
     # If no parameter is passed, show interactive session selector
     # Otherwise, attach to or create a session with the name passed as the first parameter
-    target_session="$1"
-    if [ -z "$1" ]; then
-        # Show interactive session selector using fzf
-        selected_session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --height 40% --reverse --prompt="Select tmux session: ")
-        if [ -z "$selected_session" ]; then
-            # No session selected or fzf not available
-            # tmux attach-session -t $default_session 2>/dev/null || tmux new-session -s $default_session
-	    echo "No session selected. Exiting."
-	    return 0
-        else
-	    target_session="$selected_session"
-        fi
-    elif [[ "$1" == "list" ]]; then
-        tmux list-sessions
-	return 0
-    elif [[ "$1" == "update-environment" || "$1" == "update-env" || "$1" == "env-update" ]]; then
-        mtmux_update_environment
-	return 0
-    elif [[ "$1" == "help" ]]; then
-        echo "Usage: mtmux [session_name]"
-        echo "       mtmux list"
-        echo "       mtmux update-environment|update-env|env-update"
-        echo "       mtmux help"
-	return 0
-    fi
+    case "$1" in
+        list)
+            tmux list-sessions
+            return 0
+            ;;
+        update-environment|update-env|env-update)
+            mtmux_update_environment
+            return 0
+            ;;
+        help)
+            echo "Usage: mtmux [session_name]"
+            echo "       mtmux list"
+            echo "       mtmux update-environment|update-env|env-update"
+            echo "       mtmux help"
+            return 0
+            ;;
+        "")
+            # Show interactive session selector using fzf
+            selected_session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --height 40% --reverse --prompt="Select tmux session: ")
+            if [ -z "$selected_session" ]; then
+                # No session selected or fzf not available
+                echo "No session selected. Exiting."
+                return 0
+            else
+                target_session="$selected_session"
+            fi
+            ;;
+        *)
+            target_session="$1"
+            ;;
+    esac
     # now, the target_session variable is set
     # check if in a tmux session
     if [[ -n "$TMUX" ]]; then
