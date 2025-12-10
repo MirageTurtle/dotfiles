@@ -247,16 +247,17 @@ function mtmux_out_session() {
 function mtmux_update_environment() {
     # Update environment variables from tmux's global environment
     # This is useful when SSH_AUTH_SOCK or other env vars change
-    local v
+    local v var_name var_value
     while IFS= read -r v; do
         if [[ $v == -* ]]; then
             # Variable marked for removal (prefixed with -)
             unset ${v/#-/}
         else
-            # Export the variable with proper quoting
-            v=${v/=/=\"}
-            v=${v/%/\"}
-            eval export $v
+            # Split on first = to get variable name and value
+            var_name="${v%%=*}"
+            var_value="${v#*=}"
+            # Export the variable
+            export "$var_name=$var_value"
         fi
     done < <(tmux show-environment)
 }
