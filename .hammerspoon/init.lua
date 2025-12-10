@@ -43,7 +43,7 @@ end
 print(titleline("My configuration"))
 require "module.reload"
 require "module.window"
-require "module.translator"
+-- require "module.translator"
 require "module.wifi"
 require "module.screen"
 require "module.memory"
