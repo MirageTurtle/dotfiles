@@ -1,5 +1,5 @@
 local applist = {
-    {shortcut = 'H', appname = 'Emacs'},
+    {shortcut = 'H', appname = '/Applications/Emacs.app'},
     {shortcut = 'J', appname = 'Alacritty'},
     -- {shortcut = 'O', appname = 'Logseq'},
     {shortcut = 'M', appname = 'Eudic'},
