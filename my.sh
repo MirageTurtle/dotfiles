@@ -58,6 +58,29 @@ fi
 if command -v gh &> /dev/null; then
     alias copilot='gh copilot suggest -t shell -- '
 fi
+QUICK_CHAT_SCHEME_HOST_PORT="http://100.64.0.1:13000"
+QUICK_CHAT_ENDPOINT="${QUICK_CHAT_SCHEME_HOST_PORT}/api/v1/chat/completions"
+QUICK_CHAT_MODEL="gpt-4o-mini"
+function quickchat() {
+    local prompt="$1"
+    shift
+    local payload=$(jq -n \
+        --arg model "$QUICK_CHAT_MODEL" \
+        --arg content "$prompt" \
+        '{
+            "model": $model,
+            "messages": [{"role": "user", "content": $content}],
+            "temperature": 0.7,
+            "max_tokens": 800,
+            "top_p": 0.9,
+            "frequency_penalty": 0,
+            "presence_penalty": 0
+        }')
+    curl -sS -X POST "$QUICK_CHAT_ENDPOINT" \
+        -H "Content-Type: application/json" \
+        -d "$payload" | jq -r '.choices[0].message.content'
+}
+alias qc="quickchat"
 
 # env
 export LANG=en_US.UTF-8
