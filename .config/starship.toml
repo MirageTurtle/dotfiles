@@ -1,4 +1,6 @@
 add_newline = false
+format = """$character"""
+right_format = """$all"""
 
 [character]
 error_symbol = "[✖](bold red) "
@@ -45,12 +47,6 @@ trim_at = "-"
 style = "bold dimmed white"
 disabled = false
 
-[memory_usage]
-format = "$symbol[${ram}( | ${swap})]($style) "
-threshold = 70
-style = "bold dimmed white"
-disabled = false
-
 [package]
 disabled = true
 
@@ -77,4 +73,5 @@ style_user = "bold dimmed blue"
 show_always = false
 
 [nodejs]
-format = "via [🤖 $version](bold green) "
+# format = "via [🤖 $version](bold green) "
+disabled = true
