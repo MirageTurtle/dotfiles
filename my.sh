@@ -313,6 +313,8 @@ function pasters() {
     local file=${1:-/dev/stdin}
     # curl --data-binary @${file} https://paste.rs
     curl --data-binary @${file} https://paste.remnant.gay
+    # if the file ext is .cast, add .cast to the end of the url
+    [[ "$file" == *.cast ]] && echo -n ".cast"
     echo "" # add a newline for better readability
 }
 
