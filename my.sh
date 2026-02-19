@@ -311,17 +311,19 @@ fi
 ## paste.rs
 function pasters() {
     local file=${1:-/dev/stdin}
-    curl --data-binary @${file} https://paste.rs
+    # curl --data-binary @${file} https://paste.rs
+    curl --data-binary @${file} https://paste.remnant.gay
     echo "" # add a newline for better readability
 }
 
 function pasters-delete() {
     local id=${1:-/dev/stdin}
     if [[ -z "$id" ]]; then
-	echo "Usage: paste-delete <paste_id>"
+	echo "Usage: pasters-delete <paste_id>"
 	return 1
     fi
-    curl -X DELETE https://paste.rs/${id}
+    # curl -X DELETE https://paste.rs/${id}
+    curl -X DELETE https://paste.remnant.gay/${id}
 }
 ## 0x0.st
 0x0() {
