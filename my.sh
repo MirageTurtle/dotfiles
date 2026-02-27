@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # remove fancy prompt when the $TERM is "dumb"
 # this command should place in the first line of ~/.zshrc directly
 # [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return 1
@@ -47,7 +47,7 @@ elif command -v batcat &> /dev/null; then
 fi
 if [[ -n "$BAT_BIN" ]]; then
     alias cat-cat='/bin/cat'
-    alias cat="$BAT_BIN"
+    alias cat='$BAT_BIN'
 fi
 ## fd (for ubuntu package binary)
 if ! command -v fd &> /dev/null && command -v fdfind &> /dev/null; then
@@ -63,8 +63,9 @@ QUICK_CHAT_ENDPOINT="${QUICK_CHAT_SCHEME_HOST_PORT}/api/v1/chat/completions"
 QUICK_CHAT_MODEL="gpt-4o-mini"
 function quickchat() {
     local prompt="$1"
+    local payload
     shift
-    local payload=$(jq -n \
+    payload=$(jq -n \
         --arg model "$QUICK_CHAT_MODEL" \
         --arg content "$prompt" \
         '{
@@ -88,131 +89,6 @@ export LC_ALL=en_US.UTF-8
 export TERM=xterm-256color
 # editor
 export EDITOR="emacs -nw"
-
-# sshfs
-# Detect the operating system
-function detect_os() {
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "macOS"
-    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "Linux"
-    else
-        echo "Unknown OS"
-    fi
-}
-
-# Function to check if 'user_allow_other' is enabled in /etc/fuse.conf
-function check_allow_other_enabled() {
-    if grep -q "^user_allow_other" /etc/fuse.conf; then
-        echo "user_allow_other is already enabled."
-        return 0
-    else
-        echo "user_allow_other is NOT enabled."
-        return 1
-    fi
-}
-
-# Function to show the dry-run command and request sudo permission to fix it
-function enable_allow_other() {
-    echo "Dry-run: The following command will be run to enable 'user_allow_other' in /etc/fuse.conf:"
-    echo "    sudo bash -c \"echo 'user_allow_other' >> /etc/fuse.conf\""
-
-    echo -n "Do you want to proceed and enable 'user_allow_other'? (y/n): "
-    read answer
-    if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
-        # Request sudo permission and append 'user_allow_other' to /etc/fuse.conf
-        sudo bash -c "echo 'user_allow_other' >> /etc/fuse.conf"
-
-        if [[ $? -eq 0 ]]; then
-            echo "'user_allow_other' has been successfully enabled in /etc/fuse.conf."
-            return 0
-        else
-            echo "Failed to enable 'user_allow_other'. Please check your permissions or manually edit /etc/fuse.conf."
-        fi
-    else
-        echo "Operation cancelled. 'user_allow_other' remains disabled."
-    fi
-    return 1
-}
-
-# Define OS-specific sshfs mount commands
-function mysshfs() {
-    local os=$(detect_os)
-    if [[ "$os" == "macOS" ]]; then
-        sshfs -C -o kill_on_unmount,reconnect,allow_other,defer_permissions,auto_cache,nolocalcaches,no_readahead "$1" "$2"
-    elif [[ "$os" == "Linux" ]]; then
-        mount_command="sshfs -C -o dir_cache=no,transform_symlinks,idmap=user,reconnect,allow_other \"$1\" \"$2\""
-        eval $mount_command 2> /dev/null
-        if [[ $? -ne 0 ]]; then
-            local error_message=$(eval $mount_command 2>&1)
-            echo "$error_message" > /tmp/test.txt
-            if echo "$error_message" | grep "user_allow_other" | grep -q "/etc/fuse.conf"; then
-                if ! check_allow_other_enabled; then
-                    enable_allow_other
-                    if [[ $? -eq 0 ]]; then
-                        # retry the mount command
-                        echo "Retrying the mount command..."
-                        eval $mount_command
-                    fi
-                else
-                    echo "$error_message"
-                    return 2
-                fi
-            fi
-        fi
-    else
-        echo "Unsupported OS"
-        return 1
-    fi
-}
-
-# Define OS-specific unmount commands
-function mysshfs-umount() {
-    local os=$(detect_os)
-    if [[ "$os" == "macOS" ]]; then
-        diskutil unmount force "$1"
-    elif [[ "$os" == "Linux" ]]; then
-        umount "$1"
-    else
-        echo "Unsupported OS"
-        return 1
-    fi
-}
-
-# Unmount all sshfs mounts
-function mysshfs-umount-all() {
-    local os=$(detect_os)
-    if [[ "$os" == "macOS" ]]; then
-        ps ux | grep sshfs | grep -v grep | awk '{print $NF}' | xargs -n1 diskutil unmount force
-    elif [[ "$os" == "Linux" ]]; then
-        ps ux | grep sshfs | grep -v grep | awk '{print $NF}' | xargs -n1 umount
-    else
-        echo "Unsupported OS"
-        return 1
-    fi
-}
-
-# Reconnect function
-function mysshfs-reconnect() {
-    mysshfs-umount "$2"
-    mysshfs "$1" "$2"
-}
-
-# all-in-one function
-function mtsshfs() {
-    # $1: remote directory
-    # $2: local directory
-    # on macOS:
-    # try to mount the remote directory to the local directory
-    # if failed, try to unmount the local directory and mount again
-    # mysshfs "$1" "$2" || mysshfs-reconnect "$1" "$2"
-    # BUT on Linux:
-    # it is likely that the twice mount will succeed
-    # Judge the mount status now via `ps ux | grep sshfs | grep -q "$2"`
-    # if not mounted, mount it
-    # if mounted, remount it
-    ps ux | grep sshfs | grep -q "$2" && mysshfs-reconnect "$1" "$2" || mysshfs "$1" "$2"
-}
 
 # custom tmux command
 function mtmux() {
@@ -274,7 +150,7 @@ function mtmux_update_environment() {
     while IFS= read -r v; do
         if [[ $v == -* ]]; then
             # Variable marked for removal (prefixed with -)
-            unset ${v/#-/}
+            unset "${v/#-/}"
         else
             # Split on first = to get variable name and value
             var_name="${v%%=*}"
@@ -312,7 +188,7 @@ fi
 function pasters() {
     local file=${1:-/dev/stdin}
     # curl --data-binary @${file} https://paste.rs
-    curl --data-binary @${file} https://paste.remnant.gay
+    curl --data-binary @"${file}" https://paste.remnant.gay
     # if the file ext is .cast, add .cast to the end of the url
     [[ "$file" == *.cast ]] && echo -n ".cast"
     echo "" # add a newline for better readability
@@ -325,7 +201,7 @@ function pasters-delete() {
 	return 1
     fi
     # curl -X DELETE https://paste.rs/${id}
-    curl -X DELETE https://paste.remnant.gay/${id}
+    curl -X DELETE https://paste.remnant.gay/"${id}"
 }
 ## 0x0.st
 0x0() {
@@ -333,5 +209,3 @@ function pasters-delete() {
     curl -F"file=@${file}" https://0x0.st
     echo "" # add a newline for better readability
 }
-
-

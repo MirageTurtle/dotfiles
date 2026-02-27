@@ -43,20 +43,20 @@ local function fetchPhysMem()
 		memoryBar:setIcon(memoryIcon['icon'])
 		isCleaning = false
 	end
-	
+
 	-- PhysMem: 9032M used (2148M wired), 7351M unused.
 	physMem = hs.execute('top -l 1 | head -n 10 | grep PhysMem')
-	
+
 	-- 9032M used
 	used_text = string.match(physMem, '[%d]+%a used')
 	wired_text = string.match(physMem, '[%d]+%a wired')
 	unused_text = string.match(physMem, '[%d]+%a unused')
-	
+
 	-- M or G
 	used_unit = string.match(used_text, '%u')
 	wired_unit = string.match(wired_text, '%u')
 	unused_unit = string.match(unused_text, '%u')
-	
+
 	-- 9032
 	used = string.match(used_text, '[%d]+')
 	if (used_unit == 'G') then
@@ -70,7 +70,7 @@ local function fetchPhysMem()
 	if (unused_unit == 'G') then
 		unused = unused * 1024
 	end
-	
+
 	-- used_rate = (used - wired) / (used + unused) ?
 	used_rate =  used / (used + unused)
 	memoryBar:setTitle((string.gsub(string.format("%6.0f", used_rate * 100), "^%s*(.-)%s*$", "%1"))..'%')

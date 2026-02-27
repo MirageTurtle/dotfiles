@@ -42,7 +42,7 @@ window:
   # - transparent: title bar, transparent background and title bar buttons
   # - buttonless: title bar, transparent background, but no title bar buttons
   decorations: full
-  
+
   # Startup Mode (changes require restart)
   #
   # Values for `startup_mode`:
