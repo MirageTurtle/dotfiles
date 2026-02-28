@@ -63,7 +63,7 @@ if command -v gh &>/dev/null; then
 fi
 QUICK_CHAT_SCHEME_HOST_PORT="http://100.64.0.1:13000"
 QUICK_CHAT_ENDPOINT="${QUICK_CHAT_SCHEME_HOST_PORT}/api/v1/chat/completions"
-QUICK_CHAT_MODEL="gpt-4o-mini"
+QUICK_CHAT_MODEL="gemini-3-flash-preview"
 function quickchat() {
     local prompt="$1"
     local payload
