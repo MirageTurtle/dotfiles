@@ -19,7 +19,10 @@ function proxy() {
             p) proxy_port="$OPTARG" ;;
             h) proxy_host="$OPTARG" ;;
             s) socks5_port="$OPTARG" ;;
-            *) echo "Usage: proxy [-p port] [-h host]" >&2; return 1 ;;
+            *)
+                echo "Usage: proxy [-p port] [-h host]" >&2
+                return 1
+                ;;
         esac
     done
     export http_proxy="http://$proxy_host:$proxy_port"
@@ -34,15 +37,15 @@ alias cp='cp -i'
 
 # alias for modern unix commands
 ## eza
-if command -v eza &> /dev/null; then
+if command -v eza &>/dev/null; then
     alias ls-ls='/bin/ls'
     alias ls='eza --all --long --group --group-directories-first --icons --header --time-style long-iso'
 fi
 ## bat
 BAT_BIN=""
-if command -v bat &> /dev/null; then
+if command -v bat &>/dev/null; then
     BAT_BIN="bat"
-elif command -v batcat &> /dev/null; then
+elif command -v batcat &>/dev/null; then
     BAT_BIN="batcat"
 fi
 if [[ -n "$BAT_BIN" ]]; then
@@ -50,12 +53,12 @@ if [[ -n "$BAT_BIN" ]]; then
     alias cat='$BAT_BIN'
 fi
 ## fd (for ubuntu package binary)
-if ! command -v fd &> /dev/null && command -v fdfind &> /dev/null; then
+if ! command -v fd &>/dev/null && command -v fdfind &>/dev/null; then
     alias fd="fdfind"
 fi
 
 # alias for copilot
-if command -v gh &> /dev/null; then
+if command -v gh &>/dev/null; then
     alias copilot='gh copilot suggest -t shell -- '
 fi
 QUICK_CHAT_SCHEME_HOST_PORT="http://100.64.0.1:13000"
@@ -99,7 +102,7 @@ function mtmux() {
             tmux list-sessions
             return 0
             ;;
-        update-environment|update-env|env-update)
+        update-environment | update-env | env-update)
             mtmux_update_environment
             return 0
             ;;
@@ -128,11 +131,11 @@ function mtmux() {
     # now, the target_session variable is set
     # check if in a tmux session
     if [[ -n "$TMUX" ]]; then
-	# If already in a tmux session, switch to the target session
-	mtmux_in_session "$target_session"
+        # If already in a tmux session, switch to the target session
+        mtmux_in_session "$target_session"
     else
-	# If not in a tmux session, attach to the target session or create it if it doesn't exist
-	mtmux_out_session "$target_session"
+        # If not in a tmux session, attach to the target session or create it if it doesn't exist
+        mtmux_out_session "$target_session"
     fi
 }
 function mtmux_in_session() {
@@ -161,16 +164,19 @@ function mtmux_update_environment() {
     done < <(tmux show-environment)
 }
 
-
 # alias for container
-if command -v podman &> /dev/null; then
+if command -v podman &>/dev/null; then
     alias tmpctr="podman run -it --rm --log-driver none" # thx to taoky
 fi
 
 # ripgrep
-if command -v rg &> /dev/null; then
+if command -v rg &>/dev/null; then
     # https://github.com/BurntSushi/ripgrep/issues/1352#issuecomment-1959071755
-    rgnc(){ Q="$1"; shift; rg --pretty --colors match:none -o ".{0,50}$Q.{0,50}" "$@" | rg --passthru "$Q" ;}
+    rgnc() {
+        Q="$1"
+        shift
+        rg --pretty --colors match:none -o ".{0,50}$Q.{0,50}" "$@" | rg --passthru "$Q"
+    }
 
     # Keep header line when filtering with rg
     # Usage: ps aux | rgh something
@@ -179,7 +185,11 @@ if command -v rg &> /dev/null; then
             echo "Usage: rgh <pattern>" >&2
             return 1
         fi
-        { IFS= read -r header; printf '%s\n' "$header"; rg "$@"; }
+        {
+            IFS= read -r header
+            printf '%s\n' "$header"
+            rg "$@"
+        }
     }
 fi
 
@@ -197,8 +207,8 @@ function pasters() {
 function pasters-delete() {
     local id=${1:-/dev/stdin}
     if [[ -z "$id" ]]; then
-	echo "Usage: pasters-delete <paste_id>"
-	return 1
+        echo "Usage: pasters-delete <paste_id>"
+        return 1
     fi
     # curl -X DELETE https://paste.rs/${id}
     curl -X DELETE https://paste.remnant.gay/"${id}"
