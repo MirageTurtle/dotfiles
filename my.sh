@@ -219,3 +219,6 @@ function pasters-delete() {
     curl -F"file=@${file}" https://0x0.st
     echo "" # add a newline for better readability
 }
+
+# SSH_AUTH_SOCK
+export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
