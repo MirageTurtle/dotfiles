@@ -201,6 +201,7 @@ function pasters() {
     curl --data-binary @"${file}" https://paste.remnant.gay
     # if the file ext is .cast, add .cast to the end of the url
     [[ "$file" == *.cast ]] && echo -n ".cast"
+    [[ "$file" == *.md ]] && echo -n ".md"
     echo "" # add a newline for better readability
 }
 
