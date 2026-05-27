@@ -19,17 +19,22 @@ function winResize(method)
    local newWin
 
    local method_table = {
+      -- {x, y, w, h}
       ["left"] = hs.layout.left50,
       ["right"] = hs.layout.right50,
       ["up"] = {0, 0, 1, 0.5},
       ["down"] = {0, 0.5, 1, 0.5},
       ["max"] = hs.layout.maximized,
-      ["hthird-0"] = {0, 0, 1/3, 1},
-      ["hthird-1"] = {1/3, 0, 1/3, 1},
-      ["hthird-2"] = {2/3, 0, 1/3, 1},
-      ["vthird-0"] = {0, 0, 1, 1/3},
-      ["vthird-1"] = {0, 1/3, 1, 1/3},
-      ["vthird-2"] = {0, 2/3, 1, 1/3},
+      ["h-left-third"] = {0, 0, 1/3, 1},
+      ["h-middle-third"] = {1/3, 0, 1/3, 1},
+      ["h-right-third"] = {2/3, 0, 1/3, 1},
+      ["h-left-two-third"] = {0, 0, 2/3, 1},
+      ["h-right-two-third"] = {1/3, 0, 2/3, 1},
+      ["v-top-third"] = {0, 0, 1, 1/3},
+      ["v-middle-third"] = {0, 1/3, 1, 1/3},
+      ["v-middle-third"] = {0, 2/3, 1, 1/3},
+      ["v-top-two-third"] = {0, 0, 1, 2/3},
+      ["v-bottom-two-third"] = {0, 1/3, 1, 2/3},
       ["left-up"] = {0, 0, 0.5, 0.5},
       ["left-down"] = {0, 0.5, 0.5, 0.5},
       ["right-up"] = {0.5, 0, 0.5, 0.5},
@@ -75,3 +80,8 @@ hs.hotkey.bind({"ctrl", "alt"}, "-", hs.fnutils.partial(winResize, "left-up"))
 hs.hotkey.bind({"ctrl", "alt"}, "=", hs.fnutils.partial(winResize, "right-up"))
 hs.hotkey.bind({"ctrl", "alt"}, "[", hs.fnutils.partial(winResize, "left-down"))
 hs.hotkey.bind({"ctrl", "alt"}, "]", hs.fnutils.partial(winResize, "right-down"))
+hs.hotkey.bind({"ctrl", "alt"}, ",", hs.fnutils.partial(winResize, "h-left-third"))
+hs.hotkey.bind({"ctrl", "alt"}, ".", hs.fnutils.partial(winResize, "h-middle-third"))
+hs.hotkey.bind({"ctrl", "alt"}, "/", hs.fnutils.partial(winResize, "h-right-third"))
+hs.hotkey.bind({"ctrl", "alt"}, ";", hs.fnutils.partial(winResize, "h-left-two-third"))
+hs.hotkey.bind({"ctrl", "alt"}, "'", hs.fnutils.partial(winResize, "h-right-two-third"))
