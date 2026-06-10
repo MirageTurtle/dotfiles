@@ -25,11 +25,11 @@ function proxy() {
                 ;;
         esac
     done
-    export http_proxy="http://$proxy_host:$proxy_port"
-    export https_proxy="http://$proxy_host:$proxy_port"
+    export http_proxy="socks5://$proxy_host:$proxy_port"
+    export https_proxy="socks5://$proxy_host:$proxy_port"
     export all_proxy="socks5://$proxy_host:$socks5_port"
-    export HTTP_PROXY="http://$proxy_host:$proxy_port"
-    export HTTPS_PROXY="http://$proxy_host:$proxy_port"
+    export HTTP_PROXY="socks5://$proxy_host:$proxy_port"
+    export HTTPS_PROXY="socks5://$proxy_host:$proxy_port"
     export ALL_PROXY="socks5://$proxy_host:$socks5_port"
 }
 alias unproxy="unset https_proxy http_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY"
