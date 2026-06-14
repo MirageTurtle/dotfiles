@@ -220,4 +220,6 @@ function pasters-delete() {
 }
 
 # SSH_AUTH_SOCK
-export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+if [[ -S "$HOME/.bitwarden-ssh-agent.sock" ]]; then
+    export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+fi
