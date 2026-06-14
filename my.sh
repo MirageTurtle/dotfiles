@@ -7,22 +7,30 @@
 alias mv='mv -i'
 default_proxy_host="127.0.0.1"
 default_proxy_port="2333"
-# alias proxy="export https_proxy=http://$proxy_host:$proxy_port http_proxy=http://$proxy_host:$proxy_port all_proxy=socks5://$proxy_host:$proxy_port"
 function proxy() {
     local proxy_host="$default_proxy_host"
     local socks5h_port="$default_proxy_port"
-    # -p is for port, -h is for host
-    # -s is for socks5 port
-    while getopts "p:h:s:" opt; do
+    local shell_output=false
+    # -p is for port, -h is for host, -s is for shell-parseable output
+    while getopts "p:h:s" opt; do
         case $opt in
             p) socks5h_port="$OPTARG" ;;
             h) proxy_host="$OPTARG" ;;
+            s) shell_output=true ;;
             *)
-                echo "Usage: proxy [-p port] [-h host]" >&2
+                echo "Usage: proxy [-p port] [-h host] [-s]" >&2
                 return 1
                 ;;
         esac
     done
+    if $shell_output; then
+        echo "export http_proxy=\"socks5h://$proxy_host:$socks5h_port\""
+        echo "export https_proxy=\"socks5h://$proxy_host:$socks5h_port\""
+        echo "export all_proxy=\"socks5h://$proxy_host:$socks5h_port\""
+        echo "export HTTP_PROXY=\"socks5h://$proxy_host:$socks5h_port\""
+        echo "export HTTPS_PROXY=\"socks5h://$proxy_host:$socks5h_port\""
+        echo "export ALL_PROXY=\"socks5h://$proxy_host:$socks5h_port\""
+    fi
     export http_proxy="socks5h://$proxy_host:$socks5h_port"
     export https_proxy="socks5h://$proxy_host:$socks5h_port"
     export all_proxy="socks5h://$proxy_host:$socks5h_port"
