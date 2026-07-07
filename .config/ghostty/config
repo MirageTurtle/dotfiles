@@ -1,0 +1,45 @@
+background = #faf4ed
+foreground = #575279
+cursor-color = #625c87
+cursor-text = #575279
+
+selection-background = #d0d8d8
+selection-foreground = #575279
+
+# Normal colors (0-7)
+palette = 0=#575279
+palette = 1=#b4637a
+palette = 2=#618774
+palette = 3=#ea9d34
+palette = 4=#286983
+palette = 5=#907aa9
+palette = 6=#56949f
+palette = 7=#e5e9f0
+
+# Bright colors (8-15)
+palette = 8=#5f5695
+palette = 9=#c26d85
+palette = 10=#629f81
+palette = 11=#eea846
+palette = 12=#2d81a3
+palette = 13=#9a80b9
+palette = 14=#5ca7b4
+palette = 15=#e6ebf3
+
+# Dim colors (indexed 16 = #d7827e, 17 = #d685af) — Ghostty doesn't expose dim
+# palette directly; pin to indexed colors for completeness
+
+font-family = JetBrainsMono Nerd Font
+font-size = 15
+
+bold-is-bright = false
+background-opacity = 1.0
+
+# Alt key works as Meta (ESC prefix), equivalent to Alacritty's Alt bindings
+macos-option-as-alt = true
+
+term = xterm-256color
+
+# Window
+window-theme = light
+scrollback-limit = 0
