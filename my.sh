@@ -5,6 +5,9 @@
 
 # alias for common commands
 alias mv='mv -i'
+alias diff='diff --color=auto'
+
+# proxy
 default_proxy_host="127.0.0.1"
 default_proxy_port="2333"
 function proxy() {
