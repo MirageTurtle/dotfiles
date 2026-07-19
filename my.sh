@@ -70,8 +70,8 @@ fi
 if command -v gh &>/dev/null; then
     alias copilot='gh copilot suggest -t shell -- '
 fi
-QUICK_CHAT_SCHEME_HOST_PORT="http://100.64.0.1:13000"
-QUICK_CHAT_ENDPOINT="${QUICK_CHAT_SCHEME_HOST_PORT}/api/v1/chat/completions"
+QUICK_CHAT_SCHEME_HOST_PORT="http://127.0.0.1:8000"
+QUICK_CHAT_ENDPOINT="${QUICK_CHAT_SCHEME_HOST_PORT}/v1/chat/completions"
 QUICK_CHAT_MODEL="gemini-3-flash-preview"
 function quickchat() {
     local prompt="$1"
