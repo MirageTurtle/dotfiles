@@ -4,6 +4,7 @@ local applist = {
     -- {shortcut = 'O', appname = 'Logseq'},
     {shortcut = 'M', appname = 'Eudic'},
     {shortcut = 'N', appname = "Firefox"},
+    {shortcut = 'K', appname = "Ghostty"},
 }
 
 -- Use Cmd+Alt+Ctrl+<shortcut> to launch or focus the app
