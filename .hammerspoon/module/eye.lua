@@ -9,6 +9,55 @@ end
 eyeBreak:setTitle("👁")
 
 local timer = nil
+local breakCanvases = {}
+local dismissHotkey = nil
+
+local function dismissEyeBreak()
+   if dismissHotkey then
+      dismissHotkey:delete()
+      dismissHotkey = nil
+   end
+
+   for _, canvas in ipairs(breakCanvases) do
+      canvas:delete()
+   end
+   breakCanvases = {}
+end
+
+local function showEyeBreak()
+   dismissEyeBreak()
+
+   for _, screen in ipairs(hs.screen.allScreens()) do
+      local canvas = hs.canvas.new(screen:fullFrame())
+      canvas[1] = {
+         type = "rectangle",
+         action = "fill",
+         fillColor = { white = 1, alpha = 1 },
+         frame = { x = 0, y = 0, w = "100%", h = "100%" },
+         trackMouseUp = true,
+      }
+      canvas[2] = {
+         type = "text",
+         text = "Time to take a break for your eyes!",
+         textAlignment = "center",
+         textColor = { white = 0.15, alpha = 1 },
+         textSize = 42,
+         frame = { x = 0, y = "45%", w = "100%", h = "10%" },
+      }
+      canvas:level(hs.canvas.windowLevels.screenSaver)
+      canvas:behavior({ "canJoinAllSpaces", "stationary", "fullScreenAuxiliary" })
+      canvas:clickActivating(false)
+      canvas:mouseCallback(function(_, message)
+         if message == "mouseUp" then
+            dismissEyeBreak()
+         end
+      end)
+      canvas:show()
+      table.insert(breakCanvases, canvas)
+   end
+
+   dismissHotkey = hs.hotkey.bind({}, "escape", dismissEyeBreak)
+end
 
 local function enableEyeBreakWithTimeout(timeout)
    -- timeout in minutes
@@ -18,8 +67,9 @@ local function enableEyeBreakWithTimeout(timeout)
       timer = nil
    end
    timer = hs.timer.doAfter(timeout * 60, function()
+      timer = nil
       eyeBreak:setTitle("👁")
-      hs.alert.show("Time to take a break for your eyes!")
+      showEyeBreak()
    end)
    eyeBreak:setTitle("⏳")
    hs.alert.show("Eye break reminder set for " .. timeout .. " minutes.")
@@ -36,6 +86,7 @@ eyeBreak:setMenu({
 	    timer:stop()
 	    timer = nil
 	 end
+	 dismissEyeBreak()
 	 eyeBreak:setTitle("👁")
 	 hs.alert.show("Eye break reminder disabled.")
       end }
