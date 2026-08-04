@@ -9,8 +9,33 @@ end
 eyeBreak:setTitle("👁")
 
 local timer = nil
+local countdownTimer = nil
 local breakCanvases = {}
 local dismissHotkey = nil
+
+local function stopCountdown()
+   if countdownTimer then
+      countdownTimer:stop()
+      countdownTimer = nil
+   end
+end
+
+local function updateCountdown()
+   if not timer or not timer:running() then
+      return
+   end
+
+   local secondsLeft = math.max(0, math.ceil(timer:nextTrigger()))
+   local hours = math.floor(secondsLeft / 3600)
+   local minutes = math.floor(secondsLeft % 3600 / 60)
+   local seconds = secondsLeft % 60
+
+   if hours > 0 then
+      eyeBreak:setTitle(string.format("👁 %d:%02d:%02d", hours, minutes, seconds))
+   else
+      eyeBreak:setTitle(string.format("👁 %02d:%02d", minutes, seconds))
+   end
+end
 
 local function dismissEyeBreak()
    if dismissHotkey then
@@ -66,12 +91,15 @@ local function enableEyeBreakWithTimeout(timeout)
       timer:stop()
       timer = nil
    end
+   stopCountdown()
    timer = hs.timer.doAfter(timeout * 60, function()
       timer = nil
+      stopCountdown()
       eyeBreak:setTitle("👁")
       showEyeBreak()
    end)
-   eyeBreak:setTitle("⏳")
+   updateCountdown()
+   countdownTimer = hs.timer.doEvery(1, updateCountdown)
    hs.alert.show("Eye break reminder set for " .. timeout .. " minutes.")
 end
 
@@ -86,6 +114,7 @@ eyeBreak:setMenu({
 	    timer:stop()
 	    timer = nil
 	 end
+	 stopCountdown()
 	 dismissEyeBreak()
 	 eyeBreak:setTitle("👁")
 	 hs.alert.show("Eye break reminder disabled.")
