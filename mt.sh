@@ -33,6 +33,7 @@ function proxy() {
         echo "export HTTP_PROXY=\"socks5h://$proxy_host:$socks5h_port\""
         echo "export HTTPS_PROXY=\"socks5h://$proxy_host:$socks5h_port\""
         echo "export ALL_PROXY=\"socks5h://$proxy_host:$socks5h_port\""
+        echo "And you may need: unset https_proxy http_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY"
     fi
     export http_proxy="socks5h://$proxy_host:$socks5h_port"
     export https_proxy="socks5h://$proxy_host:$socks5h_port"
