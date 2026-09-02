@@ -207,8 +207,7 @@ fi
 ## paste.rs
 function pasters() {
     local file=${1:-/dev/stdin}
-    # curl --data-binary @${file} https://paste.rs
-    curl --data-binary @"${file}" https://paste.remnant.gay
+    curl --data-binary "@${file}" https://paste.rs
     # if the file ext is .cast, add .cast to the end of the url
     [[ "$file" == *.cast ]] && echo -n ".cast"
     [[ "$file" == *.md ]] && echo -n ".md"
@@ -221,8 +220,7 @@ function pasters-delete() {
         echo "Usage: pasters-delete <paste_id>"
         return 1
     fi
-    # curl -X DELETE https://paste.rs/${id}
-    curl -X DELETE https://paste.remnant.gay/"${id}"
+    curl -X DELETE "https://paste.rs/${id}"
 }
 ## 0x0.st
 0x0() {
