@@ -12,35 +12,39 @@ default_proxy_host="127.0.0.1"
 default_proxy_port="2333"
 function proxy() {
     local proxy_host="$default_proxy_host"
-    local socks5h_port="$default_proxy_port"
+    local proxy_port="$default_proxy_port"
+    local proxy_scheme="socks5h"
     local shell_output=false
-    # -p is for port, -h is for host, -s is for shell-parseable output
-    while getopts "p:h:s" opt; do
+    local OPTIND=1 opt
+    # -p is for port, -h is for host, -H uses HTTP, -s prints shell exports
+    while getopts "p:h:Hs" opt; do
         case $opt in
-            p) socks5h_port="$OPTARG" ;;
+            p) proxy_port="$OPTARG" ;;
             h) proxy_host="$OPTARG" ;;
+            H) proxy_scheme="http" ;;
             s) shell_output=true ;;
             *)
-                echo "Usage: proxy [-p port] [-h host] [-s]" >&2
+                echo "Usage: proxy [-p port] [-h host] [-H] [-s]" >&2
                 return 1
                 ;;
         esac
     done
+    local proxy_url="$proxy_scheme://$proxy_host:$proxy_port"
     if $shell_output; then
-        echo "export http_proxy=\"socks5h://$proxy_host:$socks5h_port\""
-        echo "export https_proxy=\"socks5h://$proxy_host:$socks5h_port\""
-        echo "export all_proxy=\"socks5h://$proxy_host:$socks5h_port\""
-        echo "export HTTP_PROXY=\"socks5h://$proxy_host:$socks5h_port\""
-        echo "export HTTPS_PROXY=\"socks5h://$proxy_host:$socks5h_port\""
-        echo "export ALL_PROXY=\"socks5h://$proxy_host:$socks5h_port\""
+        echo "export http_proxy=\"$proxy_url\""
+        echo "export https_proxy=\"$proxy_url\""
+        echo "export all_proxy=\"$proxy_url\""
+        echo "export HTTP_PROXY=\"$proxy_url\""
+        echo "export HTTPS_PROXY=\"$proxy_url\""
+        echo "export ALL_PROXY=\"$proxy_url\""
         echo "And you may need: unset https_proxy http_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY"
     fi
-    export http_proxy="socks5h://$proxy_host:$socks5h_port"
-    export https_proxy="socks5h://$proxy_host:$socks5h_port"
-    export all_proxy="socks5h://$proxy_host:$socks5h_port"
-    export HTTP_PROXY="socks5h://$proxy_host:$socks5h_port"
-    export HTTPS_PROXY="socks5h://$proxy_host:$socks5h_port"
-    export ALL_PROXY="socks5h://$proxy_host:$socks5h_port"
+    export http_proxy="$proxy_url"
+    export https_proxy="$proxy_url"
+    export all_proxy="$proxy_url"
+    export HTTP_PROXY="$proxy_url"
+    export HTTPS_PROXY="$proxy_url"
+    export ALL_PROXY="$proxy_url"
 }
 alias unproxy="unset https_proxy http_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY"
 alias cp='cp -i'
