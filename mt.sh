@@ -237,3 +237,16 @@ function pasters-delete() {
 if [[ -S "$HOME/.bitwarden-ssh-agent.sock" ]]; then
     export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
 fi
+
+if [[ -n $TMUX ]]; then
+    autoload -Uz add-zsh-hook
+
+    _tmux_mark_prompt() {
+        # add a hidden "prompt start" marker to the prompt to avoid adding it multiple times
+        if [[ $PROMPT != *$'\e]133;A'* ]]; then
+            PROMPT=$'%{\e]133;A\e\\%}'"$PROMPT"
+        fi
+    }
+
+    add-zsh-hook precmd _tmux_mark_prompt
+fi
