@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Source this file to define proxy-system, unproxy-system, and proxy-system-status.
+# Source this file to define proxy-system, unproxy-system, proxy-system-status,
+# and dns-system.
 # Run proxy-system --help for usage. Sourcing the file does not change settings.
 # Commands verified against `networksetup -help` and Apple's documentation:
 # https://support.apple.com/guide/remote-desktop/about-networksetup-apdd0c5a2d5/mac
@@ -7,7 +8,7 @@
 function _mt_macos_check_service() {
     local service="$1" services candidate
     if [[ "${OSTYPE:-}" != darwin* ]]; then
-        echo 'System proxy settings require macOS.' >&2
+        echo 'System network settings require macOS.' >&2
         return 1
     fi
     services=$(networksetup -listallnetworkservices) || return 1
@@ -30,7 +31,7 @@ function _mt_macos_networksetup() {
         sudo networksetup "$@" || result=$?
     fi
     if [[ $result -ne 0 ]]; then
-        echo 'macOS proxy update failed; system settings may be partially changed.' >&2
+        echo 'macOS network update failed; system settings may be partially changed.' >&2
     fi
     return "$result"
 }
@@ -83,31 +84,34 @@ function _mt_macos_proxy_status() {
 
 function _mt_macos_usage() {
     cat <<'EOF'
-Load the commands with: source /path/to/mt-macos.sh
-
 Usage:
   proxy-system [-p port] [-h host] [-H] [-n service]
   unproxy-system [-n service]
   proxy-system-status [-n service]
+  dns-system [-n service] {127.0.0.1|default}
   proxy-system --help
 
 Options:
   -p port     Proxy port (default: 2333).
   -h host     Proxy host (default: 127.0.0.1).
   -H          Use HTTP/HTTPS proxies instead of SOCKS.
-  -n service  Network service (default: MT_MACOS_PROXY_SERVICE or Wi-Fi).
+  -n service  Network service (default: Wi-Fi; override with
+              MT_MACOS_PROXY_SERVICE, or MT_MACOS_DNS_SERVICE for DNS).
 
 Examples:
-  networksetup -listallnetworkservices
   proxy-system
   proxy-system -H -p 7890 -n "USB Ethernet"
   proxy-system-status -n "USB Ethernet"
   unproxy-system -n "USB Ethernet"
+  dns-system 127.0.0.1
+  dns-system default
+  dns-system -n "USB Ethernet" 127.0.0.1
 
 Changes persist after this command exits; sudo may request a password.
 Proxy mode disables competing proxy types, PAC, and automatic discovery.
 Unproxy disables all proxy modes on the selected service without restoring
 earlier settings. Shell proxy environment variables are managed separately.
+DNS default clears manual DNS servers to use network-provided DNS settings.
 EOF
 }
 
@@ -188,4 +192,37 @@ function unproxy-system() {
 
 function proxy-system-status() {
     _mt_macos_proxy_command status "$@"
+}
+
+function dns-system() {
+    local service="${MT_MACOS_DNS_SERVICE:-Wi-Fi}" server
+    local OPTIND=1 opt
+    if [[ "${1:-}" == --help ]]; then
+        _mt_macos_usage
+        return 0
+    fi
+    while getopts 'n:' opt; do
+        case "$opt" in
+            n) service="$OPTARG" ;;
+            *)
+                _mt_macos_usage >&2
+                return 2
+                ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+    if [[ $# -ne 1 || -z "$service" ]]; then
+        _mt_macos_usage >&2
+        return 2
+    fi
+    case "$1" in
+        127.0.0.1) server='127.0.0.1' ;;
+        default) server='Empty' ;;
+        *)
+            _mt_macos_usage >&2
+            return 2
+            ;;
+    esac
+    _mt_macos_check_service "$service" || return 1
+    _mt_macos_networksetup -setdnsservers "$service" "$server"
 }
