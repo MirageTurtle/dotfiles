@@ -382,6 +382,9 @@ tmux_conf_copy_to_os_clipboard=false
 # -- user customizations -------------------------------------------------------
 # this is the place to override or undo settings
 
+# Open the session chooser when clicking the session name in the status bar.
+bind -n MouseDown1StatusLeft choose-tree -s
+
 # swap the current window and follow its content to the new position
 bind -r > swap-window -t '{next}' \; select-window -t '{next}'
 bind -r < swap-window -t '{previous}' \; select-window -t '{previous}'
