@@ -37,25 +37,12 @@ function _mt_macos_networksetup() {
 }
 
 function _mt_macos_proxy() {
-    local service="$1" scheme="$2" host="$3" port="$4"
+    local service="$1" host="$2" port="$3"
     _mt_macos_check_service "$service" || return 1
-    # Setters enable the selected proxy. The final "off" disables authentication.
-    case "$scheme" in
-        http)
-            _mt_macos_networksetup -setwebproxy "$service" "$host" "$port" off || return 1
-            _mt_macos_networksetup -setsecurewebproxy "$service" "$host" "$port" off || return 1
-            _mt_macos_networksetup -setsocksfirewallproxystate "$service" off || return 1
-            ;;
-        socks5h)
-            _mt_macos_networksetup -setsocksfirewallproxy "$service" "$host" "$port" off || return 1
-            _mt_macos_networksetup -setwebproxystate "$service" off || return 1
-            _mt_macos_networksetup -setsecurewebproxystate "$service" off || return 1
-            ;;
-        *)
-            printf 'Unsupported system proxy scheme: %s\n' "$scheme" >&2
-            return 1
-            ;;
-    esac
+    # Setters enable all three proxies. The final "off" disables authentication.
+    _mt_macos_networksetup -setwebproxy "$service" "$host" "$port" off || return 1
+    _mt_macos_networksetup -setsecurewebproxy "$service" "$host" "$port" off || return 1
+    _mt_macos_networksetup -setsocksfirewallproxy "$service" "$host" "$port" off || return 1
     _mt_macos_networksetup -setautoproxystate "$service" off || return 1
     _mt_macos_networksetup -setproxyautodiscovery "$service" off
 }
@@ -85,7 +72,7 @@ function _mt_macos_proxy_status() {
 function _mt_macos_usage() {
     cat <<'EOF'
 Usage:
-  proxy-system [-p port] [-h host] [-H] [-n service]
+  proxy-system [-p port] [-h host] [-n service]
   unproxy-system [-n service]
   proxy-system-status [-n service]
   dns-system [-n service] {127.0.0.1|default}
@@ -94,13 +81,12 @@ Usage:
 Options:
   -p port     Proxy port (default: 2333).
   -h host     Proxy host (default: 127.0.0.1).
-  -H          Use HTTP/HTTPS proxies instead of SOCKS.
   -n service  Network service (default: Wi-Fi; override with
               MT_MACOS_PROXY_SERVICE, or MT_MACOS_DNS_SERVICE for DNS).
 
 Examples:
   proxy-system
-  proxy-system -H -p 7890 -n "USB Ethernet"
+  proxy-system -p 7890 -n "USB Ethernet"
   proxy-system-status -n "USB Ethernet"
   unproxy-system -n "USB Ethernet"
   dns-system 127.0.0.1
@@ -108,7 +94,8 @@ Examples:
   dns-system -n "USB Ethernet" 127.0.0.1
 
 Changes persist after this command exits; sudo may request a password.
-Proxy mode disables competing proxy types, PAC, and automatic discovery.
+Proxy mode enables HTTP, HTTPS, and SOCKS5 with the same host and port,
+and disables PAC and automatic discovery.
 Unproxy disables all proxy modes on the selected service without restoring
 earlier settings. Shell proxy environment variables are managed separately.
 DNS default clears manual DNS servers to use network-provided DNS settings.
@@ -117,7 +104,7 @@ EOF
 
 function _mt_macos_proxy_command() {
     local action="$1" option_spec='n:'
-    local host='127.0.0.1' port='2333' scheme='socks5h'
+    local host='127.0.0.1' port='2333'
     local service="${MT_MACOS_PROXY_SERVICE:-Wi-Fi}"
     local OPTIND=1 opt
     shift
@@ -126,19 +113,18 @@ function _mt_macos_proxy_command() {
         return 0
     fi
     case "$action" in
-        proxy) option_spec='p:h:Hn:' ;;
+        proxy) option_spec='p:h:n:' ;;
         unproxy | status) ;;
         *)
             _mt_macos_usage >&2
             return 2
             ;;
     esac
-    # -p is for port, -h is for host, -H uses HTTP, -n selects the service.
+    # -p is for port, -h is for host, -n selects the service.
     while getopts "$option_spec" opt; do
         case "$opt" in
             p) port="$OPTARG" ;;
             h) host="$OPTARG" ;;
-            H) scheme='http' ;;
             n) service="$OPTARG" ;;
             *)
                 _mt_macos_usage >&2
@@ -175,7 +161,7 @@ function _mt_macos_proxy_command() {
                 echo 'Proxy host must not be empty.' >&2
                 return 2
             fi
-            _mt_macos_proxy "$service" "$scheme" "$host" "$port"
+            _mt_macos_proxy "$service" "$host" "$port"
             ;;
         unproxy) _mt_macos_unproxy "$service" ;;
         status) _mt_macos_proxy_status "$service" ;;
