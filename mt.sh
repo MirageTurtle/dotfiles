@@ -250,3 +250,10 @@ if [[ -n $TMUX ]]; then
 
     add-zsh-hook precmd _tmux_mark_prompt
 fi
+
+# rustc --explain
+rexplain() {
+    rustc --explain "$1" --color never |
+        awk '/^```/{ print (f ? "```" : "```rust"); f=!f; next } 1' |
+        bat -l md --theme "${2:-ansi}" --style plain
+}
