@@ -8,6 +8,7 @@ local applist = {
     },
     {shortcut = 'N', appname = "Firefox"},
     {shortcut = 'K', appname = "Ghostty"},
+    {shortcut = 'L', appname = "Claude"},
 }
 
 -- Use Cmd+Alt+Ctrl+<shortcut> to launch or focus the app
