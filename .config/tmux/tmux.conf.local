@@ -389,6 +389,10 @@ bind -n MouseDown1StatusLeft choose-tree -s
 bind -r > swap-window -t '{next}' \; select-window -t '{next}'
 bind -r < swap-window -t '{previous}' \; select-window -t '{previous}'
 
+# nested tmux (local tmux -> ssh -> remote tmux) clipboard relay via OSC 52
+# accept OSC 52 emitted by the inner tmux (default "external" ignores it)
+set -s set-clipboard on
+
 # increase history size
 #set -g history-limit 10000
 
