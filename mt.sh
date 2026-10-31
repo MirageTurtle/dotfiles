@@ -120,9 +120,14 @@ function mtmux() {
             mtmux_update_environment
             return 0
             ;;
+        move)
+            mtmux_move "$2"
+            return $?
+            ;;
         help)
             echo "Usage: mtmux [session_name]"
             echo "       mtmux list"
+            echo "       mtmux move [session_name]"
             echo "       mtmux update-environment|update-env|env-update"
             echo "       mtmux help"
             return 0
@@ -159,6 +164,26 @@ function mtmux_in_session() {
 function mtmux_out_session() {
     # attach to the target session if it exists, otherwise create a new session
     tmux attach-session -t "$1" 2>/dev/null || tmux new-session -s "$1"
+}
+function mtmux_move() {
+    # Move the current window to another session (selected via fzf if no name is given)
+    if [[ -z "$TMUX" ]]; then
+        echo "mtmux move must be run inside a tmux session." >&2
+        return 1
+    fi
+    local target="$1"
+    if [[ -z "$target" ]]; then
+        local current
+        current=$(tmux display-message -p "#{session_name}")
+        target=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | grep -Fxv "$current" |
+            fzf --height 40% --reverse --prompt="Move window to session: ")
+        if [[ -z "$target" ]]; then
+            echo "No session selected. Exiting."
+            return 0
+        fi
+    fi
+    tmux move-window -t "${target}:" || return 1
+    tmux switch-client -t "$target"
 }
 function mtmux_update_environment() {
     # Update environment variables from tmux's global environment
