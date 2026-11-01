@@ -158,12 +158,13 @@ function mtmux() {
     fi
 }
 function mtmux_in_session() {
-    # switch to the target session if it exists, otherwise exit
-    tmux switch-client -t "$1" 2>/dev/null || echo "Session '$1' does not exist."
+    # create the target session detached if missing (-A -d), then switch to it;
+    # attaching directly would nest tmux
+    tmux new-session -A -d -s "$1" && tmux switch-client -t "$1"
 }
 function mtmux_out_session() {
-    # attach to the target session if it exists, otherwise create a new session
-    tmux attach-session -t "$1" 2>/dev/null || tmux new-session -s "$1"
+    # attach to the target session, creating it if it doesn't exist
+    tmux new-session -A -s "$1"
 }
 function mtmux_move() {
     # Move the current window to another session (selected via fzf if no name is given)
